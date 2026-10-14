@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>مدیریت شیفت داروخانه</title>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f2f5f4;--cd:#fff;--tx:#18262b;--mu:#667a80;--pr:#0b6e66;--bd:#dde5e4;--ok:#157a3b;--wa:#a8590a;--er:#b3261e;--sb:#0f2f33;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#101a1c;--cd:#172629;--tx:#e6eeee;--mu:#93a8ac;--pr:#2bb5a8;--bd:#2a3d41;--ok:#4cc27a;--wa:#e0933f;--er:#f27c74;--sb:#0a1315}}
+:root[data-theme="dark"]{--bg:#101a1c;--cd:#172629;--tx:#e6eeee;--mu:#93a8ac;--pr:#2bb5a8;--bd:#2a3d41;--ok:#4cc27a;--wa:#e0933f;--er:#f27c74;--sb:#0a1315}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:14px/1.7 Vazirmatn,Tahoma,sans-serif;display:flex;min-height:100vh}
+nav{width:210px;background:var(--sb);color:#cfe3e1;padding:16px 10px;flex-shrink:0}
+nav h1{font-size:16px;margin:0 8px 16px;color:#fff}
+nav a{display:block;padding:9px 12px;border-radius:8px;cursor:pointer;color:inherit}
+nav a.on{background:var(--pr);color:#fff;font-weight:600}
+main{flex:1;padding:18px;min-width:0}
+#mb{display:none}
+h2{font-size:18px;margin:0 0 14px}
+.card{background:var(--cd);border:1px solid var(--bd);border-radius:10px;padding:14px;margin-bottom:14px}
+.g{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin-bottom:14px}
+.g2{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+.k{background:var(--cd);border:1px solid var(--bd);border-radius:10px;padding:10px 14px}
+.k small{color:var(--mu);display:block}.k b{font-size:17px}
+input,select,textarea,button{font:inherit;color:var(--tx);background:var(--cd);border:1px solid var(--bd);border-radius:8px;padding:7px 10px;max-width:100%}
+button{cursor:pointer}button.p{background:var(--pr);border-color:var(--pr);color:#fff}button.d{color:var(--er)}
+.fm{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.fm label{display:flex;flex-direction:column;gap:3px;color:var(--mu)}
+.fb{display:flex;flex-wrap:wrap;gap:8px}
+.dt{display:flex;gap:4px}.dt select{flex:1;padding:7px 4px}
+.tw{overflow-x:auto}
+table{border-collapse:collapse;width:100%;white-space:nowrap}
+th,td{padding:7px 9px;border-bottom:1px solid var(--bd);text-align:right}
+th{color:var(--mu);font-weight:600}tfoot td{font-weight:800}
+.b{padding:1px 9px;border-radius:99px;font-size:12px;border:1px solid}
+.b.u{color:var(--er)}.b.s{color:var(--ok)}.b.p{color:var(--wa)}
+.br{display:flex;align-items:center;gap:8px;margin:5px 0}.br span:first-child{width:90px;flex-shrink:0;overflow:hidden;text-overflow:ellipsis}
+.br i{display:block;height:14px;border-radius:4px}.br div{flex:1}
+.pie{width:130px;height:130px;border-radius:50%;flex-shrink:0}
+.pw{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.lg div{display:flex;gap:6px;align-items:center}.lg i{width:10px;height:10px;border-radius:3px}
+.mo{position:fixed;inset:0;background:#0008;display:flex;align-items:center;justify-content:center;padding:16px;z-index:9}
+.mo[hidden]{display:none}
+.mo>div{background:var(--cd);border-radius:12px;padding:16px;width:min(520px,100%)}
+.mo textarea{width:100%;height:200px;direction:ltr}
+.doc h3{margin:0}.mu{color:var(--mu)}
+@media(max-width:760px){body{display:block}#mb{display:block;margin:8px 12px 0}nav{display:none;width:auto}nav.open{display:block}main{padding:12px}}
+@media print{nav,#mb,.np,.mo{display:none!important}body{background:#fff;color:#000;display:block}main{padding:0}.card{border:0}}
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<style>
+:root{--pr2:#14a89a;--sh:0 1px 2px #0a2a2a0d,0 8px 22px #0a2a2a12}
+body{background:radial-gradient(1100px 380px at 100% -8%,color-mix(in srgb,var(--pr) 12%,transparent),transparent),var(--bg)}
+nav{background:linear-gradient(180deg,var(--sb),color-mix(in srgb,var(--sb) 78%,var(--pr)));box-shadow:2px 0 24px #0003}
+nav h1{font-size:17px;font-weight:800;padding:6px 8px 14px;border-bottom:1px solid #fff2;margin:0 0 12px}
+nav a{margin:3px 0;transition:.15s}nav a:hover{background:#ffffff14}
+nav a.on{background:linear-gradient(135deg,var(--pr),var(--pr2));box-shadow:0 4px 14px #0b6e6655}
+h2{font-size:21px;font-weight:800;display:flex;align-items:center;gap:10px}
+h2::before{content:'';width:5px;height:22px;border-radius:3px;background:linear-gradient(var(--pr2),var(--pr))}
+.card,.k{border-radius:14px;box-shadow:var(--sh)}
+.k{position:relative;overflow:hidden;padding:14px 16px}
+.k::before{content:'';position:absolute;inset-inline-start:0;top:0;bottom:0;width:4px;background:var(--ac,var(--pr))}
+.k small{font-size:12.5px}
+.k b{display:block;font-size:21px;font-weight:800;font-variant-numeric:tabular-nums;margin-top:2px}
+.k .ic{float:left;font-size:22px}
+.k.c1{--ac:#3b6fd4}.k.c2{--ac:#d98324}.k.c3{--ac:var(--pr)}.k.c4{--ac:var(--ok)}.k.c5{--ac:var(--er)}
+.k.c4 b{color:var(--ok)}.k.c5 b{color:var(--er)}
+button{transition:.15s;font-weight:600}
+button:hover{border-color:var(--pr);transform:translateY(-1px)}
+button.p{background:linear-gradient(135deg,var(--pr),var(--pr2));border:0;color:#fff;box-shadow:0 3px 10px #0b6e6640}
+button.d:hover{background:color-mix(in srgb,var(--er) 12%,transparent);border-color:var(--er)}
+input:focus,select:focus,textarea:focus{outline:0;border-color:var(--pr);box-shadow:0 0 0 3px color-mix(in srgb,var(--pr) 22%,transparent)}
+th{background:color-mix(in srgb,var(--pr) 8%,var(--cd));font-size:12.5px}
+td{font-variant-numeric:tabular-nums}
+tr:nth-child(even)>td{background:color-mix(in srgb,var(--bd) 22%,transparent)}
+tr:hover>td{background:color-mix(in srgb,var(--pr) 9%,transparent)}
+tfoot td{background:color-mix(in srgb,var(--pr) 10%,var(--cd))!important;font-size:14px}
+.b{font-weight:600;padding:2px 10px}
+.b.u{background:color-mix(in srgb,var(--er) 12%,transparent)}
+.b.s{background:color-mix(in srgb,var(--ok) 12%,transparent)}
+.b.p{background:color-mix(in srgb,var(--wa) 14%,transparent)}
+.br i{height:16px;border-radius:8px;background-image:linear-gradient(90deg,#ffffff40,#0000)}
+.br span:last-child{font-weight:700;font-variant-numeric:tabular-nums;min-width:90px;text-align:left}
+.pie{position:relative;box-shadow:var(--sh)}
+.pie::after{content:'';position:absolute;inset:27%;background:var(--cd);border-radius:50%}
+.av{display:inline-flex;width:24px;height:24px;border-radius:50%;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:700;margin-inline-end:7px;vertical-align:middle}
+.mo{backdrop-filter:blur(3px)}
+.mo>div{border-radius:16px;box-shadow:0 20px 50px #0006;border:1px solid var(--bd)}
+.doc{border-top:4px solid var(--pr)}
+@media print{.av{display:none}.card,.k,.pie{box-shadow:none}.doc{border-top:0}}
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+<nav id="nv"><h1>💊 شیفت داروخانه</h1></nav>
+<div style="flex:1;min-width:0"><button id="mb" onclick="nv.classList.toggle('open')">☰ منو</button><main id="main"></main></div>
+<div class="mo" id="mo" hidden></div>
+<script>
+// ---------- Utils ----------
+const $=s=>document.querySelector(s);
+const MN=['فروردین','اردیبهشت','خرداد','تیر','مرداد','شهریور','مهر','آبان','آذر','دی','بهمن','اسفند'];
+const fa=s=>String(s).replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d));
+const num=v=>Number(fa(v).replace(/[,٬\s]/g,''))||0;
+const pad=n=>String(n).padStart(2,'0');
+const nd=s=>fa(s).trim().split(/[\/\-]/).map((x,i)=>i?pad(x):x).join('/');
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const fmt=n=>Math.round(n*100/100).toLocaleString('en-US');
+const uid=()=>Math.random().toString(36).slice(2,9)+Date.now().toString(36).slice(-4);
+function toJ(gy,gm,gd){const g=[0,31,59,90,120,151,181,212,243,273,304,334];const y2=gm>2?gy+1:gy;let d=355666+365*gy+Math.floor((y2+3)/4)-Math.floor((y2+99)/100)+Math.floor((y2+399)/400)+gd+g[gm-1];let jy=-1595+33*Math.floor(d/12053);d%=12053;jy+=4*Math.floor(d/1461);d%=1461;if(d>365){jy+=Math.floor((d-1)/365);d=(d-1)%365}const jm=d<186?1+Math.floor(d/31):7+Math.floor((d-186)/30);const jd=1+(d<186?d%31:(d-186)%30);return[jy,jm,jd]}
+const T=new Date(),[TY,TM,TD]=toJ(T.getFullYear(),T.getMonth()+1,T.getDate());
+const today=()=>`${TY}/${pad(TM)}/${pad(TD)}`;
+
+// ---------- Storage layer (swap this object for Supabase later) ----------
+const Store={key:'pharmashift_v1',
+ load(){try{return JSON.parse(localStorage.getItem(this.key))}catch(e){return null}},
+ save(d){try{localStorage.setItem(this.key,JSON.stringify(d))}catch(e){}}};
+let db=Store.load()||{people:[],pharmacies:[],shifts:[],settings:{cur:'ریال',rate:0}};
+if(!db.settings.m2){db.settings.m2=1;db.settings.cur='ریال'}
+const save=()=>Store.save(db);
+const fi=e=>{e.value=e.value?fmt(num(e.value)):''};
+const tm=t=>{const[h,m]=t.split(':').map(Number);return h*60+m};
+let DL=null;(async()=>{try{DL=await claude.use('downloads')}catch(e){}})();
+async function dl(n,d){if(!DL)return false;try{await DL.save({filename:n,data:d});return true}catch(e){return !!(e&&e.code=='declined')}}
+const money=n=>fmt(n)+' <small style="font-weight:400;font-size:.62em;opacity:.7">'+esc(db.settings.cur)+'</small>';
+
+// ---------- Domain ----------
+const P=id=>db.people.find(x=>x.id===id),H=id=>db.pharmacies.find(x=>x.id===id);
+const av=n=>`<span class="av" style="background:${COL[[...n].reduce((a,c)=>a+c.charCodeAt(0),0)%8]}">${esc([...n.trim()][0]||'?')}</span>`;
+const nm=o=>o?av(o.name)+esc(o.name):'—';
+const who=s=>nm(P(s.pe))+(s.orig?` <small class="mu">(جایگزین ${nm(P(s.orig))})</small>`:'');
+function calc(s,e){const[a,b]=s.split(':').map(Number),[c,d]=e.split(':').map(Number);let x=a*60+b,y=c*60+d;if(y<=x)y+=1440;return Math.round((y-x)/60*100)/100}
+const st=s=>s.paid<=0?'u':s.paid>=s.amount?'s':'p';
+const STN={u:'تسویه نشده',s:'تسویه شده',p:'تسویه ناقص'};
+const badge=s=>`<span class="b ${st(s)}">${STN[st(s)]}</span>`;
+const F={list:{desc:1},rep:{}};
+const flt=f=>db.shifts.filter(s=>(!f.ph||s.ph===f.ph)&&(!f.pe||s.pe===f.pe)&&(!f.doc||H(s.ph)?.doctor===f.doc)&&(!f.m||s.date.startsWith(f.m))&&(!f.from||s.date>=f.from)&&(!f.to||s.date<=f.to)&&(!f.st||st(s)===f.st)&&(!f.q||(s.note+' '+P(s.pe)?.name+' '+H(s.ph)?.name).includes(f.q))).sort((a,b)=>(a.date+a.start).localeCompare(b.date+b.start)*(f.desc?-1:1));
+const tot=l=>l.reduce((t,s)=>({n:t.n+1,h:t.h+s.hours,a:t.a+s.amount,p:t.p+s.paid}),{n:0,h:0,a:0,p:0});
+function agg(l,key){const m={};l.forEach(s=>{const o=m[s[key]]||(m[s[key]]={n:0,h:0,a:0,p:0});o.n++;o.h+=s.hours;o.a+=s.amount;o.p+=s.paid});return Object.entries(m).map(([k,o])=>({...o,name:(key=='pe'?P(k):H(k))?.name||'—'})).sort((a,b)=>b.a-a.a)}
+
+// ---------- UI helpers ----------
+const COL=['#0b6e66','#d98324','#3b6fd4','#b3447a','#7a9a1e','#8a5cd0','#c9503c','#4a9aa8'];
+const opt=(arr,v,all)=>(all?`<option value="">${all}</option>`:'')+arr.map(o=>`<option value="${esc(o[0])}" ${String(o[0])===String(v)?'selected':''}>${esc(o[1])}</option>`).join('');
+const phO=()=>db.pharmacies.map(h=>[h.id,h.name]),peO=()=>db.people.map(p=>[p.id,p.name]);
+function dsel(id,v){const[y,m,d]=(v||today()).split('/').map(Number);const ys=[];for(let i=1403;i<=1412;i++)ys.push([i,i]);if(y<1403||y>1412)ys.push([y,y]);
+ return `<div class="dt" id="${id}"><select>${opt(ys,y)}</select><select>${opt(MN.map((n,i)=>[i+1,n]),m)}</select><select>${opt([...Array(31)].map((_,i)=>[i+1,i+1]),d)}</select></div>`}
+const gd=id=>{const s=document.querySelectorAll('#'+id+' select');return s[0].value+'/'+pad(s[1].value)+'/'+pad(s[2].value)};
+function bars(items,f,c){const mx=Math.max(1,...items.map(i=>i[f]));return items.length?items.map((i,k)=>`<div class="br"><span>${esc(i.name)}</span><div><i style="width:${Math.max(2,i[f]/mx*100)}%;background:${COL[k%8]}"></i></div><span>${c?money(i[f]):fmt(i[f])+' ساعت'}</span></div>`).join(''):'<p class="mu">داده‌ای نیست</p>'}
+function pie(items){const t=items.reduce((s,i)=>s+i.a,0);if(!t)return '<p class="mu">داده‌ای نیست</p>';let a=0;const seg=items.map((i,k)=>{const s=a;a+=i.a/t*100;return `${COL[k%8]} ${s}% ${a}%`}).join(',');
+ return `<div class="pw"><div class="pie" style="background:conic-gradient(${seg})"></div><div class="lg">${items.map((i,k)=>`<div><i style="background:${COL[k%8]}"></i>${esc(i.name)} (${Math.round(i.a/t*100)}%)</div>`).join('')}</div></div>`}
+function modal(h){const m=$('#mo');m.innerHTML='<div>'+h+'</div>';m.hidden=false}
+const closeM=()=>$('#mo').hidden=true;
+let pend;const ask=(msg,fn)=>{pend=fn;modal(`<p>${msg}</p><button class="p" onclick="closeM();pend()">بله</button> <button onclick="closeM()">انصراف</button>`)};
+function showText(title,txt,imp){window._t=txt;modal(`<h3>${title}</h3><textarea id="ta" ${imp?'':'readonly'}>${esc(txt)}</textarea><p><button class="p" onclick="${imp?'doImport()':'copyT()'}">${imp?'بازیابی':'کپی'}</button> <button onclick="closeM()">بستن</button></p>`)}
+function copyT(){const t=$('#ta');t.select();try{navigator.clipboard.writeText(window._t)}catch(e){document.execCommand('copy')}}
+
+// ---------- Pages ----------
+let page='dash',editId=null,D={y:TY,m:TM};
+const pages={dash,add,list,ph:()=>ent('ph'),pe:()=>ent('pe'),rep,set};
+const NAV=[['dash','📊 داشبورد'],['add','➕ ثبت شیفت'],['list','🗂️ لیست شیفت‌ها'],['ph','💊 داروخانه‌ها'],['pe','👥 افراد'],['rep','🧾 گزارش‌ها'],['set','⚙️ تنظیمات']];
+function go(p,e){page=p;editId=e||null;nv.classList.remove('open');render()}
+function render(){nv.innerHTML='<h1>💊 شیفت داروخانه</h1>'+NAV.map(n=>`<a class="${n[0]==page?'on':''}" onclick="go('${n[0]}')">${n[1]}</a>`).join('');$('#main').innerHTML=pages[page]();if(post[page])post[page]();scrollTo(0,0)}
+const post={list:()=>res('list'),rep:()=>res('rep'),add:()=>{prev();impPrev()}};
+
+function dash(){const pre=D.y+'/'+(D.m?pad(D.m)+'/':'');const l=db.shifts.filter(s=>s.date.startsWith(pre)),t=tot(l),pe=agg(l,'pe'),ph=agg(l,'ph');
+ const tb=(a,h)=>`<div class="card tw"><h3>${h}</h3><table><tr><th>نام</th><th>شیفت</th><th>ساعت</th><th>کارکرد</th><th>پرداخت‌شده</th><th>باقی‌مانده</th></tr>${a.map(x=>`<tr><td>${av(x.name)}${esc(x.name)}</td><td>${x.n}</td><td>${fmt(x.h)}</td><td>${money(x.a)}</td><td>${money(x.p)}</td><td>${money(Math.max(0,x.a-x.p))}</td></tr>`).join('')}</table></div>`;
+ return `<h2>داشبورد</h2>${bkBanner()}<div class="card fb"><select onchange="D.y=+this.value;render()">${opt([...Array(10)].map((_,i)=>[1403+i,1403+i]),D.y)}</select><select onchange="D.m=+this.value;render()">${opt([[0,'کل سال'],...MN.map((n,i)=>[i+1,n])],D.m)}</select></div>
+ <div class="g"><div class="k c1"><span class="ic">📋</span><small>تعداد شیفت</small><b>${t.n}</b></div><div class="k c2"><span class="ic">⏱️</span><small>مجموع ساعات</small><b>${fmt(t.h)}</b></div><div class="k c3"><span class="ic">💰</span><small>مجموع کارکرد</small><b>${money(t.a)}</b></div><div class="k c4"><span class="ic">✅</span><small>پرداخت‌شده</small><b>${money(t.p)}</b></div><div class="k c5"><span class="ic">⏳</span><small>باقی‌مانده تسویه</small><b>${money(Math.max(0,t.a-t.p))}</b></div></div>
+ <div class="g2"><div class="card"><h3>کارکرد افراد</h3>${bars(pe,'a',1)}</div><div class="card"><h3>کارکرد داروخانه‌ها</h3>${bars(ph,'a',1)}</div><div class="card"><h3>ساعات کار افراد</h3>${bars([...pe].sort((a,b)=>b.h-a.h),'h')}</div><div class="card"><h3>سهم هر شخص</h3>${pie(pe)}</div><div class="card"><h3>سهم هر داروخانه</h3>${pie(ph)}</div></div>${tb(pe,'جدول افراد')}${tb(ph,'جدول داروخانه‌ها')}`}
+
+function add(){return addForm()+(editId?'':imp())}
+function addForm(){if(!db.pharmacies.length||!db.people.length)return `<h2>ثبت شیفت</h2><div class="card">ابتدا حداقل یک <a href="#" onclick="go('ph');return false">داروخانه</a> و یک <a href="#" onclick="go('pe');return false">شخص</a> اضافه کنید.</div>`;
+ const s=db.shifts.find(x=>x.id===editId)||{ph:'',pe:'',date:today(),start:'16:00',end:'00:00',rate:0,mode:'t',paid:0,note:''};
+ const v0=s.mode=='h'?s.rate:s.amount||0;
+ return `<h2>ثبت شیفت</h2><details class="card" name="addsec" open><summary style="cursor:pointer;font-weight:700">${editId?'✏️ ویرایش شیفت':'➕ ثبت شیفت جدید'}</summary><br><div class="fm">
+ <label>داروخانه<select id="f_ph" onchange="prev()">${opt(phO(),s.ph)}</select></label>
+ <label>شخصی که شیفت را انجام داده<select id="f_pe">${opt(peO(),s.pe)}</select></label>
+ <label>نفر اصلی (فقط اگر جایگزین رفته)<select id="f_o">${opt(peO(),s.orig||'','— خودش انجام داده —')}</select></label>
+ <label>تاریخ شمسی${dsel('f_d',s.date)}</label>
+ <label>ساعت شروع<input type="time" id="f_s" value="${s.start}" oninput="prev()"></label>
+ <label>ساعت پایان<input type="time" id="f_e" value="${s.end}" oninput="prev()"></label>
+ <label>مبلغ (${db.settings.cur})<div class="dt"><select id="f_m" onchange="prev()" style="flex:0 0 42%"><option value="t">مبلغ کل شیفت</option><option value="h" ${s.mode=='h'?'selected':''}>نرخ هر ساعت</option></select><input id="f_r" inputmode="numeric" value="${v0?fmt(v0):''}" oninput="fi(this);prev()" style="flex:1;min-width:0"></div></label>
+ <label>مبلغ پرداخت‌شده توسط داروخانه<input id="f_p" inputmode="numeric" value="${s.paid?fmt(s.paid):''}" oninput="fi(this)"></label>
+ <label>توضیحات<input id="f_n" value="${esc(s.note)}"></label></div>
+ <p id="pv" class="k"></p><button class="p" onclick="saveShift()">ذخیره</button> ${editId?'<button onclick="go(\'list\')">انصراف</button>':''}</details>`}
+function prev(){const p=$('#pv');if(!p)return;const h=calc($('#f_s').value||'0:0',$('#f_e').value||'0:0');const r=num($('#f_r').value);p.innerHTML=`مدت: <b>${h}</b> ساعت — مبلغ شیفت: <b>${money($('#f_m').value=='t'?r:h*r)}</b>`}
+function saveShift(){const ph=$('#f_ph').value,pe=$('#f_pe').value,s=$('#f_s').value,e=$('#f_e').value,r=num($('#f_r').value);if(!s||!e||!r){modal('<p>ساعت شروع، پایان و مبلغ را وارد کنید.</p><button onclick="closeM()">باشه</button>');return}
+ const hours=calc(s,e),md=$('#f_m').value,tt=md=='t',o={id:editId||uid(),ph,pe,date:gd('f_d'),orig:$('#f_o').value,start:s,end:e,mode:md,rate:tt?Math.round(r/hours):r,hours,amount:tt?r:Math.round(hours*r),paid:num($('#f_p').value),note:$('#f_n').value};
+ const fin=()=>{if(editId)db.shifts=db.shifts.map(x=>x.id===editId?o:x);else db.shifts.push(o);save();go('list')};
+ const iv=x=>{const a=tm(x.start);let b=tm(x.end);if(b<=a)b+=1440;return[a,b]},[a1,b1]=iv(o);
+ const dup=db.shifts.some(x=>x.id!==o.id&&x.pe===o.pe&&x.date===o.date&&(([a2,b2])=>a1<b2&&a2<b1)(iv(x)));
+ dup?ask('این شخص در همین تاریخ یک شیفت هم‌پوشان دارد. باز هم ثبت شود؟',fin):fin()}
+
+function fbar(n){const f=F[n],L=n=='list',docs=[...new Set(db.pharmacies.map(h=>h.doctor).filter(Boolean))].map(d=>[d,d]),ms=[...new Set(db.shifts.map(s=>s.date.slice(0,7)))].sort().reverse().map(m=>[m,m.slice(0,4)+' '+MN[+m.slice(5)-1]]);
+ const S=(k,o,a)=>`<select onchange="sf('${n}','${k}',this.value)">${opt(o,f[k],a)}</select>`,I=(k,p)=>`<input placeholder="${p}" value="${f[k]||''}" oninput="sf('${n}','${k}',this.value)" size="14">`;
+ return `<div class="card fb np">${L?I('q','جستجو...'):''}${S('ph',phO(),'همه داروخانه‌ها')}${S('pe',peO(),'همه افراد')}${L?S('doc',docs,'همه دکترها')+S('m',ms,'همه ماه‌ها'):''}${dsl(n,'from','از')}${dsl(n,'to','تا')}${S('st',Object.entries(STN),'همه وضعیت‌ها')}${L?`<button onclick="F.list.desc=F.list.desc?0:1;res('list')">⇅ مرتب‌سازی تاریخ</button>`:''}</div>`}
+function dsl(n,k,lab){const p=F[n]['p_'+k]||['','',''],ys=[];for(let i=1403;i<=1412;i++)ys.push([i,i]);const o=`onchange="sd('${n}','${k}')"`;
+ return `<div class="dt" id="d_${n}_${k}" style="min-width:270px"><span class="mu" style="align-self:center">${lab}</span><select ${o}>${opt(ys,p[0],'سال')}</select><select ${o}>${opt(MN.map((x,i)=>[i+1,x]),p[1],'ماه')}</select><select ${o}>${opt([...Array(31)].map((_,i)=>[i+1,i+1]),p[2],'روز')}</select></div>`}
+function sd(n,k){const s=document.querySelectorAll(`#d_${n}_${k} select`),p=[s[0].value,s[1].value,s[2].value],e=k=='to';F[n]['p_'+k]=p;F[n][k]=p[0]?p[0]+'/'+pad(p[1]||(e?12:1))+'/'+pad(p[2]||(e?31:1)):'';res(n)}
+function sf(n,k,v){F[n][k]=(k=='from'||k=='to')&&v?nd(v):v;res(n)}
+function list(){return `<h2>لیست شیفت‌ها</h2>${fbar('list')}<div id="res"></div>`}
+function res(n){const l=flt(F[n]),t=tot(l);
+ if(n=='rep')return $('#res').innerHTML=report(l,t);
+ $('#res').innerHTML=`<div class="card tw"><table><tr><th>تاریخ</th><th>داروخانه</th><th>دکتر</th><th>انجام‌دهنده</th><th>ساعت</th><th>مدت</th><th>نرخ</th><th>مبلغ</th><th>پرداخت‌شده</th><th>وضعیت</th><th></th></tr>${l.map(s=>`<tr><td>${s.date}</td><td>${nm(H(s.ph))}</td><td>${esc(H(s.ph)?.doctor||'—')}</td><td>${who(s)}</td><td>${s.start}–${s.end}</td><td>${s.hours}</td><td>${fmt(s.rate)}</td><td>${fmt(s.amount)}</td><td>${fmt(s.paid)}</td><td>${badge(s)}</td><td><button onclick="det('${s.id}')">جزئیات</button> <button onclick="pay('${s.id}')">پرداخت</button> <button onclick="go('add','${s.id}')">ویرایش</button> <button class="d" onclick="del('${s.id}')">حذف</button></td></tr>`).join('')}<tfoot><tr><td colspan="5">جمع (${t.n} شیفت)</td><td>${fmt(t.h)}</td><td></td><td>${fmt(t.a)}</td><td>${fmt(t.p)}</td><td colspan="2">باقی‌مانده: ${money(Math.max(0,t.a-t.p))}</td></tr></tfoot></table></div>`}
+function det(id){const s=db.shifts.find(x=>x.id==id);modal(`<h3>جزئیات شیفت</h3><p>داروخانه: ${nm(H(s.ph))} (دکتر ${esc(H(s.ph)?.doctor||'—')})<br>انجام‌دهنده: ${who(s)}<br>تاریخ: ${s.date} | ${s.start} تا ${s.end} | ${s.hours} ساعت<br>نرخ: ${money(s.rate)} | مبلغ: ${money(s.amount)}<br>پرداخت‌شده: ${money(s.paid)} | باقی‌مانده: ${money(Math.max(0,s.amount-s.paid))}<br>${badge(s)}<br>توضیحات: ${esc(s.note||'—')}</p><button onclick="closeM()">بستن</button>`)}
+function del(id){ask('این شیفت حذف شود؟',()=>{db.shifts=db.shifts.filter(s=>s.id!=id);save();res('list')})}
+
+function ent(t){const L=t=='ph'?db.pharmacies:db.people,e=L.find(x=>x.id===editId)||{name:'',doctor:'',note:''},T2=t=='ph'?'داروخانه':'شخص';
+ return `<h2>${t=='ph'?'داروخانه‌ها':'افراد'}</h2><div class="card"><div class="fm"><label>نام ${T2}<input id="e_n" value="${esc(e.name)}"></label>${t=='ph'?`<label>نام دکتر / مسئول<input id="e_d" value="${esc(e.doctor)}"></label>`:''}<label>توضیحات<input id="e_t" value="${esc(e.note)}"></label></div><p><button class="p" onclick="saveEnt('${t}')">${editId?'ذخیره تغییرات':'افزودن'}</button> ${editId?`<button onclick="go('${t}')">انصراف</button>`:''}</p></div>
+ <div class="card tw"><table>${L.map(x=>`<tr><td>${av(x.name)}${esc(x.name)}</td><td>${esc(x.doctor||'')}</td><td class="mu">${esc(x.note||'')}</td><td><button onclick="go('${t}','${x.id}')">ویرایش</button> <button class="d" onclick="delEnt('${t}','${x.id}')">حذف</button></td></tr>`).join('')||'<tr><td class="mu">هنوز موردی ثبت نشده است.</td></tr>'}</table></div>`}
+function saveEnt(t){const n=$('#e_n').value.trim();if(!n)return;const o={id:editId||uid(),name:n,note:$('#e_t').value};if(t=='ph')o.doctor=$('#e_d').value;const k=t=='ph'?'pharmacies':'people';
+ if(editId)db[k]=db[k].map(x=>x.id===editId?o:x);else db[k].push(o);save();go(t)}
+function delEnt(t,id){if(db.shifts.some(s=>s[t]===id))return modal('<p>برای این مورد شیفت ثبت شده و حذف آن ممکن نیست.</p><button onclick="closeM()">باشه</button>');const k=t=='ph'?'pharmacies':'people';ask('حذف شود؟',()=>{db[k]=db[k].filter(x=>x.id!==id);save();go(t)})}
+
+function rep(){return `<h2>گزارش‌ها</h2>${fbar('rep')}<div id="res"></div>`}
+function report(l,t){const f=F.rep,h=H(f.ph);
+ return `<div class="np fb" style="margin-bottom:10px"><button class="p" onclick="pdfOut()">ذخیره PDF</button><button onclick="try{print()}catch(e){}">چاپ</button><button onclick="xlsOut()">خروجی Excel</button><button onclick="csvOut()">خروجی CSV</button><button onclick="settleAll()">ثبت تسویه کامل همه</button></div>
+ <div class="card doc" id="doc"><h3>گزارش تسویه شیفت‌ها</h3><p>${h?`داروخانه: <b>${esc(h.name)}</b> — دکتر: ${esc(h.doctor||'—')}<br>`:''}${f.pe?`شخص: <b>${nm(P(f.pe))}</b><br>`:''}بازه: ${f.from||'ابتدا'} تا ${f.to||'انتها'} | تاریخ صدور: ${today()}</p>
+ <div class="tw"><table><tr><th>داروخانه</th><th>دکتر</th><th>انجام‌دهنده</th><th>تاریخ</th><th>شروع</th><th>پایان</th><th>ساعت</th><th>نرخ</th><th>مبلغ</th><th>وضعیت</th></tr>${l.map(s=>`<tr><td>${nm(H(s.ph))}</td><td>${esc(H(s.ph)?.doctor||'—')}</td><td>${who(s)}</td><td>${s.date}</td><td>${s.start}</td><td>${s.end}</td><td>${s.hours}</td><td>${fmt(s.rate)}</td><td>${fmt(s.amount)}</td><td>${STN[st(s)]}</td></tr>`).join('')}</table></div>
+ <p>مجموع ساعات: <b>${fmt(t.h)}</b> | مجموع کارکرد: <b>${money(t.a)}</b> | پرداخت‌شده: <b>${money(t.p)}</b></p><h3>مبلغ نهایی قابل تسویه: ${money(Math.max(0,t.a-t.p))}</h3></div>`}
+const HD=['داروخانه','دکتر','انجام‌دهنده','جایگزین برای','تاریخ','شروع','پایان','ساعت','نرخ','مبلغ','پرداخت‌شده','باقی‌مانده','وضعیت'];
+const rws=()=>flt(F.rep).map(s=>[H(s.ph)?.name||'',H(s.ph)?.doctor||'',P(s.pe)?.name||'',P(s.orig)?.name||'',s.date,s.start,s.end,s.hours,s.rate,s.amount,s.paid,Math.max(0,s.amount-s.paid),STN[st(s)]]);
+async function pdfOut(){
+ if(!window.html2canvas||!window.jspdf)return modal('<p>کتابخانهٔ PDF بارگذاری نشد (اینترنت لازم است). دوباره امتحان کنید.</p><button onclick="closeM()">باشه</button>');
+ modal('<p>در حال ساخت PDF...</p>');
+ try{
+  const c=await html2canvas($('#doc'),{scale:2,backgroundColor:'#ffffff',windowWidth:1100,onclone:d=>{d.documentElement.setAttribute('data-theme','light');const s=d.createElement('style');s.textContent='body{background:#fff!important}th{background:#e8f2f1!important}tr:nth-child(even)>td,tr:hover>td{background:transparent!important}tfoot td{background:#e3f0ee!important}.b.u,.b.s,.b.p{background:transparent!important}.card,.k{box-shadow:none!important}';d.head.appendChild(s);d.querySelectorAll('.tw').forEach(x=>x.style.overflow='visible')}});
+  const pdf=new window.jspdf.jsPDF({orientation:'l',unit:'mm',format:'a4'}),m=8,iw=297-2*m,ih=210-2*m,sh=Math.floor(c.width*ih/iw);
+  for(let y=0,i=0;y<c.height;y+=sh,i++){const h=Math.min(sh,c.height-y),s=document.createElement('canvas');s.width=c.width;s.height=h;const x=s.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,s.width,h);x.drawImage(c,0,y,c.width,h,0,0,c.width,h);if(i)pdf.addPage();pdf.addImage(s.toDataURL('image/jpeg',.92),'JPEG',m,m,iw,h*iw/c.width)}
+  const ab=pdf.output('arraybuffer');closeM();
+  if(!await dl('report.pdf',ab)){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([ab],{type:'application/pdf'}));a.download='report.pdf';document.body.appendChild(a);a.click();a.remove()}
+ }catch(e){modal('<p>ساخت PDF ناموفق بود.</p><p dir="ltr" class="mu">'+esc(e&&e.message||e)+'</p><button onclick="closeM()">باشه</button>')}}
+async function csvOut(){const q=v=>'"'+String(v).replace(/"/g,'""')+'"';const c=[HD,...rws()].map(r=>r.map(q).join(',')).join('\n');if(!await dl('report.csv','\ufeff'+c))showText('خروجی CSV (کپی کنید و در Excel بچسبانید)',c)}
+async function xlsOut(){if(!window.XLSX||!DL)return modal('<p>خروجی Excel در این حالت در دسترس نیست. از CSV یا چاپ استفاده کنید.</p><button onclick="closeM()">باشه</button>');const wb=XLSX.utils.book_new();wb.Workbook={Views:[{RTL:true}]};XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet([HD,...rws()]),'گزارش');await dl('report.xlsx',XLSX.write(wb,{type:'array',bookType:'xlsx'}))}
+function pay(id){const s=db.shifts.find(x=>x.id==id),r=Math.max(0,s.amount-s.paid);modal(`<h3>ثبت پرداخت</h3><p>مبلغ شیفت: ${money(s.amount)} | پرداخت‌شده: ${money(s.paid)} | باقی‌مانده: ${money(r)}</p><input id="pa" inputmode="numeric" value="${fmt(r)}" oninput="fi(this)"> <button class="p" onclick="doPay('${id}')">ثبت پرداخت</button> <button onclick="closeM()">انصراف</button>`)}
+function doPay(id){const s=db.shifts.find(x=>x.id==id);s.paid+=num($('#pa').value);save();closeM();res('list')}
+async function backup(){const j=JSON.stringify(db);db.settings.bk=Date.now();save();if(!await dl('backup-'+today().replace(/\//g,'-')+'.json',j))showText('پشتیبان (کپی و در جای امن ذخیره کنید)',j)}
+function impFile(i){const f=i.files[0];if(!f)return;const r=new FileReader();r.onload=()=>showText('فایل پشتیبان خوانده شد. برای جایگزینی اطلاعات فعلی، بازیابی را بزنید',r.result,1);r.readAsText(f)}
+// ---------- Bulk import (pasted shift messages) ----------
+const nz=s=>fa(s).replace(/ي/g,'ی').replace(/ك/g,'ک').trim();
+const pt=x=>{const[h,m]=x.split(':').map(Number);return pad(h%24)+':'+pad(m)};
+const cl=s=>nz(s).replace(/[^\u0600-\u06FF\u200c\s]/g,'').replace(/\s+/g,' ').trim();
+const IM={t:'',mul:0,items:[]};
+function parseShifts(txt){const tx=nz(txt),ix=[...tx.matchAll(/تاریخ\s*:/g)].map(m=>m.index),out=[];
+ ix.forEach((s,i)=>{const b=tx.slice(s,ix[i+1]??tx.length),dm=b.match(/تاریخ\s*:\s*(\d+)\s*([^\d\s]+)\s*(\d{4})/),ph=cl((b.match(/داروخانه\s*:\s*(.+)/)||[])[1]||''),tt=b.match(/(\d{1,2}:\d{2})\s*تا\s*(\d{1,2}:\d{2})/),tot=b.match(/جمع[^:\n]*:\s*([\d,٬]+)/),rt=b.match(/نرخ[^:\n]*:\s*([\d,٬]+)/),du=b.match(/مدت[^:\n]*:\s*(\d+)\s*ساعت(?:\s*و\s*(\d+)\s*دقیقه)?/),
+  ps=[...b.matchAll(/توسط\s*:\s*(.+)/g)].map(m=>cl(m[1])).filter(Boolean),mi=dm?MN.indexOf(dm[2]):-1,sh=du?+du[1]+(+du[2]||0)/60:0,r={ps,ph,fl:[],er:''};
+  if(mi<0)r.er='تاریخ نامعتبر';else if(!tt)r.er='ساعت پیدا نشد';else if(!ph)r.er='داروخانه پیدا نشد';else if(!ps.length)r.er='نام شخص پیدا نشد';
+  if(!r.er){r.date=dm[3]+'/'+pad(mi+1)+'/'+pad(dm[1]);r.start=pt(tt[1]);r.end=pt(tt[2]);r.hours=calc(r.start,r.end);r.T=tot?num(tot[1]):(rt&&sh?num(rt[1])*sh:0);if(!r.T)r.er='مبلغ پیدا نشد'}
+  if(!r.er){if(sh&&Math.abs(sh-r.hours)>.01)r.fl.push(`مدت اعلام‌شده ${sh} ساعت با ساعت‌ها (${r.hours}) نمی‌خواند؛ مبلغ طبق پیام ثبت می‌شود`);if(ps.length>1)r.fl.push('چند نفر برای یک شیفت؛ مبلغ بین آن‌ها تقسیم می‌شود')}
+  if(r.er||!ps.length)out.push({...r,pe:ps[0]||'',n:1});else ps.forEach(pe=>out.push({...r,pe,n:ps.length}))});
+ return out}
+function imp(){IM.mul=IM.mul||(db.settings.cur=='تومان'?1000:10000);return `<details class="card" name="addsec"><summary style="cursor:pointer;font-weight:700">📥 ورود دسته‌ای از پیام‌ها (برای تعداد زیاد شیفت)</summary><p class="mu">پیام‌های شیفت را همان‌طور که هست اینجا بچسبانید یا فایل متنی (.txt) انتخاب کنید. قبل از ثبت، پیش‌نمایش را می‌بینید و موارد تکراری رد می‌شوند.</p>
+ <textarea id="it" rows="8" style="width:100%" oninput="IM.t=this.value;impPrev()">${esc(IM.t)}</textarea>
+ <div class="fb" style="margin-top:8px"><input type="file" accept=".txt,text/plain" onchange="impFile2(this)"><label>ضرب مبالغ در <select onchange="IM.mul=+this.value;impPrev()">${opt([[1,'همان عدد'],[1000,'×۱,۰۰۰'],[10000,'×۱۰,۰۰۰ (هزار تومان ← ریال)']],IM.mul)}</select></label></div>
+ <p class="mu">مبلغ‌هایی مثل «۴۵۰ تومان» احتمالاً یعنی ۴۵۰ هزار تومان. واحد را از روی پیش‌نمایش چک کنید.</p></details><div id="ipv"></div>`}
+function impFile2(i){const f=i.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{IM.t=r.result;$('#it').value=IM.t;impPrev()};r.readAsText(f)}
+function impPrev(){const el=$('#ipv');if(!el)return;IM.items=parseShifts(IM.t);let ok=0,dp=0,er=0,sum=0;const seen=new Set();
+ const rows=IM.items.map(x=>{const ph=db.pharmacies.find(h=>nz(h.name)===x.ph),pe=db.people.find(q=>nz(q.name)===x.pe);let f=[...x.fl];
+  if(x.er){er++;f=['❌ '+x.er]}else{x.am=Math.round(x.T*IM.mul/x.n);const k=[x.ph,x.pe,x.date,x.start].join('|'),inDb=!!(ph&&pe&&db.shifts.some(s=>s.ph===ph.id&&s.pe===pe.id&&s.date===x.date&&s.start===x.start)),inBatch=seen.has(k);seen.add(k);x.dup=inDb||inBatch;if(x.dup){dp++;f.unshift(inDb?'تکراری (قبلاً ثبت شده)؛ رد می‌شود':'تکراری (دوبار در همین متن)؛ رد می‌شود')}else{ok++;sum+=x.am}}
+  return `<tr><td>${x.date||'—'}</td><td>${esc(x.ph)}${ph||x.er?'':' <span class="b p">جدید</span>'}</td><td>${esc(x.pe)}${pe||x.er?'':' <span class="b p">جدید</span>'}</td><td>${x.start?x.start+'–'+x.end:''}</td><td>${x.hours??''}</td><td>${x.am!=null?fmt(x.am):''}</td><td style="white-space:normal;min-width:180px">${f.map(esc).join('<br>')}</td></tr>`}).join('');
+ el.innerHTML=IM.items.length?`<div class="card tw"><h3>پیش‌نمایش</h3><table><tr><th>تاریخ</th><th>داروخانه</th><th>شخص</th><th>ساعت</th><th>مدت</th><th>مبلغ</th><th>توضیح</th></tr>${rows}</table><p>${ok} شیفت آماده ثبت — ${dp} تکراری — ${er} خطا — جمع مبلغ: <b>${money(sum)}</b></p><button class="p" ${ok?'':'disabled'} onclick="impGo()">ثبت ${ok} شیفت</button></div>`:(IM.t?'<div class="card">شیفتی پیدا نشد. فرمت پیام را چک کنید.</div>':'')}
+function impGo(){let n=0;const get=(k,name,x)=>{let o=db[k].find(q=>nz(q.name)===name);if(!o){o={id:uid(),name,note:'',...x};db[k].push(o)}return o.id};
+ IM.items.filter(x=>!x.er&&!x.dup).forEach(x=>{db.shifts.push({id:uid(),ph:get('pharmacies',x.ph,{doctor:''}),pe:get('people',x.pe,{}),date:x.date,orig:'',start:x.start,end:x.end,mode:'t',rate:Math.round(x.am/x.hours),hours:x.hours,amount:x.am,paid:0,note:'ورود دسته‌ای'+(x.fl.length?' — '+x.fl[0]:'')});n++});
+ save();IM.t='';modal(`<p>${n} شیفت ثبت شد.</p><button class="p" onclick="closeM();go('list')">دیدن لیست</button>`)}
+
+const bkBanner=()=>db.shifts.length&&(!db.settings.bk||Date.now()-db.settings.bk>2592e6)?'<div class="card" style="border-color:var(--wa)">⚠️ بیش از یک ماه از آخرین پشتیبان‌گیری گذشته است. <button class="p" onclick="backup()">گرفتن پشتیبان</button></div>':'';
+const TS=[['به برنامه خوش آمدید','این برنامه شیفت‌ها را ثبت می‌کند، مبلغ را حساب می‌کند و برای تسویه با داروخانه گزارش می‌دهد. در چند قدم با بخش‌ها آشنا شوید.'],
+['داروخانه‌ها و افراد','اول داروخانه‌ها (با نام دکتر) و افراد را یک‌بار اضافه کنید تا هنگام ثبت شیفت فقط انتخاب کنید.'],
+['ثبت شیفت','داروخانه، شخص، تاریخ شمسی و ساعت‌ها را بزنید و مبلغ را «کل شیفت» یا «نرخ ساعتی» وارد کنید. اگر کسی جایگزین رفته، نفر اصلی را هم انتخاب کنید. شیفت‌هایی که از نیمه‌شب عبور می‌کنند درست حساب می‌شوند و شیفت هم‌پوشان هشدار می‌دهد.'],
+['لیست شیفت‌ها','همهٔ شیفت‌ها با جستجو و فیلتر اینجاست. برای هر شیفت جزئیات، پرداخت، ویرایش و حذف دارید.'],
+['تسویه','هر شیفت وضعیت تسویه نشده، ناقص یا تسویه شده دارد. با دکمهٔ «پرداخت» هر قسط را ثبت کنید تا باقی‌مانده خودکار حساب شود.'],
+['گزارش‌ها','بازه و داروخانه را انتخاب کنید و گزارش مرتب برای ارسال به داروخانه بگیرید. خروجی چاپ/PDF، Excel و CSV دارد.'],
+['داشبورد','مجموع ساعات و مبلغ هر ماه و سهم هر شخص و داروخانه را با نمودار می‌بینید.'],
+['پشتیبان‌گیری','اطلاعات فقط روی همین مرورگر می‌ماند. ماهی یک‌بار از تنظیمات پشتیبان بگیرید. این آموزش را هم از تنظیمات می‌توانید دوباره ببینید.']];
+function tour(i){const l=i==TS.length-1;modal(`<h3>${TS[i][0]} <small class="mu">(${i+1}/${TS.length})</small></h3><p>${TS[i][1]}</p>${i?`<button onclick="tour(${i-1})">قبلی</button> `:''}<button class="p" onclick="${l?'endTour()':`tour(${i+1})`}">${l?'شروع':'بعدی'}</button> <button onclick="endTour()">رد کردن</button>`)}
+function endTour(){db.settings.tour=1;save();closeM()}
+function settleAll(){ask('همه شیفت‌های این گزارش «تسویه شده» ثبت شوند؟',()=>{flt(F.rep).forEach(s=>s.paid=s.amount);save();res('rep')})}
+
+function set(){return `<h2>تنظیمات</h2><div class="card"><label>واحد پول <input id="cur" value="${esc(db.settings.cur)}"></label> <button class="p" onclick="db.settings.cur=$('#cur').value||'ریال';save();modal('<p>ذخیره شد.</p><button onclick=closeM()>باشه</button>')">ذخیره</button></div>
+ <div class="card"><h3>پشتیبان‌گیری</h3><p class="mu">اطلاعات فقط روی همین مرورگر ذخیره می‌شود. مرتب نسخه پشتیبان بگیرید.</p><button class="p" onclick="backup()">گرفتن پشتیبان</button> <button onclick="showText('متن پشتیبان را اینجا بچسبانید','',1)">بازیابی از متن</button> <button onclick="tour(0)">آموزش برنامه</button><p>بازیابی از فایل: <input type="file" accept=".json" onchange="impFile(this)"></p> <button class="d" onclick="ask('همه اطلاعات پاک شود؟',()=>{db={people:[],pharmacies:[],shifts:[],settings:{cur:'ریال',rate:0}};save();go('dash')})">پاک‌کردن همه</button></div>`}
+function doImport(){try{const d=JSON.parse($('#ta').value);if(!d.shifts||!d.people||!d.pharmacies)throw 0;db=d;db.settings=db.settings||{cur:'ریال',rate:0};save();closeM();go('dash')}catch(e){$('#ta').value='فایل پشتیبان معتبر نیست'}}
+render();
+if(!db.settings.tour)tour(0);
+</script>
+</body>
+</html>
