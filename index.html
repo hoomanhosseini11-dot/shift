@@ -283,7 +283,9 @@ function set(){return `<h2>تنظیمات</h2><div class="card"><label>واحد 
  <div class="card"><h3>پشتیبان‌گیری</h3><p class="mu">اطلاعات فقط روی همین مرورگر ذخیره می‌شود. مرتب نسخه پشتیبان بگیرید.</p><button class="p" onclick="backup()">گرفتن پشتیبان</button> <button onclick="showText('متن پشتیبان را اینجا بچسبانید','',1)">بازیابی از متن</button> <button onclick="tour(0)">آموزش برنامه</button><p>بازیابی از فایل: <input type="file" accept=".json" onchange="impFile(this)"></p> <button class="d" onclick="ask('همه اطلاعات پاک شود؟',()=>{db={people:[],pharmacies:[],shifts:[],settings:{cur:'ریال',rate:0}};save();go('dash')})">پاک‌کردن همه</button></div>`}
 function doImport(){try{const d=JSON.parse($('#ta').value);if(!d.shifts||!d.people||!d.pharmacies)throw 0;db=d;db.settings=db.settings||{cur:'ریال',rate:0};save();closeM();go('dash')}catch(e){$('#ta').value='فایل پشتیبان معتبر نیست'}}
 render();
-if(!db.settings.tour)tour(0);
+(function(){let t='';try{t=new URLSearchParams(location.search).get('t')||'';if(t)history.replaceState(null,'',location.pathname)}catch(e){}
+if(t){IM.t=t;go('add');const d=[...document.querySelectorAll('details')].find(x=>x.textContent.includes('ورود دسته'));if(d)d.open=true;impPrev();setTimeout(()=>{const e=$('#ipv');if(e&&e.scrollIntoView)e.scrollIntoView()},60)}
+else if(!db.settings.tour)tour(0)})();
 </script>
 </body>
 </html>
