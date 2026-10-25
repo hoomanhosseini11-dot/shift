@@ -1,0 +1,1138 @@
+<!DOCTYPE html>
+<!-- فارماشیفت — نسخهٔ ۱٫۰ (۱۴۰۵/۰۷/۲۷) -->
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>فارماشیفت</title>
+<meta name="theme-color" content="#0b6e66">
+<meta name="description" content="فارماشیفت — ثبت شیفت، تسویه و گزارش برای داروسازان و موسسان">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="فارماشیفت">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20viewBox=%270%200%20120%20120%27%3E%3Crect%20width=%27120%27%20height=%27120%27%20rx=%2728%27%20fill=%27%230b6e66%27/%3E%3Ccircle%20cx=%2760%27%20cy=%2760%27%20r=%2740%27%20fill=%27none%27%20stroke=%27white%27%20stroke-width=%277%27%20stroke-linecap=%27round%27%20stroke-dasharray=%27190%2062%27%20transform=%27rotate%28-60%2060%2060%29%27/%3E%3Cg%20transform=%27rotate%2845%2060%2060%29%27%3E%3Crect%20x=%2750%27%20y=%2736%27%20width=%2720%27%20height=%2748%27%20rx=%2710%27%20fill=%27white%27%20opacity=%27.5%27/%3E%3Cpath%20d=%27M50%2060V46a10%2010%200%200%201%2020%200V60Z%27%20fill=%27white%27/%3E%3C/g%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAAijUlEQVR42u2deZRcVbnovz2cc2rseUp6ytBzSDrdgUwECIIQmYJBxTBzUZ6KF1lPWcv17lPvuB5XnqhP0ad3AT4QBTUgMkUCBIJkHjud7qQ76SQ9z0PNVefsvd8fO920SVUldJ+qrnTOt/iDZGVV1dnnt79pf9+3kfPRh8ESS6IJtpbAEgsOSyw4LLHgsMSCwxILDkssOCyx4LDEgsMSCw5LLDgsscSCwxILDkssOCyx4LDEgsMSCw5LLDgsseCwxILDEgsOSyyx4LDEgsMSCw5LLDgsseCwxILDEgsOSyw4LJltQq0lSLQghDBCAMCFEEJYcFgCAIAACMZhwwjpERCgUGpXVSEEv0gQseBIoMLgnPt8vvzMrKvLKwnGxwf6Wnt6CKUum81gzILj0iWDcYYB/2D9HV9dc01hRiYAeEOhVw/ue/KdtxrbTzmdLoIx4zyVn4KoK5ZZ79J8nSE4BrT5W4/ft/LKNJudCyEAbIpSW1Ryz4rVmqJ+fKLVFw47NC2VTYwFRwK0MSY+v+97t37+3hWrI4aBEcIIIYQEAOPcrqhrK6tvqLmsqburtbtL0zSMkLDguETUhs6MbHf6s/c9ZFdUjLEMVaR/ihESQjDBizOz7l+1RlGUd5sbGReaoqSgCrHyHGYvKEKhSKSuuCTX5ZZ/PJceigkXnGD8P2+6bfOjj89Jzxjz+SghFhyXhCjne9MYYQFgcHZ9Vc2u737/5tq6Ma8HIYTOgckyK7NKBAKDiYeuvFoqg1jvGwFghBnnaTb7XctXBQx927GjlBCMsABhwTE7RaW0Z3hoUVHxksJinTGCcXwzxIXgQtxYs7gkO3vT3t0II4WQVMilWnAkxi3FaGfbiXtWrk6z2TnnAkQceyHz6wbny0rmrSmvfOPwIU8wqCnKjPNhwZGYaJbQ0YD/9YZDZXl55XkFCCHGOYptYqQKMTgry82/rrpm0/49vnBIpTPMhwVHYtwOEApVej2jv9uzc0vzkeLMrLK8fJkci8sH1hkrysi8rnrRn/bNPB8WHAnkQ6VUIeR4f+/vd+8YCQZWLyy3KYrBOY7NB8HY4Kxwgo9QSJ05+2LBkVA+QADYVZUSsq35yF8aDtSXzi/Nyo5vYjD6hI9N+/cG9DDFdEbiFwuOxCMihABw2O09Y6Mv7vo4ze5YuWAhQogLEY8PxgozMtdWVj/z0YeAEMbYgmPWChdCUxQA9Jd9e1oH+q+rrrErKottYjDGBmPFmVkl2Tmv7t+rUiosOGa3CkEADrt9z/FjH7WduGXJUrfNFp8PnbH6klJK6dsH9jrsjiSfv1hwzIAKcdodx/v7Xt6z85rK6sKMTIMzjHAc/bG2oqp1aHDviVaHzZ5MPpJtyRBCBGOCcUodIiRZdMbSHI7usdF1P31yf8dpionBoxeGIQCKsRDi6Y33VhUW+0MhkkTnI3nfJJ/TYMwTDHgCgbCuX8qIGIy5bPbRYGCCj1hVYdJ1zbA7Xnjwv1GMGedJW7QkmRX5hL5AINudduXC8oqCORxEz/AwIKQQmiLnTMm3LypVfOHQn/btua56UWFGZiz/QyZPizKzspyuP+/bbddsyTEuKAkXAE4UVH7nhs99UlAZDr16YN8P/vJK5+iIXdN4aldTJnB3YhwMhzMczj3/459Ls7I557GiVoNzivEtT//4zUMH0pzOJNSfJlxzIISEEBjg7IJKqtQWlXz5ipVvHj7UPzamUOXS1B9CCE1VR/z+3SfbPl+3zK6oEOcIBqFVC8pe2LVdZ0YSMh8J/wKCsN/vf/zGm9csLI8YhhBC1lQKgIhhFKSl/3zjvVyIS5OMCf8j3eHYfqz5/uf+S9rf6K8KIc75gpzcJzbcGQgEceI9j8RqDoSQzvT8jMznHviKRpXJHqhs+GGcL8jJ23a8paW3x6aqF1dDmOnxbcPpNk3Vri6vjBXcIgAuRF1xyfstx04N9Cf6WD+xmoNgHAoEvrH2uiyHM2q2WIAQAGsrq4ShI7h0g1sA0Jnhdrm/99qmrS1HYwUvcgEpJk9s+JLBWKL3UgLhwAgFw6FFJfMfueY6LgSJpQaFUMhF0Fsla8cpxhRjjLA0jgRjijGZVGI+zS8hBD/w3K8HfN5Y9kWq2zULy+9dfZU34E9o2iOBH40QikQi/3TTrel2u4hxyCRLag92nAZMUtbtOJOJAvCFw2N+35jP5w0F/eGwPxL2BAJjPp/H7w/qumRlesaF21WtfbD/O396STYxxPo9APD9m9e7bA7GeeIULk2Y2sCBcGjpvAUb6i7nQkTdWJxzjHBrf9+bDYccNltq9n4RjHXGfD6f0+FYOX9hXXFpzZy5pdnZ6XY7AOodGz09PHSws/1gR3tTT5fgwm23Sx9iys5pmsv9/PZtty+t//zSZYzzc4HDGDPOy3Lz7l65+ldbt6S70gzBLiY4EAJD1x+/4SaNUhYjdhcIMILvbHrZGwqkOZyp1jiKAAgmY35fdlra/Suv/IfVV18xb36sfxzU9bePNDzz8ba/HjkMANNplZbB7bdefnFtZXW6LbrSRQAC4L9fv+7Fndt1biCEEqF2ExKtYIRDkVBtyfwffWHjRDPgWf9G7olXD+77tzdeTUEyZLDt9fm+tHzVCw9+9YFVV8ncHeNcjtmYEPlHldLqgrl3L191xbz5BztOd/T3T1kXCgBVUfpHhw0hbqxZHFXvyhb+XJe7fWR4Z2uLIzE504TAQTAKBINPfOHLy0rmMRFFMQohAKEIY3c/+6shv49SmlJBLEZIZwwj9NSX7n7yjjtzXG6DcxgvE4/6nwDgnAOIiryCDXWXe8Lh7Sda7Io6tacSIBRF3XOy7YuXr8hxuUXU8xQhAKGKvIJntn+UoLUz3yFFCIV0vTAn95bFtQKARIvX5W7YdGBvw+lTTs2eUrlzjJDBGAjxu4e+9s1rr2eCcyHo+eIRmbaRTUoFaem/vufBx2+82eP30ym5qEIAxSQQCj317mZpQaL8ToyFEBX5+ddW1gQSc1pr/icShMPh0Ia6ZdlOF4+GvDSiYcN48p23qEJ5iukMmT/4w8PfvG1Jnc4YQZ8uTCUYcyEMzn644c5HP7tuzOedWhOsIZjD4Xhx5/aW/j6McdT9wwVHgO5fvUYIfnFoDia4oqj3rVojYmcDpdo4eKrNodm44ClIxq1LlhqcK1N6rxghjDAX4t9u27CkdL4/FJpKFkSAgokv6I+jPAjCAuCmRUsW5M8J6RHTj/JNhoNgHAiF1pRX1BeXCiGieRuAEQrqkSffeYsqSupojXPJoNNQ1DJLkWazP3ffQyqZonY8ozx2bT/a14MxPncXyeNul6Z9+fIVkVCYIJzScCBA3NBvq63HCEVVCbKr58PWloOnT6aO2jCXjIl9YnBeXzJv44qV/mBgKh8oQMHU5/c9v/NjFCN3Is8cbl9aT1WVmb2YJsOhc8PpdN18WS0AYIieEuVCPL313RmptU8aGZ9kI4R4eM1aTVWnFqszwTW7/be7dgz4vARH6a4mGAuA2qLixYVFoUgEY5SicBCMQ+HI8nkLynLzuBDnvn7OOUbo5NDAe0ebbJotFXIbiSNDLggALJ+3YE1ZpT8cnkJAIYSwUbWjv/ed5iMIIKpuYJyphN60uNaIhLGpL9TMz0KAODPWL61HsWwKAAC8vHd3MBRQMJndZIxvfQEAV5dXCmZMbVMLEJjS3+/eIYSIcY6PAGB9bb2q2ZipeXRs6kIwqmpXl1VO/OJzd1LYMP6wdxdVVD7Tx2xJIGNCqgrmAMZTe2DGuU3T3j/W3DrQhxHiXJz7IABw2dzC0uycsGGYGLOYthwYo2BEv2xOYc2cuWJco571kAigqbe7qafbpiozm/hKGhnyRc3LzlEUdcret4JpMODf0twEAByixixnhhTq4YiJMYuJH4SZrq9csFCjNOqLlyfyH7Yc1SNhgsglojPktp6fk5vjdOlsil0FAgQi5INjzbEsi1zbayqqJv4/9aIVwRcXFcf6ffKptjQ1zmzpRjLJmLT1CZlGHMGFUFV1+4lWTzgUtc5DBoaL5sxVVNVElWzauhicqTb7yvkLowaxsq64e2x0X/spm6rOVMo8+WTI5/SEgiFdn/I3CSFUQnvHRv92vBWiJTykQirPy1+Qkxs2DLNqj00K6BHSmTE3PaM8Lx+iVdbL52nq6e4bG1NnaBqaPGtNss6QT9o2ODDk99FpPDhGmBv6nlNtURWzzB45Va1mzlzdPJ8Um7buBluYk+tUtViFxACw+1Qb4gyhGUh/Sa+NIvTyw48kjQwYn99yYqAfGJvOOxMgEKF7T5+M5XZIb3dRYTEww6xSbbNSgUgwVpZfEKvyUT7P7pMnBJ6BIZuysSqsR56+6/7bltRFmEFxUpuED3d3yvkL03E7FFU53NXpDYfjlJdW5heAeSts3hoJXpFfEFXpSYcjqEeO9fUqSZ+AJoumuBD3rbrKFw6fGhqc8knYFLY7wcgXDr/T1EjVaV2QIIRQMOn1jLUN9k9Yq3NTYWW5eZiYNkbdHDi44ECV2sLiqOkv+UsHfL5+j4cSLJJOhgCx8YqVtUUlfV7P7/fs6hgZxrEby8zMCnKBAL15+GBzV4dz2m44QTgSiZwcHIRoJ/jSCS3Lyy9IS9OZOW6HiZpDxDo7kJifGhocDvgpTp43OomMVYsLizyhoF1RDM5+u2tHcvhACBmc/3LbVkzI9L8KIQScHe3riZPMoNjMvYdNWgKW404ry8uD2E3Ao4EAJNGgnEWGNxSSNVqUkOTwYTBGEPrNjo8+PHrEZbObc56O0GggEFU9S7/KpWnleflmBSxmmRVhozTNZgeI4ihLzA92tgMzcFJClahkTKixJPBhcE4JOdzd+dgffue0mVMkK0AAJoc6TsfagQKAYpJms3EuUIpojjMfhHH8VbYrygzqjLPMXEL5YJxTjHvGRu999ldygJGJn65R5fzWJ3XMCkYoHNGrC+ak2+xRkxzyb9oG+iHxcex5yUg0H7Ifp2dsdN3PfnSoo92hacykTxYAlOCu0ZGQoaNYYQHA5fMWmJXqME1z0NgDvuQPbRvohwTblAskI3F8TCajoaM93dT5O/IHd46OBCMRFDvVoZh345Npb+u866pQmjpkJIKPc8kw/fJYAaCcb8qeicFg8hKFCY1gp0CGuXwkgYwL3IQmymy4423KZJjFR9LISLIk9YghBcmYPh9JJgPNSjiMBNQFmkLGdPhIvs4wOI8f8YkUhCNOgYl8mCyny9wMqTyFN4WMqfGRfJ3BuUi32xUc7wYFEw+cTfggIYRCaWt/ny8cihpiyb9ZWlwCnJk4FU42ZJtFxqflI/k6AyGkG0ZFfoFL00TsfNKhjnazCjHNWFAAjJEnFDI4j/Pmg7pupjlEKKhH1tfW1RYVe00dQHAhfMygBxqKvYxy440EfJBSlWBS6cUc7Q4IABbm5oFJR7IYoYAeubx0QX3JPE8CRlPE52MmYxPBF+blQ+xTWSGEiT6rOapYJbTXM9bU0wOxZ6WVZGUDQtNXdwjA4DzL4Vy36DIWV1clgo8ZJAMBAs6KM7OiJo1kRZUnFGzq6dZUc+p9TNtzcUZUy/eX63K7zTi5RgiFDH35vAWZDmeEGYm7X+JcPuT10jOVz5CnskUZmRCjoVCuDku11gSMMDCjqacbYtRGA0BJVlaOy21Mr85W7t10m2NxYXHYSHgBwCd87N5xcmhQIaR7dGSmMl1cCEyVyoI5sQ0KnBwcGPT5zKqoMnNxW/t7Y2YjhLAr6sK8XN1g0+mqwAhFDKMsNy/X7dYZS0JGSAihEBLW9T8f3Lf7VNutv/hJQ/vp5JOBEDKYkedyL8jJjZo4kCycHBwMR0yb4oJN1HhHe7phvND8HOo5RqiueJ6Y9mkyB5ibkZHMRKHBuctmGw0E1v/y/xzoaE+biew4QihiGOV5+VkOp4jd/NHc2w2cpVbfihBCoeTU0GBQj36aLIG4sqwcEJ6OxhMABKFcdxoXSUokcyE0Sn2h0G92/G3I75X3OULSBQPiurFiwUKCcVS/TQJxtKfbxG5T08oEFUpPDw91jo4giJIIlXBUF8x12R3TmcUsx8Gm2+0sKfOiJBn+cPjZ7R91j43YqDpTA2cECMCotqgkjtunM9bY3UUoEaYRaZJQTPwB/862ExBtTADGSAhRnptXV1wSDEemlpmQc7FsiuJUNc45JPg2mslk9IyN2KcxQ2H6NkVnRqY77bqqaog22lUWjZ4cGmjp79UU08ZbmJgEQyCgoasjZpQhBELo6ooqYV6/XnLJmMnJAOGIXl9cmudO4/Ecjh5/MEhR6lWCcRBIobtPtnEhSIxbhgDghprLEKFT24ICACEUNvRAJEwwTlyjQ0qRAeMzGj9TVUMQjrp0Eo4dbcfB1ItFzYODc7uq7m8/fWKwH8WeTlRbVFyanRM29Kk9A0YorBtjwQTecJZqZAAAE5yo2meqaiDmPC2iM7alqZGoCk/N4S0UE1/AF8vtkCfs6Tb7LYuXRqY6nQgBMCEGfB45i/5SIANjHIqE60tKl8WY+8s5RwAnhwaP9ZrpcID5Q2oR/suh/RC3vOP+1Wuookw53EAAPaNjlwgZMog1IpG7l69WCGHRZzQKAHir8ZA/4FcwNfWrzV1cm/Zha0uf14Oj5TMIxkKIJYVFS4tLQpEwnlI9n0rp8YH+IZkknu1kAAKdG26X++bFtRAjwSiX+i+HDmBq8t3eZsIhj2cHRke2NB8RsSaqCq4S+sja643IVMYgCQCK8UjA39jdaVOoWbFlipIBQBEJBIJfqL+iLDePiSiXmcu5v8cH+nefarNpJqdhEnBwhdBrB/ejGJZFDvq/dcnSwpzc0JTcUiGERumukydGg0GVUDF7yQAALjgh5IHVV53ZGbFsypEGv99nrk0xHw4uuN1m29Lc2DY0IK+VONct5ZxnO12PrL0uHAxOwS0VAAohgz7fe82NFONpHj+mMhkEY18weMNlS64uq+AxJlwQhA3OX9y1g6rmz/01vYYKVELHvN6X9uyCGIU/cmrRw1etLczJCxtTuSWEC+FQ1R1txxs6O6Zz2JHKZMB4kex3190CMVrCGOcIoe1trftPtdll1jiV4ZDKg6rq73fvDOoRglCUcxaEuBBSeYSmpDzOvFdFfeXAvububrfNxj+9AmFC2BQlZcmQauPGuGpDpjx+s/1vjLFElLYkAg7h0LTGzvZtrS2xJuRPKI+52blTvmIII2QI9tvd2xu7Oh2qeuGdSPI+R6eqDvt9z6UkGROqIo7akGMF+72e1xsO2Oy2RJxEJmysM0Y/27oFYoyLmFAej11/Y3iqFcJCCFny9PzOj99oOCCEcKoaAsTHr/M8y1M5c80ngF1RbIqyv/300x+81+cdS0EyCMbeYODWpfVx1AYXAgE88/G2wbFRjSRkDF9Crg4VQmiK0tTddW1VzbzsHMajxGDy3rLl8+a/3tjQOTykKVN8PHm//ImBgaO9PQohmQ6H22YjmKBJKVSEEMFYpVRTFMFF29DAG4cPftByFADoDE3MjRvtIS64gukrX3s02+mKXtojBEJoOOD/h+efiXCOcEIOExICBwBgjMO63uv13L18lYAY1+YKoRBSWTDn+R1/U+i0glKVUm84dLiro7m3ZywYCOoRuf8UQhBCBmPeUKhzZLixu/OdpsYPWo4OeL02RcEAKXhDOiXE6/P+y+1fWF9bH/W6cukwEYx/+v47f967y2V3JqiWIFEzMxjnLrv9r40NHx1vuaqsIupDEowZ59dWVD12/bqnNr+RnpY25fI7yZlKyEjA/96xZoyQLPtwahoCCOm6LxwK6rrBGcFEoxQSPBJien5oYFVF9Xc++7moWS/5ywlCwwH/0x+8Z0tk3RNOqHoEEP/+1utxQk3pRf7LrbdXFxX7Q8HptCdJl4Ji4lRVu6JwIcaCgc6R4Y6R4UG/T2dMpdSpahql4hyPJIUMCucKob+8+36FEBDRPTZZ0vHzD97rGhzQqJq4Z0kgHIxzl935TsOBP+zfI69KjAWQS7M9/+DDFBM27XIEAUI6pAiAYqxSqlIqjYuI5qimnNrw+370xbtqC4tjGRTOOcb4+ED/Dze/4XQ6Eloumei+D65q6r+/+ZonFIwzFt3g/PLS+T/64l1+v8/EJnEZoYjUBmJCFELHvJ67Vl/9jWs+Y3AWc+IvAAL41zdf84eCBNOEPlqiHNKJJ9EUtbO/1263r62oYoLHOFdEBmcr5i9sHRzc03LM6XDwi+F1mqszPMFA1Zy5r3z9UZVSjFBUDSrVyfvHmr/9xxfdDmeia1oTPryFMeZyuX/49huHujqk4Yi+OghzIZ7eeO+V1TWeQIAScumQgRHWDSPP7f7dV76eYXcACBTDD0UI+cKhf3zpBYXSJAz5SfxtNAAY46Cuf/3F/6dzFitMkMuRYXf8+RuPzc3I9IWCFF8SfCCEhODBSPilrz5SV1xq8JiJcCYERugHr/+5qeN0ci7zTsbYJ8a52+HY0dL85Dtvx+rJkcaFcZ7jdL32jceyHc5AxPzZCilIBgjhC4Wee+DhtRVVBmextoSciry15ehP3t3sdrmT03KXpNU3GHO73N9/bdPWlqPxjAvGjPP6ktK3v/V4ht0RjIRnMR/4EzK++sCqNYzzWGTI6737vZ4Hnvu1QpOnUJO59IgQ/MBzv+73euIckhGMDc7qi0s3Sz7C4Vnpf8javgkyDMbibAO5Vg89/2z70KBN0ZLmrScPDi64XdHahwYfev5ZeXwQ+9IQMsFHptPpCQSU2cUHwVhnxmQy4mwAnTGK8ROb33jjwJ50l8vgyevhTmwoe+4OcNhsh0+fDDF2Q81ljItYReoYYcZ5YUbmHfVX7Dl1srW702l3zFQ3otn5DDIWDGQ5Xa9947ENdcsY53HIMDhTCHmt4cDXXnjW5XAmuVM3qXBIPmya9sGx5tLsnPqSUoOxWDXo0j/NdrruqL+8safn8Ok2TdMS1K6SJLMKQAkZ83qq5hS+8vVHr1xYHscDHXdCyb7203f++ucGF+ZezZGKcEgfnRLyx727rqmsXpibp8c2txgh2Uh31/JViqJuaWpkQmiKcjGmyOQ9UV6f765VazZ97dEFObnnJYNgPOj3Xfuj/zXg89pVLflPPRNwAGCECcZvNBz4TPWioozMOMG9PBMRANeUV64uq3j/WHP/yIhd01BKnrbHURjeYJAg9NSd9/znhi/ZFSVObAIAnHOC8WgwcNvTP27u7XbbHDMy+mFm4BAgKCGeYHDT/j3XVS8qPB8f8hq5stz8jVes7PN597SdAISmXB80IwrjyrKKlx5+5PNLl8kJiHEauuTR2mgwcPPPntreeizNmVQndObhgPFqMV849Kd95+djwkVNs9k31C2rmVu4s621b2REUZTpdyckDgsEyBsMKIR8/9bPP3PfQ0WZWdJYxDl5ZuM64+afPbX9+LEMt3sGL2CYMTjgTG/jp+JDmhhx2dyie1as1gXff/qUNxigiqKkEiIEYwTgDQUjhnFbbd3LX33kjvrLMUJc8Pg5vbPJcLn1Gb2aYybh+ISPUGjTgb1XlVeWZGXrcdNB0sQwzl2abd2ixbcvXWZwfqS70+P3U0VRCJlBQND4UHpvMKhzvm7R4l/eff8/fe62XLdb1qnEHxsh/dM+r2f9L36yvfVYhnuGyQAA5Hz04VTYahFDF1z88p4HH1y1RhYkn/eyqomy7Kaerp++987v9+z0+v2a3W6jigCRTA8OI4QR1jkLBAOI0BtrLvv2Z9ddX7UIxpOb550mojOmELK/4/TtT/+kc3QkzeFIhet8ZlhzTLxpSqgAePXAXoLx2ooqqR7irKnciLLoKz8t/dYldeuX1rvtjrahgf7R4TBjKqUUk8TNN0bjMZcACEQioWDAoWkbl69+8o47v3/z+gU5eXwc3/i/QU5+ppi8cmDfxv/6Rb/P47Y7UuSip5TQHJ+YDACv13vX6qt+vvG+TIcjfibg79Z3XIv0ez1vNTb8ad/urS1HA8EAYKypmkqonFg3zTJB+QtlIk5nLKhHQDeoqi4tLr3rihU3LV5amV9wllaLLxO1gP/x9uvfe22TbJ6YqYGFKQ2HFIWQUa+nurD42fu/snL+Qjk18EKGPPEzBcZnXklzT/e7zUe2HT+2ve149+goGDoQqiqKBAXBJxMxo/KCxktMEABIR1gInbGwoQvDAIQz3e6lRSWfqay+vqpm+fyF8hfK93ohWAghmBAU417P2FdeePbNA3vdLjfEvlbAguOMUEJ8oZBK8H9u+PI/Xns9yNu/L/i2RyYEmeSyDPv9O9qO7z7Vtq/9VENXR5/HE9EjwBggBJgAACZEIQTE+NhbAYAQ51w3DAAAwYFzwARTkutKK8/LXzFv/uKikmsrqkqysie5kxxfGMSTFca7R4889Pyz7YMD6S5XCt4ZmIpwwHhhhz8QuKW27sd33l2Wmz95TS9EpCI564WNBYPHB/rah4eOdHd5w6GDHe0U416Pp2d0hBB8ZtMi4Jyn2exlefm6YSzIzS9MTy/JzlmYm1eRX5Drck9K5QHjHCNAF9xxNmEBPaHQD15/5efvb0EEO1QtNW+TTFE4AAABIhiP+X3Zbve/3rbh4auupVgOWkSfapTgeIuswAjjGG0gY4EAxmicjTOjcO2KGi23e8Z2XLieOMuOAMBfmw5/+48vHek4lYKm5OKAY0KF6IwFg4ErK6r/+dbbZXx4IWmDWG9IgLwYRkxAFutz5Ds709kw7opObRTRBBZNPd1PbH79hV3bKSZOmy3Fr59NdThkjEAQ8oRCgvN7V1753XW31MyZOx1EzlUGMaa1T/uTJ2HR7/X84sP3/veWzf5g0O1wAojUP1u+COCYUCECwOv3u+32jVes/NZ1N9TMKZywGlPb04lK2wDwSWFLv9fzq21bf/XRB11DAw6Hk2KcOsHqLIFjAhGD80Ag4HY4Ni5f+c21n11cWDQpXvgUvmEi5Kxwumt05LntH/3fbVu7Bgc0u81GVcbZRVSKcpHBIR1GgrHOeSAYsNvs15ZX3rVi9W1L6tw2299TgpIzfl98kvU6842M863Hml/cvePNwwcHxsZUTbOrKuNcXGw1ShcfHBOIYBnuhkPAxYL8/C/VL19fW3fFvAUT4S7jXABgBGdQMRsImT2bnIBp7u3e3Njwuz27DrSfYoZht9tVQthF0qw7e+CYbGgAIKhH9HBYUdWauUWfq1m8fmndksJih6r9vcLnAGhiQOqF4yJf7USYI2Psyemv1r7ezUcaXms4uPf0SX/AjxXFqWr4zG3qF7Fc9HBMjmiYEMFIhOkRRdXmZWWvraxaU1ZZPWfuojmFDlWNuvsBIFZR+4S+OTcgYpy39PUe6+v524nj7x09cry/zxfwA6FOTaOYcMFnRyP4LIFjQmRuigkR1nVdjwCAoqjzc3KrCuYsLSouyyuYn51TNWcuQSjT4bzAz/QEg0zwk4MD7cNDh7u7mnu6m3q6Twz0+UJB4IIoiiarjWLfyW3BkYq6RABwCYphADMAY0xofno6CCjPy3dqKsXk8tL59MzZCpowJIBQY1fnsN8HCDX3dBucDfn94UgYGAeMCaWaolCM0XhGfFZOjJi1cJylTmTwIkAIISKMAUDY0EG6BIyNz0QRk/xdAZhIXFRFQQgpGGOMJz5ktgIxWShcAsKFmJwDlc2VKqFSU8SKeCe6NSfy6LPMalhwxIs+QIAl8TSutQSWWHBYYsFhiQWHJRYcllhwWGLBYYkFhyUWHJZYcFhiwWGJJRYcllhwWGLBYYkFhyUWHJZYcFhiwWGJBYclFhyWWHBYYsm4/H8u/yjZBTWqXAAAAABJRU5ErkJggg==">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+button.busy,button:disabled{opacity:.6;cursor:wait}
+:root{--bg:#f2f5f4;--cd:#fff;--tx:#18262b;--mu:#667a80;--pr:#0b6e66;--bd:#dde5e4;--ok:#157a3b;--wa:#a8590a;--er:#b3261e}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#101a1c;--cd:#172629;--tx:#e6eeee;--mu:#93a8ac;--pr:#2bb5a8;--bd:#2a3d41;--ok:#4cc27a;--wa:#e0933f;--er:#f27c74}}
+:root[data-theme=dark]{--bg:#101a1c;--cd:#172629;--tx:#e6eeee;--mu:#93a8ac;--pr:#2bb5a8;--bd:#2a3d41;--ok:#4cc27a;--wa:#e0933f;--er:#f27c74}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:14px/1.7 Vazirmatn,Tahoma,sans-serif;padding:env(safe-area-inset-top,0) 0 env(safe-area-inset-bottom,0)}
+.w{max-width:960px;margin:0 auto;padding:14px}
+h1{font-size:20px;margin:0}h2{font-size:16px;margin:0 0 10px}
+.card{background:var(--cd);border:1px solid var(--bd);border-radius:12px;padding:14px;margin-bottom:14px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+input,select,button{font:inherit;color:var(--tx);background:var(--cd);border:1px solid var(--bd);border-radius:8px;padding:8px 10px;max-width:100%}
+button{cursor:pointer;font-weight:600}button.p{background:var(--pr);border-color:var(--pr);color:#fff}button.d{color:var(--er)}
+input:focus,select:focus{outline:2px solid var(--pr);outline-offset:1px}
+.fm{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.fm label{display:flex;flex-direction:column;gap:3px;color:var(--mu)}
+.fb{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.dt{display:flex;gap:4px}.dt select{flex:1;padding:8px 4px}
+.tw{overflow-x:auto}table{border-collapse:collapse;width:100%;white-space:nowrap}
+th,td{padding:7px 9px;border-bottom:1px solid var(--bd);text-align:right}th{color:var(--mu);font-weight:600}
+.b{padding:1px 10px;border-radius:99px;font-size:12px;border:1px solid;font-weight:600}
+.b.pending{color:var(--wa)}.b.confirmed{color:var(--ok)}.b.rejected,.b.voided{color:var(--er)}
+.mu{color:var(--mu)}.pv{background:var(--bg);border-radius:8px;padding:8px 12px;margin:10px 0}
+#msg{position:sticky;top:0;z-index:5}#msg div{padding:9px 12px;border-radius:8px;margin-bottom:10px;border:1px solid var(--ok);background:var(--cd);color:var(--ok)}
+#msg div.e{border-color:var(--er);color:var(--er)}
+.auth{max-width:420px;margin:6vh auto}.tabs{display:flex;gap:2px;margin-bottom:12px;background:var(--tr);border-radius:99px;padding:4px}.tabs button{flex:1;background:none;border:0;border-radius:99px;box-shadow:none;color:var(--mu);padding:7px 10px}.tabs button.on{color:var(--tx);font-weight:800}
+.pw{display:flex;gap:6px}.pw input{flex:1;min-width:0}.pw button{padding:6px 10px}a{color:var(--pr)}
+@media print{*{-webkit-print-color-adjust:exact;print-color-adjust:exact}@page{size:A4;margin:10mm}html,body{height:auto!important;overflow:visible!important;background:#fff}.w,#msg,.np{display:none!important}#pa{position:static;overflow:visible;background:#fff;padding:0}.sheet{box-shadow:none;border-radius:0;margin:0;max-width:none;page-break-after:always}.sheet:last-child{page-break-after:auto}tr{page-break-inside:avoid}}
+#pa{position:fixed;inset:0;overflow:auto;background:#dfe7e6;z-index:20;padding:env(safe-area-inset-top,0) 10px env(safe-area-inset-bottom,0)}#pa[hidden]{display:none}
+.pbar{position:sticky;top:0;display:flex;gap:8px;padding:10px 0;z-index:2}
+.sheet{max-width:794px;margin:0 auto 16px;background:#fff;color:#18262b;border-radius:14px;overflow:hidden;box-shadow:0 4px 20px #0002;font-size:13px;line-height:1.7}
+.sheet table{white-space:normal;border-collapse:collapse;width:100%}
+.sheet th,.sheet td{padding:7px 8px;border-bottom:1px solid #dde8e6;text-align:center;color:#18262b}
+.sheet th{background:#e3f2ef;color:#0b6e66;font-weight:800;font-size:12px}
+.sheet td.dy{background:#f1f8f6;font-weight:800;color:#0b6e66;border-right:1px solid #cfe3df}
+.sh-h{background:linear-gradient(135deg,#0a5d57,#12988a);color:#fff;padding:20px 22px}
+.sh-k{font-size:12px;opacity:.85}.sh-n{font-size:22px;font-weight:800;margin:2px 0 14px}
+.sh-m{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
+.sh-m div{background:#ffffff26;border-radius:10px;padding:8px 12px}.sh-m span{display:block;font-size:11px;opacity:.85}.sh-m b{font-size:13px}
+.sh-b{padding:18px 22px}
+.sh-s{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0}.sh-s div{flex:1;min-width:120px;border:1px solid #cfe3df;border-radius:10px;padding:10px 14px;background:#f6fbfa}.sh-s div.am{background:#fff7e6;border-color:#e8c777}
+.sh-s span{display:block;font-size:11px;color:#667a80}.sh-s b{font-size:17px;color:#0b6e66}.sh-s div.am b{color:#8a5a00}
+.sh-x{margin-top:14px}.sh-x b{display:block;margin-bottom:4px;color:#0b6e66}
+.sh-g{display:flex;gap:24px;margin-top:34px}.sh-g div{flex:1;border-top:1.5px solid #9fb5b2;padding-top:6px;text-align:center;color:#667a80;font-size:12px;min-height:64px}
+.sh-f{text-align:center;color:#8aa0a3;font-size:11px;padding:0 0 14px}
+.am{width:130px}td .fb{flex-wrap:nowrap}
+.code{font:700 18px/1.4 monospace;letter-spacing:2px;direction:ltr;display:inline-block;padding:4px 10px;border:1px dashed var(--pr);border-radius:8px}
+/* ---- ظاهر محصول‌گونه + منوی پایین ---- */
+body{padding-bottom:0}
+.w{padding:16px 14px calc(92px + env(safe-area-inset-bottom,0))}
+.card{border:0;border-radius:16px;box-shadow:0 1px 2px #0b2a2d0d,0 4px 14px #0b2a2d0f;padding:16px}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]) .card,:root:not([data-theme=light]) .kp{box-shadow:none;border:1px solid var(--bd)}}
+:root[data-theme=dark] .card,:root[data-theme=dark] .kp{box-shadow:none;border:1px solid var(--bd)}
+h2{font-size:15px;font-weight:800}
+button{border-radius:10px;padding:9px 14px}button.p{box-shadow:0 2px 6px #0b6e6640}
+th{font-size:12px}
+.top{margin-bottom:10px}.who b{font-size:17px;display:block;line-height:1.4}
+.gh{background:transparent;color:var(--mu);border-color:transparent}
+.ph-sel{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:14px}.ph-sel select{flex:1;min-width:190px;font-weight:700}
+.upd{font-size:11px;cursor:pointer}
+.kps{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:14px}
+.kp{background:var(--cd);border-radius:16px;padding:14px;box-shadow:0 1px 2px #0b2a2d0d,0 4px 14px #0b2a2d0f;display:flex;flex-direction:column;gap:2px;cursor:pointer}
+.kp span{color:var(--mu);font-size:12px}.kp b{font-size:21px;color:var(--pr);line-height:1.5}.kp small{color:var(--mu);font-size:11px}.kp.warn b{color:var(--wa)}
+.nav{position:fixed;inset:auto 0 0 0;z-index:10;background:var(--cd);border-top:1px solid var(--bd);padding:6px 6px calc(6px + env(safe-area-inset-bottom,0));display:flex;justify-content:center;gap:2px}
+.nav button{flex:1;max-width:150px;border:0;background:none;color:var(--mu);display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 2px;font-size:11px;font-weight:600;position:relative;border-radius:12px}
+.nav button svg{width:23px;height:23px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.nav button.on{color:var(--pr);background:color-mix(in srgb,var(--pr) 12%,transparent)}
+.nav i{position:absolute;top:1px;left:calc(50% + 3px);min-width:17px;height:17px;border-radius:9px;background:var(--er);color:#fff;font:700 10px/17px Vazirmatn,Tahoma,sans-serif;text-align:center;font-style:normal;padding:0 4px}
+.nav button{font-size:10.5px;line-height:1.3;text-align:center}
+.rf{padding:7px 12px;font-size:13px;color:var(--pr);border-color:var(--pr);background:transparent}
+.ch{display:flex;gap:6px;align-items:flex-end;height:176px;padding-top:18px;margin-top:6px}
+.cm{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;height:100%;min-width:0}
+.cb{flex:1;min-height:0;width:100%;display:flex;align-items:flex-end;justify-content:center;gap:3px;border-bottom:1px solid var(--bd)}
+.cb div{flex:1;max-width:24px;border-radius:5px 5px 0 0;position:relative;min-height:2px}
+.cb div span{position:absolute;bottom:100%;left:50%;transform:translateX(-50%);font-size:9px;color:var(--mu);white-space:nowrap}
+.cl{font-size:11px;color:var(--mu);white-space:nowrap}
+.lg{display:flex;gap:14px;flex-wrap:wrap;margin:6px 0;font-size:12px}.lg i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-inline-end:5px}
+details>summary{cursor:pointer;font-weight:800;list-style:none}
+.ph-sel select.us,select.us{flex:0 0 auto;min-width:0;width:auto}
+@media print{html,body{height:auto!important;overflow:visible!important;background:#fff!important}.w,#msg,.np,.nav{display:none!important}#pa{position:static!important;inset:auto!important;display:block!important;overflow:visible!important;height:auto!important;max-height:none!important;background:#fff!important;padding:0!important;z-index:auto!important}#pa[hidden]{display:none!important}.sheet{overflow:visible!important;box-shadow:none!important;border-radius:0!important;margin:0 auto!important;max-width:none!important}}
+@media print{.sh-h{padding:14px 20px!important}.sh-n{margin:2px 0 8px!important;font-size:20px!important}.sh-m div{padding:5px 10px!important}.sh-b{padding:10px 20px!important}.sheet th,.sheet td{padding:3px 8px!important}.sh-s{margin:10px 0!important;page-break-inside:avoid}.sh-g{margin-top:14px!important;page-break-inside:avoid}.sh-g div{min-height:38px!important}.sh-f{padding-bottom:6px!important;page-break-before:avoid}}
+
+.cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px;text-align:center}.cal .h{font-size:11px;color:var(--mu)}
+.cal .d{height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--mu);cursor:pointer;border:2px solid transparent}
+.cal .d.p{background:var(--wa);color:#fff}.cal .d.c{background:#2b6fd6;color:#fff}.cal .d.s{background:var(--ok);color:#fff}.cal .d.sel{border-color:var(--tx)}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]) .cal .d.p,:root:not([data-theme=light]) .cal .d.s,:root:not([data-theme=light]) .cal .d.c{color:#0d1b1c}:root:not([data-theme=light]) .cal .d.c{background:#6aa3f0}}
+:root[data-theme=dark] .cal .d.p,:root[data-theme=dark] .cal .d.s,:root[data-theme=dark] .cal .d.c{color:#0d1b1c}:root[data-theme=dark] .cal .d.c{background:#6aa3f0}
+.cn{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}.cn b{font-size:15px}.cn button{padding:3px 12px;font-size:16px}
+.cg{display:flex;gap:6px 14px;flex-wrap:wrap;margin-top:10px;font-size:12px;color:var(--mu)}.cg i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-inline-end:5px}
+.dl{margin-top:12px;border-top:1px solid var(--bd);padding-top:8px}.dl div{display:flex;justify-content:space-between;gap:8px;padding:5px 0}
+.pl{display:flex;gap:6px;overflow-x:auto;margin-bottom:12px}.pl button{border-radius:99px;padding:5px 14px;font-size:13px;white-space:nowrap;border:1px solid transparent;background:none;color:var(--mu);box-shadow:none}
+.pl button.on{background:color-mix(in srgb,var(--pr) 12%,transparent);color:var(--pr)}
+.bn{display:flex;justify-content:space-between;align-items:center;gap:10px;background:color-mix(in srgb,var(--wa) 14%,var(--cd));border-radius:16px;padding:14px 16px;margin-bottom:14px;cursor:pointer}
+.bn small{display:block;color:var(--wa);font-size:12px}.bn b{font-size:16px}.bn span{color:var(--wa);font-weight:700;font-size:13px}
+.pc{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid var(--bd)}.pc:last-child{border:0}.pc small{display:block;color:var(--mu);font-size:12px}
+
+/* ---- LB look ---- */
+:root{--bg:#f3f3f4;--cd:#ebebed;--cd2:#fff;--tr:#e1e1e4;--pr:#0b6e66;--bl:#2b6fd6}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#111112;--cd:#1e1e20;--cd2:#2a2a2d;--tr:#232326;--pr:#2bb5a8;--bl:#6aa3f0}}
+:root[data-theme=dark]{--bg:#111112;--cd:#1e1e20;--cd2:#2a2a2d;--tr:#232326;--pr:#2bb5a8;--bl:#6aa3f0}
+.card,.kp,.sr{background:var(--cd);box-shadow:none!important;border:0!important;border-radius:20px}
+.card input,.card select{background:var(--cd2)}
+.kp{padding:14px 16px}.kp span,.ml{font-size:11px;letter-spacing:.05em;color:var(--mu);font-weight:600}.kp b{color:var(--tx);font-size:22px}.kp.warn b{color:var(--wa)}
+button.p{box-shadow:none}
+.hd{display:grid;grid-template-columns:44px 1fr 44px;align-items:center;margin-bottom:14px}
+.hd .t{text-align:center}.hd .t b{font-size:24px;font-weight:800;line-height:1.3;display:block}.hd .t small{font-size:11px;color:var(--mu)}
+.hd .c{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:17px;border:0;padding:0;cursor:pointer}
+.hd .av{background:var(--pr);color:#fff}.hd .rb{background:var(--cd);color:var(--tx);font-size:19px}
+.nav{inset:auto 12px calc(10px + env(safe-area-inset-bottom,0)) 12px;border:0;border-radius:30px;background:var(--cd);box-shadow:0 8px 28px #00000022;padding:6px}
+.nav button.on{background:var(--cd2);color:var(--pr)}
+.w{padding-bottom:calc(100px + env(safe-area-inset-bottom,0))}
+.cn b{font-size:22px;font-weight:800}.cn b .yr{color:var(--mu);font-weight:400}
+.cal .d{background:transparent}.cal .d.tdy{border-color:var(--pr);color:var(--pr);font-weight:800}.cal .d.sel{border-color:var(--tx)}
+.cal .d.p,.cal .d.c,.cal .d.s{color:#fff}.cal .d.c{background:var(--bl)}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]) .cal .d.p,:root:not([data-theme=light]) .cal .d.c,:root:not([data-theme=light]) .cal .d.s{color:#0d1b1c}}
+:root[data-theme=dark] .cal .d.p,:root[data-theme=dark] .cal .d.c,:root[data-theme=dark] .cal .d.s{color:#0d1b1c}
+.pl{background:var(--tr);border-radius:99px;padding:4px;gap:2px}.pl button{flex:1;padding:7px 10px}.pl button.on{background:var(--cd2);color:var(--tx);font-weight:800}
+.mh{display:flex;justify-content:space-between;padding:10px 6px 6px;font-size:12px;letter-spacing:.04em;color:var(--mu);font-weight:700}
+.sr{padding:14px 16px;margin-bottom:8px;display:flex;justify-content:space-between;gap:10px}.sr b{font-size:15px}.sr small{display:block;color:var(--mu);font-size:12px;line-height:1.7}
+.sr .am{text-align:left;white-space:nowrap}.st{font-size:12px;font-weight:800}.st.p{color:var(--wa)}.st.c{color:var(--bl)}.st.s{color:var(--ok)}.st.x{color:var(--er)}
+.nx{display:block}.nx .r{display:flex;justify-content:space-between;align-items:center;margin-top:4px}.nx .r b{font-size:18px}.nx small{color:var(--mu);font-size:12px}
+.wk{margin-top:8px}.wk .cal .d{height:40px;cursor:default}.wk p{margin:10px 0 0;font-size:13px;text-align:center}
+.bn{background:color-mix(in srgb,var(--wa) 16%,var(--cd));border-radius:20px}
+
+.bars{display:flex;gap:8px;align-items:flex-end;height:130px;margin:10px 0 4px}.bars .c{flex:1;min-width:0;height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:4px}
+.bars i{display:block;width:100%;max-width:30px;border-radius:7px 7px 0 0;background:var(--tr);min-height:3px}.bars .c.now i{background:var(--pr)}.bars small{font-size:10px;color:var(--mu);white-space:nowrap}
+.dl2{font-size:12px;font-weight:700}.dl2.u{color:var(--ok)}.dl2.d{color:var(--er)}
+.cal .d.n{background:transparent;border:2px dashed var(--pr);color:var(--pr);font-weight:700}.st.n{color:var(--pr)}
+.mr{display:flex;align-items:center;gap:14px;padding:12px 14px;margin-bottom:8px;background:var(--cd);border-radius:20px;cursor:pointer}.mr .ic{width:48px;height:48px;border-radius:50%;background:var(--pr);color:#fff;display:flex;align-items:center;justify-content:center;flex:none}
+.mr .ic svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}.mr .tx{flex:1;min-width:0}.mr .tx b{display:block;font-size:16px}.mr .tx small{color:var(--mu);font-size:13px}
+.mr .chv{color:var(--mu);flex:none;display:flex}.mr.red .ic{background:var(--er)}.mr.red .tx b{color:var(--er)}
+.sec{font-weight:800;font-size:15px;margin:18px 4px 8px}
+.sw{display:flex;gap:12px;flex-wrap:wrap;margin-top:12px}.swb{width:44px;height:44px;border-radius:50%;border:3px solid transparent;color:#fff;font-weight:800;font-size:18px;padding:0;box-shadow:none}.swb.on{border-color:var(--tx)}
+:root[data-theme=dark]{color-scheme:dark}:root[data-theme=light]{color-scheme:light}
+.tg{width:46px;height:28px;border-radius:14px;background:var(--tr);position:relative;flex:none;transition:.2s}.tg i{position:absolute;top:3px;right:3px;width:22px;height:22px;border-radius:50%;background:#fff;transition:.2s}.tg.on{background:var(--ok)}.tg.on i{right:21px}
+.seg{position:relative}.seg button{position:relative;z-index:1}.seg button.on{background:none!important}
+.seg .ind{position:absolute;top:4px;bottom:4px;left:0;right:auto;width:0;background:var(--cd2);border-radius:99px;transition:transform .3s cubic-bezier(.4,0,.2,1),width .3s cubic-bezier(.4,0,.2,1);box-shadow:0 1px 3px #0003;pointer-events:none}
+.nav .nind{position:absolute;left:0;top:6px;height:0;width:0;background:var(--cd2);border-radius:22px;transition:transform .3s cubic-bezier(.4,0,.2,1),width .3s cubic-bezier(.4,0,.2,1);pointer-events:none;z-index:0}.nav button{z-index:1}.nav button.on{background:none!important}
+.seg button,.swb{transition:color .2s,border-color .2s}
+.pb{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}.pb button{padding:3px 10px;font-size:12px}
+
+/* ---- sheets, rows, wheels ---- */
+.gc{background:var(--cd);border-radius:20px;padding:0 16px;margin-bottom:12px}
+.rows{display:block}.sr.pr{flex-wrap:wrap}.sr.pr .pm{flex:1;min-width:0}.sr .pa{width:100%;margin-top:4px}.sr .pa button{flex:1;padding:10px;border-radius:12px}.sr .pit{width:100%;font-size:12px;line-height:1.9}
+.srow{display:flex;justify-content:space-between;align-items:center;gap:10px;min-height:54px;border-bottom:1px solid var(--bd)}
+.srow:last-child{border-bottom:0}.srow.tap{cursor:pointer;transition:opacity .15s}.srow.tap:active{opacity:.55}
+.srow>span.k{color:var(--mu)}.srow>b.v{font-weight:600;direction:ltr}
+.srow input{border:0;background:none;flex:1;min-width:0;padding:8px 0;text-align:left;outline:0}
+.srow.sg{padding:8px 0;display:block}.srow.sg .seg{margin:0}
+.plus{width:34px;height:34px;border-radius:50%;background:var(--tx);color:var(--bg);display:grid;place-items:center;font-size:24px;line-height:1;font-weight:500;flex:none}
+.srow.add{justify-content:flex-start;gap:14px;min-height:62px}
+.shw{position:fixed;inset:0;z-index:40}.shb{position:absolute;inset:0;background:#000a;opacity:0;transition:opacity .3s;touch-action:none}
+.shw.on .shb{opacity:1}
+.shp{position:absolute;left:0;right:0;bottom:0;margin:0 auto;max-width:560px;max-height:90vh;overflow-y:auto;background:var(--bg);border-radius:26px 26px 0 0;padding:0 14px calc(16px + env(safe-area-inset-bottom,0));transform:translateY(105%);transition:transform .36s cubic-bezier(.2,.9,.25,1);overscroll-behavior:contain}
+.shw.on .shp{transform:none}.shp.dg{transition:none}
+.shh{touch-action:none;padding:8px 0 4px;position:sticky;top:0;background:var(--bg);z-index:2}
+.shg{width:38px;height:5px;border-radius:9px;background:var(--mu);opacity:.45;margin:0 auto 8px}
+.sht{text-align:center;font-weight:800;font-size:16px;padding-bottom:6px}
+.stoast{position:absolute;left:14px;right:14px;top:34px;z-index:3;border-radius:12px;padding:9px 12px;background:var(--cd);color:var(--ok);border:1px solid var(--ok);opacity:0;transform:translateY(-6px);transition:.25s;pointer-events:none}
+.stoast.e{color:var(--er);border-color:var(--er)}.stoast.on{opacity:1;transform:none}
+.shp button.wide{width:100%;padding:13px;border-radius:14px;margin-top:4px}
+.wh{position:relative;display:flex;gap:6px;background:var(--cd);border-radius:20px;padding:0 10px;margin-bottom:12px;overflow:hidden}
+.wband{position:absolute;left:10px;right:10px;top:80px;height:40px;border-radius:12px;background:var(--cd2,var(--tr));pointer-events:none}
+.wc{position:relative;z-index:1;flex:1;height:200px;overflow-y:auto;scroll-snap-type:y mandatory;scroll-padding:80px 0;padding:80px 0;box-sizing:border-box;scrollbar-width:none;text-align:center;overscroll-behavior:contain;touch-action:pan-y}
+.wc::-webkit-scrollbar{display:none}
+.wc div{height:40px;line-height:40px;scroll-snap-align:start;font-size:20px;color:var(--mu);cursor:pointer}
+.seg{touch-action:pan-y;user-select:none;-webkit-user-select:none}
+
+.ios{position:relative;width:51px;height:31px;border-radius:99px;border:0;padding:0;flex:none;background:var(--tr,#8885);transition:background .25s}
+.ios::after{content:"";position:absolute;top:2px;right:2px;width:27px;height:27px;border-radius:50%;background:#fff;box-shadow:0 2px 5px #0005;transition:transform .28s cubic-bezier(.3,.9,.3,1)}
+.ios.on{background:#34c759}.ios.on::after{transform:translateX(-20px)}.ios:active::after{width:31px}
+.srow.xr{min-height:0;max-height:0;overflow:hidden;opacity:0;border-bottom-width:0;transition:max-height .3s ease,opacity .25s,min-height .3s}
+.srow.xr.on{max-height:62px;min-height:54px;opacity:1;border-bottom-width:1px}
+.srow:last-child.xr{border-bottom-width:0}
+.srow:has(+.xr:not(.on)){border-bottom-color:transparent}
+.shc>.pv,.shc>div>.pv{background:var(--cd);border-radius:20px;padding:14px}
+.shc .card{margin-bottom:12px}
+
+.dt.dw{display:block}.dw select{display:none}.dbtn{width:100%;text-align:right;direction:rtl;padding:10px 12px;border-radius:12px}
+
+.ob{max-width:420px;margin:5vh auto 0;animation:up .45s cubic-bezier(.2,.9,.25,1)}
+@keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.ob h1{text-align:center;margin:0 0 4px;font-size:26px}.ob>p.mu{text-align:center;margin:0 0 18px}
+.logo{width:76px;height:76px;border-radius:24px;background:color-mix(in srgb,var(--pr) 16%,var(--cd));display:grid;place-items:center;font-size:38px;margin:0 auto 14px}
+.bigp{width:100%;padding:14px;border-radius:16px;font-size:16px}
+.gt{font-weight:800;margin:16px 6px 8px}.ob>p.hint{text-align:right;margin:-4px 6px 12px;font-size:13px}
+.or{display:flex;align-items:center;gap:10px;color:var(--mu);margin:18px 0 2px}.or::before,.or::after{content:"";flex:1;height:1px;background:var(--bd)}
+.eye{border:0;background:none;padding:6px;color:var(--mu);flex:none;box-shadow:none}
+.ob .gc{margin-bottom:12px}
+
+.chip{display:flex;align-items:center;gap:8px;flex:1;min-width:160px;background:var(--cd);border:0;border-radius:99px;padding:12px 18px;font-weight:700;text-align:right}
+.chip span{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.chip svg{flex:none;color:var(--mu)}
+.usw{display:inline-block}.usw .pl{display:inline-flex;margin:0;min-width:140px}
+.ck{color:var(--pr);font-weight:800;font-size:18px}
+.srow .dbtn{width:auto;background:none;border:0;padding:6px 0;font-weight:600;box-shadow:none}.srow .dt.dw{display:block}
+.srow>.usw{margin-inline-start:auto}
+
+.lr{padding:14px 0;border-bottom:1px solid var(--bd);display:flex;flex-direction:column;gap:6px}.lr:last-child{border-bottom:0}
+.lt{display:flex;justify-content:space-between;align-items:center;gap:10px}.lr .fb{margin-top:4px}
+.lr .fb button{flex:1;padding:10px;border-radius:12px}
+.chipb{border:0;background:var(--cd);border-radius:99px;padding:8px 16px;font-weight:700;color:var(--pr)}
+.lr.tap{cursor:pointer}.lr.tap:active{opacity:.6}
+*{-webkit-tap-highlight-color:transparent}button:focus,.tap:focus{outline:none}
+.sr,.srow.tap,.mr,.lr.tap,.chip,.kp{transition:transform .12s,opacity .12s}
+button:active,.sr:active,.srow.tap:active,.mr:active,.lr.tap:active,.chip:active,.kp:active{transform:scale(.97);opacity:.8}
+.seg button:active,.nav button:active{transform:none;opacity:.7}
+.sr .pit{overflow:hidden;transition:height .36s cubic-bezier(.2,.9,.25,1),opacity .3s ease}.sr .pit.cl{opacity:0}
+/* brand logo */
+.logo.br{background:#0b6e66;color:#fff;font-size:0;overflow:hidden}.logo.br svg{width:100%;height:100%;display:block}
+.sh-br{display:flex;align-items:center;gap:8px}.sh-br i{display:block;width:26px;height:26px;border-radius:8px;background:#fff;color:#0b6e66;flex:none;overflow:hidden}.sh-br i svg{width:100%;height:100%;display:block}
+.sh-f i{display:inline-block;width:14px;height:14px;vertical-align:-3px;margin-inline-end:5px;color:#0b6e66}.sh-f i svg{width:100%;height:100%;display:block}
+/* picker rows: accent value + chevron so it's clear they can be tapped */
+.srow.tap:not(.add)>b.v{direction:rtl;display:inline-flex;align-items:center;color:var(--pr)}
+.srow .dt.dw .dbtn{color:var(--pr);display:inline-flex;align-items:center}
+.srow.tap:not(.add)>b.v::after,.srow .dt.dw .dbtn::after{content:'';flex:none;width:9px;height:15px;margin-inline-start:10px;background:var(--mu);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 9 15'%3E%3Cpath d='M7.5 1.5L1.5 7.5l6 6' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 9 15'%3E%3Cpath d='M7.5 1.5L1.5 7.5l6 6' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat}
+/* scrollbar of pill switches: hidden at rest, visible only while dragging/scrolling */
+.seg,.pl{scrollbar-width:none}.seg::-webkit-scrollbar,.pl::-webkit-scrollbar{display:none}
+.seg.sbar,.pl.sbar{scrollbar-width:thin;scrollbar-color:var(--mu) transparent}
+.seg.sbar::-webkit-scrollbar,.pl.sbar::-webkit-scrollbar{display:block;height:3px}
+.seg.sbar::-webkit-scrollbar-thumb,.pl.sbar::-webkit-scrollbar-thumb{background:var(--mu);border-radius:99px}
+
+.seg button{flex:1 1 auto;padding:7px 14px}
+.nav{touch-action:pan-y;user-select:none;-webkit-user-select:none}
+.nav{border-radius:99px!important}.nav .nind{border-radius:99px}
+@keyframes fi{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}#app.fd>*:not(.hd):not(.nav){animation:fi .22s ease both}
+.card.mu{text-align:center;padding:26px 16px;font-size:14px}
+
+.mpin{position:absolute;left:50%;top:50%;width:0;height:0;z-index:1100;pointer-events:none}
+.mpin::before{content:"";position:absolute;left:-17px;top:-52px;width:34px;height:34px;border-radius:50%;background:var(--pr);border:6px solid #fff;box-shadow:0 2px 8px #0006;box-sizing:border-box}
+.mpin::after{content:"";position:absolute;left:-1.5px;top:-18px;width:3px;height:18px;background:#222;border-radius:2px}
+.mps{position:absolute;top:10px;left:10px;right:10px;z-index:1100;display:flex;gap:6px;align-items:center;background:var(--cd2);border-radius:99px;padding:4px 6px 4px 4px;box-shadow:0 2px 10px #0003}
+.mps input{flex:1;min-width:0;border:0;background:none;padding:8px 12px}
+.mps button{border-radius:99px;padding:6px 14px}
+.mloc{position:absolute;bottom:12px;left:10px;z-index:1100;border-radius:99px;padding:8px 14px;box-shadow:0 2px 10px #0003}
+.leaflet-container{font-family:inherit}
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+</head>
+<body>
+<div class="w"><div id="msg"></div><div id="app"><p class="mu">در حال بارگذاری…</p></div></div>
+<div id="pa" hidden></div>
+<script>
+const lsGet=k=>{try{return localStorage.getItem(k)}catch(e){return null}},lsSet=(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}};
+const ACC={teal:['سبز فارماشیفت','#0b6e66','#2bb5a8'],rose:['سرخابی','#b3125f','#f06aa6'],blue:['آبی','#1f6fe5','#6aa3f0'],violet:['بنفش','#6d4ad9','#a58cf5'],orange:['نارنجی','#cc5a0a','#f59a5b'],green:['سبز','#1f8f4e','#5cc98a']};
+const isDark=()=>{const th=lsGet('theme')||'auto';return th=='dark'||(th=='auto'&&matchMedia('(prefers-color-scheme: dark)').matches)};
+function applyLook(){const th=lsGet('theme')||'auto',ac=ACC[lsGet('accent')]||ACC.teal,d=document.documentElement,dk=isDark();
+ if(th=='auto')delete d.dataset.theme;else d.dataset.theme=th;
+ d.style.setProperty('--pr',dk?ac[2]:ac[1]);
+ const m=document.querySelector('meta[name=theme-color]');if(m)m.content=dk?'#111112':'#f3f3f4'}
+applyLook();try{matchMedia('(prefers-color-scheme: dark)').addEventListener('change',applyLook)}catch(e){}
+function swPaint(){const dk=isDark(),a=lsGet('accent')||'teal';document.querySelectorAll('.swb').forEach(b=>{const x=ACC[b.dataset.id];b.style.background=dk?x[2]:x[1];b.classList.toggle('on',b.dataset.id==a);b.textContent=b.dataset.id==a?'✓':''})}
+function setTheme(v){lsSet('theme',v);applyLook();const s=document.getElementById('seg_th');if(!s)return home();segSet(s,['auto','light','dark'].indexOf(v));swPaint()}
+function setAcc(v){lsSet('accent',v);applyLook();swPaint()}
+
+const APP='فارماشیفت';
+const LOGO='<svg viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="40" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-dasharray="190 62" transform="rotate(-60 60 60)"/><g transform="rotate(45 60 60)"><rect x="50" y="36" width="20" height="48" rx="10" fill="currentColor" opacity=".5"/><path d="M50 60V46a10 10 0 0 1 20 0V60Z" fill="currentColor"/></g></svg>';
+const SB_URL='https://xzdshyqcmmponlltwsfl.supabase.co',SB_KEY='sb_publishable_gg8zDAtbJ11Rlmfbegjgyg_npa9KnH6';
+const UDOM='users.shiftapp.app'; // ایمیل ساختگی برای حساب‌های «فقط نام کاربری»
+const sb=supabase.createClient(SB_URL,SB_KEY);
+const $=s=>document.querySelector(s),pad=n=>String(n).padStart(2,'0');
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const fa=s=>String(s).replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d));
+const num=v=>Math.round(Number(fa(v).replace(/[,٬\s]/g,''))||0),fmtN=n=>Math.round(n).toLocaleString('en-US'),fmt=n=>fmtN(REPU=='t'?n/10:n); // fmt: مبلغ دیتابیس (ریال) را به واحد انتخابی نشان می‌دهد؛ fmtN: عدد خام
+const K=()=>REPU=='t'?10:1,nI=v=>num(v)*K(),dvr=v=>Math.round(v/K()); // nI: ورودی کاربر -> ریال دیتابیس
+const MN=['فروردین','اردیبهشت','خرداد','تیر','مرداد','شهریور','مهر','آبان','آذر','دی','بهمن','اسفند'];
+const ST={pending:'منتظر تأیید',confirmed:'تأییدشده',rejected:'ردشده',voided:'ابطال‌شده'};
+function j2g(jy,jm,jd){jy+=1595;let d=-355668+365*jy+Math.floor(jy/33)*8+Math.floor(((jy%33)+3)/4)+jd+(jm<7?(jm-1)*31:(jm-7)*30+186),gy=400*Math.floor(d/146097);d%=146097;if(d>36524){gy+=100*Math.floor(--d/36524);d%=36524;if(d>=365)d++}gy+=4*Math.floor(d/1461);d%=1461;if(d>365){gy+=Math.floor((d-1)/365);d=(d-1)%365}let gd=d+1;const s=[0,31,((gy%4==0&&gy%100!=0)||gy%400==0)?29:28,31,30,31,30,31,31,30,31,30,31];let gm=0;for(;gm<13;gm++){if(gd<=s[gm])break;gd-=s[gm]}return[gy,gm,gd]}
+const tj=()=>{const p=new Intl.DateTimeFormat('en-u-ca-persian',{year:'numeric',month:'numeric',day:'numeric'}).formatToParts(new Date()),g=t=>+p.find(x=>x.type==t).value;return[g('year'),g('month'),g('day')]};
+const opt=(a,v)=>a.map(o=>`<option value="${o[0]}" ${String(o[0])==String(v)?'selected':''}>${esc(o[1])}</option>`).join('');
+function msg(t,err){$('#msg').innerHTML=`<div class="${err?'e':''}">${esc(t)}</div>`;clearTimeout(msg.t);msg.t=setTimeout(()=>$('#msg').innerHTML='',6000)}
+const fail=e=>msg((e&&e.message)||'خطا در ارتباط با سرور',1);
+
+let S={me:null,ms:[],cur:null,shifts:[],pay:[],bal:{},sub:[],ent:[],tab:'login'};
+
+// ---------- ورود و ثبت‌نام ----------
+const toEmail=v=>{v=fa(v).trim().toLowerCase();return v.includes('@')?v:v+'@'+UDOM};
+function authView(){const su=S.tab=='signup';
+ $('#app').innerHTML=`<div class="ob"><div class="logo br">${LOGO}</div><h1>${APP}</h1><p class="mu">ثبت شیفت و تسویه با داروخانه</p>
+ ${segHtml('seg_au',[['login','ورود'],['signup','ثبت‌نام']],su?'signup':'login','auGo')}
+ ${su?`<select id="a_r" hidden><option value="pharmacist">داروساز</option><option value="owner">موسس</option></select><div class="gc"><div class="srow sg">${segHtml('seg_ar',[['pharmacist','داروساز'],['owner','موسس']],'pharmacist','arGo')}</div></div>`:''}
+ <div class="gc">${su?'<div class="srow"><span class="k">نام و نام خانوادگی</span><input id="a_n"></div>':''}
+  <div class="srow"><span class="k">ایمیل یا نام کاربری</span><input id="a_u" dir="ltr" autocapitalize="none" autocomplete="username"></div>
+  <div class="srow"><span class="k">رمز عبور</span><input id="a_p" type="password" dir="ltr" autocomplete="${su?'new-password':'current-password'}" onkeydown="if(event.key=='Enter')${su?'doSignup()':'doLogin()'}"><button type="button" class="eye" onclick="tp(this)" aria-label="نمایش رمز"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></button></div></div>
+ ${su?'<p class="mu hint">نام کاربری فقط حروف کوچک انگلیسی، عدد و _ (حداقل ۳ حرف). حساب بدون ایمیل بازیابی رمز ندارد.</p>':''}
+ <button class="p bigp" onclick="${su?'doSignup()':'doLogin()'}">${su?'ساخت حساب':'ورود'}</button>${su?'':'<p style="text-align:center;margin-top:14px"><a href="#" onclick="forgot();return false">رمز را فراموش کرده‌اید؟</a></p>'}</div>`}
+const tp=b=>{const i=b.previousElementSibling;i.type=i.type=='password'?'text':'password'};
+async function forgot(){const v=fa($('#a_u').value).trim().toLowerCase();
+ if(!v)return msg('اول ایمیل خود را در کادر بالا بنویسید',1);
+ if(!v.includes('@'))return msg('بازیابی خودکار فقط برای حساب‌های دارای ایمیل است. برای حساب نام‌کاربری از ادمین بخواهید رمز را عوض کند',1);
+ const{error}=await sb.auth.resetPasswordForEmail(v,{redirectTo:location.origin+location.pathname});
+ if(error)return fail(error);msg('اگر این ایمیل ثبت شده باشد، لینک بازیابی برایش ارسال شد')}
+let REC=/type=recovery/.test(location.hash);
+function recView(){$('#app').innerHTML=`<div class="ob"><div class="logo">🔑</div><h1>رمز جدید</h1><p class="mu">یک رمز جدید برای حساب خود انتخاب کنید.</p>
+ <div class="gc"><div class="srow"><span class="k">رمز جدید</span><input id="n_p" type="password" dir="ltr" autocomplete="new-password"><button type="button" class="eye" onclick="tp(this)" aria-label="نمایش رمز"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></button></div></div>
+ <button class="p bigp" onclick="setPw()">ذخیره رمز</button></div>`}
+async function setPw(){const v=$('#n_p').value;if(v.length<6)return msg('رمز حداقل ۶ کاراکتر باشد',1);
+ const{data,error}=await sb.auth.updateUser({password:v});if(error)return fail(error);
+ REC=false;history.replaceState(null,'',location.pathname);msg('رمز عوض شد');boot(data.user)}
+async function doLogin(){const{error}=await sb.auth.signInWithPassword({email:toEmail($('#a_u').value),password:$('#a_p').value});if(error)msg('ایمیل/نام کاربری یا رمز اشتباه است',1)}
+async function doSignup(){const raw=fa($('#a_u').value).trim().toLowerCase(),name=$('#a_n').value.trim(),pw=$('#a_p').value,isE=raw.includes('@');
+ if(!name)return msg('نام را وارد کنید',1);if(pw.length<6)return msg('رمز حداقل ۶ کاراکتر باشد',1);
+ if(!isE&&!/^[a-z0-9_]{3,30}$/.test(raw))return msg('نام کاربری معتبر نیست',1);
+ const{error}=await sb.auth.signUp({email:toEmail(raw),password:pw,options:{data:{full_name:name,role:$('#a_r').value,username:isE?'':raw}}});
+ if(error)msg(/already|registered/i.test(error.message)?'این ایمیل یا نام کاربری قبلاً ثبت شده':error.message,1)}
+const logout=()=>sb.auth.signOut();
+
+// ---------- بارگذاری داده ----------
+async function boot(user){
+ const p=await sb.from('profiles').select('*').eq('id',user.id).single();if(p.error)return fail(p.error);S.me=p.data;S.email=user.email||'';await loadDet();
+ await loadMs();await loadSub();home()}
+async function loadMs(){
+ const r=await sb.from('memberships').select('id,user_id,role,ended_at,pharmacy_id,pharmacies(id,name,owner_id,created_by,province,city,address,lat,lng,phone)').order('started_at');
+ if(r.error)return fail(r.error);S.ms=r.data.filter(m=>m.pharmacies&&m.user_id==S.me.id).sort((a,b)=>(a.ended_at?1:0)-(b.ended_at?1:0)).filter((m,i,a)=>a.findIndex(y=>y.pharmacy_id==m.pharmacy_id)==i);
+ const act=S.ms.filter(m=>!m.ended_at);if(!S.ms.some(m=>m.pharmacy_id==S.cur))S.cur=(act[0]||S.ms[0])?.pharmacy_id||null;
+ await loadShifts()}
+// خواندن صفحه‌به‌صفحه (دور زدن سقف ۱۰۰۰ ردیف سرور)؛ هر پرس‌وجو باید ترتیب یکتا داشته باشد
+async function fetchAll(mk){const out=[],N=500;for(let from=0;from<500000;from+=N){const r=await mk().range(from,from+N-1);if(r.error)return{data:null,error:r.error};out.push(...r.data);if(r.data.length<N)break}return{data:out,error:null}}
+async function loadShifts(){S.upd=new Date();S.shifts=[];S.plan=[];S.ci=[];S.pay=[];S.bal={};if(!S.cur)return;
+ const r=await fetchAll(()=>sb.from('shifts').select('*').eq('pharmacy_id',S.cur).order('shift_gdate',{ascending:false}).order('start_time',{ascending:false}).order('id'));
+ if(r.error)return fail(r.error);S.shifts=r.data.filter(x=>x.status!='planned');S.plan=r.data.filter(x=>x.status=='planned').sort((a,b)=>a.shift_gdate<b.shift_gdate?-1:1);
+ const b=await fetchAll(()=>sb.from('shift_balances').select('*').eq('pharmacy_id',S.cur).order('shift_id'));if(b.error)return fail(b.error);b.data.forEach(x=>S.bal[x.shift_id]=x);
+ const p=await fetchAll(()=>sb.from('payments').select('*').eq('pharmacy_id',S.cur).order('created_at',{ascending:false}).order('id'));if(p.error)return fail(p.error);S.pay=p.data;await loadMb();await loadInc();await loadHrs();await loadCi()}
+const curM=()=>S.ms.find(m=>m.pharmacy_id==S.cur),curP=()=>curM()?.pharmacies;
+
+// ---------- درآمد، پروفایل، کپی کد، به‌روزرسانی ----------
+const mkM=(y,m)=>`${y}/${pad(m)}`;
+async function loadInc(){S.inc=[];if(S.me.role!='pharmacist')return;
+ const r=await fetchAll(()=>sb.from('payments').select('*').eq('status','confirmed').order('id'));if(r.error)return fail(r.error);
+ S.inc=r.data.filter(p=>p.pharmacist_id===undefined||p.pharmacist_id==S.me.id).map(p=>({ph:p.pharmacy_id,d:p.paid_date,a:p.amount}));
+ const per=S.ms.filter(m=>!m.pharmacies.owner_id).map(m=>m.pharmacy_id);
+ if(per.length){const q=await fetchAll(()=>sb.from('shifts').select('pharmacy_id,shift_date,amount,status,pharmacist_id').in('pharmacy_id',per).eq('status','confirmed').eq('pharmacist_id',S.me.id).order('id'));
+  if(!q.error)q.data.forEach(s=>S.inc.push({ph:s.pharmacy_id,d:s.shift_date,a:s.amount}))}}
+async function refreshAll(){await loadShifts();await loadSub();home();msg('اطلاعات به‌روز شد')}
+function incTile(){const t=tj(),c=mkM(t[0],t[1]),pm=t[1]==1?mkM(t[0]-1,12):mkM(t[0],t[1]-1),I=S.inc||[],sum=k=>I.filter(x=>x.d.startsWith(k)).reduce((a,x)=>a+x.a,0),a=sum(c),b=sum(pm),d=b?Math.round((a-b)/b*100):null;
+ return tile('درآمد ماه جاری',ru(a),`${RL()} — واریزی‌های تأییدشده${d==null?'':` — ${d>=0?'▲':'▼'} ${Math.abs(d)}٪ نسبت به ماه قبل`}`)}
+const last6=()=>{const t=tj(),ms=[];for(let i=5;i>=0;i--){let m=t[1]-i,y=t[0];while(m<1){m+=12;y--}ms.push([y,m])}return ms};
+const CHD={};
+function chartBlock(ms,ser){const mx=Math.max(1,...ms.flatMap(m=>ser.map(s=>s.v[mkM(m[0],m[1])]||0))),CL=['var(--pr)','#d9a21f','#a678d9','#4fb28a','#d9728a'],
+ cp=v=>{const u=ux(v);return u>=1e6?fdg((u/1e6).toFixed(1).replace(/\.0$/,''))+' میلیون':u>=1e3?fdg(Math.round(u/1e3))+' هزار':fdg(u)},
+ k=(window._ck=(window._ck||0)+1);CHD[k]={ms,ser};delete CHD[k-8];
+ return `${ser.length>1?`<div class="lg">${ser.map((s,i)=>`<span><i style="background:${CL[i%5]}"></i>${esc(s.n)}</span>`).join('')}</div>`:''}
+ <div class="ch">${ms.map(m=>`<div class="cm"><div class="cb">${ser.map((s,i)=>{const v=s.v[mkM(m[0],m[1])]||0;return `<div style="height:${Math.round(v/mx*100)}%;background:${CL[i%5]};${v?'':'opacity:.25'}" title="${esc(s.n)}: ${ru(v)} ${RL()}">${ser.length<=2&&v?`<span>${cp(v)}</span>`:''}</div>`}).join('')}</div><span class="cl">${MN[m[1]-1]}</span></div>`).join('')}</div>
+ <div class="gc np" style="margin:14px 0 0"><div class="srow tap" onclick="chDet(${k})"><span class="k">جزئیات ماه‌ها</span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg></div></div>`}
+function incCard(){const I=S.inc||[],nm={},by={};S.ms.forEach(x=>nm[x.pharmacy_id]=x.pharmacies.name);
+ I.forEach(x=>{const o=by[x.ph]||(by[x.ph]={n:nm[x.ph]||'داروخانه',v:{}}),k=String(x.d).slice(0,7);o.v[k]=(o.v[k]||0)+x.a});const ser=Object.values(by);
+ return `<div class="card"><h2>درآمد ماهانه <span class="mu" style="font-weight:400">(فقط واریزی‌های تأییدشده)</span></h2><div class="fb"><div class="mu">واحد ${unitSel()}</div></div>
+ ${ser.length?chartBlock(last6(),ser)+`<p class="mu" style="margin:8px 0 0;font-size:12px">بر اساس تاریخ واریزی تأییدشده (${RL()}). در داروخانهٔ شخصی، شیفت‌های تأییدشده حساب می‌شوند.</p>`:'<p class="mu">هنوز واریزی تأییدشده‌ای ثبت نشده است.</p>'}</div>`}
+function subDash(){const by={};S.sub.forEach(x=>by[x.id]={n:x.name,v:{}});let any=false;
+ S.ent.filter(e=>e.kind=='owed').forEach(e=>{const o=by[e.substitute_id];if(o){const k=String(e.entry_date).slice(0,7);o.v[k]=(o.v[k]||0)+e.amount;any=true}});
+ return `<div class="card"><h2>بدهی ماهانه به جایگزین‌ها</h2><div class="fb"><div class="mu">واحد ${unitSel()}</div></div>
+ ${any?chartBlock(last6(),Object.values(by).filter(o=>Object.keys(o.v).length))+`<p class="mu" style="margin:8px 0 0;font-size:12px">بر اساس تاریخ ثبت بدهی در حساب خصوصی (${RL()}).</p>`:'<p class="mu">هنوز بدهیِ ثبت‌شده‌ای برای جایگزین‌ها نیست.</p>'}</div>`}
+function recCard(){const me=S.me,live=curM()&&!curM().ended_at,conf=S.shifts.filter(s=>s.pharmacist_id==me.id&&s.status=='confirmed'),
+ tot=conf.reduce((a,s)=>a+s.amount,0),got=conf.reduce((a,s)=>a+bal(s).paid_confirmed,0),
+ mine=S.pay.filter(p=>p.status=='pending'&&p.created_by!=me.id),wait=S.pay.filter(p=>p.status=='pending'&&p.created_by==me.id);
+ return `<div class="kps">${tile('طلب باقی‌مانده',fmt(tot-got),RL()+' — شیفت‌های تأییدشده منهای دریافتی‌ها')}${tile('دریافتی تأییدشده',fmt(got),RL())}${tile('منتظر تأیید شما',mine.length,wait.length?`${wait.length} ثبت‌شدهٔ شما منتظر موسس`:'',null,mine.length?'warn':'')}</div>
+ ${mine.length?`<div class="card" style="border:2px solid var(--wa)"><h2>منتظر تأیید شما (${mine.length})</h2>${mine.map(p=>`<div class="pv fb" style="justify-content:space-between"><div><b>${fmt(p.amount)} ${RL()}</b><div class="mu">${p.paid_date} — ثبت‌شده توسط موسس</div></div><div class="fb"><button class="p" onclick="okP('${p.id}')">تأیید دریافت</button><button class="d" onclick="noP('${p.id}')">رد</button></div></div>`).join('')}</div>`:''}
+ ${live?`<details class="card"><summary>＋ ثبت دریافتیِ جدید</summary>${payForm(false)}</details>`:''}
+ <div class="gt">تاریخچهٔ دریافتی‌ها</div><p class="mu" style="margin:-4px 6px 10px;font-size:12px">هر دریافتی بعد از تأیید طرف مقابل از طلب کم می‌شود و در «درآمد» حساب می‌شود.</p>${payList()}`}
+function finBody(){return S.ft=='sub'?subView():recCard()}
+function finPage(){const hasRec=!!curP().owner_id;if(!hasRec)S.ft='sub';else if(S.ft!='sub')S.ft='rec';
+ const tabs=hasRec?segHtml('seg_ft',[['rec','دریافتی از موسس'],['sub','تسویه با جایگزین‌ها']],S.ft,'ftGo'):'';
+ return tabs+`<div id="ft_c">${finBody()}</div>`}
+async function loadHrs(){S.hrs=[];if(S.me.role!='pharmacist')return;
+ const r=await fetchAll(()=>sb.from('shifts').select('pharmacy_id,shift_date,hours,status,pharmacist_id').eq('pharmacist_id',S.me.id).in('status',['confirmed','pending']).order('id'));if(!r.error)S.hrs=r.data}
+function hrsCard(){const H=S.hrs||[],nm={},by={};let T=0,N=0,P=0,first='';S.ms.forEach(x=>nm[x.pharmacy_id]=x.pharmacies);
+ H.forEach(s=>{if(s.status=='confirmed'){T+=s.hours;N++;const o=by[s.pharmacy_id]||(by[s.pharmacy_id]={h:0,n:0});o.h+=s.hours;o.n++;if(!first||s.shift_date<first)first=s.shift_date}else P+=s.hours});
+ const r2=v=>Math.round(v*100)/100;
+ return `<div class="card"><h2>ساعت کارکرد کل</h2><div class="kps" style="margin-bottom:8px">${tile('جمع کل ساعت',r2(T),`${N} شیفت تأییدشده${first?` — از ${first}`:''}`)}${P?tile('منتظر تأیید',r2(P),'ساعت'):''}</div>
+ <div class="rows">${Object.entries(by).map(([id,o])=>{const p=nm[id];return `<div class="sr pr"><div class="pm"><b>${esc(p?p.name:'داروخانه')}</b><small>${p&&p.owner_id?'با موسس':'شخصی'} · ${o.n} شیفت</small></div><div class="am"><b>${r2(o.h)}</b><small>ساعت</small></div></div>`}).join('')||'<div class="card mu">هنوز شیفت تأییدشده‌ای نیست.</div>'}</div></div>`}
+async function chPw(){const v=$('#pf_p').value;if(v.length<6)return msg('رمز حداقل ۶ کاراکتر باشد',1);const r=await sb.auth.updateUser({password:v});if(r.error)return fail(r.error);$('#pf_p').value='';msg('رمز عبور تغییر کرد')}
+const PT={acc:'اطلاعات شخصی',bank:'اطلاعات پرداخت',ph:'داروخانه‌های من',hrs:'ساعت کارکرد',sec:'امنیت',co:'همکاری‌ها',dsp:'نمایش',upd:'به‌روزرسانی'},APPV='نسخه ۱٫۴ — ۱۴۰۵/۰۸/۰۲';
+const ciOn=()=>{try{return localStorage.getItem('ci_on')=='1'}catch(e){return false}};
+function ciTog(){try{localStorage.setItem('ci_on',ciOn()?'0':'1')}catch(e){}home()}
+function pfBack(){if(S.pfp)S.pfp=null;else S.pg='home';home();window.scrollTo(0,0)}
+function pfGo(k){S.pfp=k;home();window.scrollTo(0,0)}
+function reloadApp(){location.href=location.pathname+'?v='+Date.now()}
+const mrow=(ic,t,s,on,cls)=>`<div class="mr ${cls||''}" onclick="${on}"><div class="ic"><svg viewBox="0 0 24 24">${IC[ic]}</svg></div><div class="tx"><b>${t}</b>${s?`<small>${s}</small>`:''}</div><span class="chv"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg></span></div>`;
+async function loadDet(){const r=await sb.from('member_details').select('*');S.dets={};(r.data||[]).forEach(x=>S.dets[x.user_id]=x);S.det=S.dets[S.me.id]||{}}
+function segSet(el,i){if(!el)return;el.querySelectorAll('button').forEach((b,k)=>b.classList.toggle('on',k==i));segPlace(el)}
+const segHtml=(id,o,cur,fn,cls)=>`<div class="${cls||'pl'} seg np" id="${id}" style="--n:${o.length}"><i class="ind"></i>${o.map(x=>`<button class="${x[0]==cur?'on':''}" onclick="${fn}('${x[0]}')">${x[1]}</button>`).join('')}</div>`;
+function auGo(v){segSet($('#seg_au'),v=='login'?0:1);setTimeout(()=>{S.tab=v;authView()},240)}
+function ftGo(v){S.ft=v;segSet($('#seg_ft'),v=='rec'?0:1);$('#ft_c').innerHTML=finBody()}
+function shFil(v){S.sf=v;segSet($('#seg_sf'),sfl.findIndex(f=>f[0]==v));$('#sl_rows').innerHTML=shRows()}
+function cpv(b,v){const t=b.textContent,ok=()=>{b.textContent='کپی شد ✓';setTimeout(()=>{b.textContent=t},1500)},fb=()=>{const x=document.createElement('textarea');x.value=v;document.body.appendChild(x);x.select();try{document.execCommand('copy');ok()}catch(e){msg('کپی نشد',1)}x.remove()};try{navigator.clipboard.writeText(v).then(ok,fb)}catch(e){fb()}}
+function payBtns(uid){const m=(S.dets||{})[uid];if(!m||uid==S.me.id)return'';const b=[];if(m.card_number)b.push(`<button onclick="cpv(this,'${m.card_number}')">کپی کارت</button>`);if(m.sheba)b.push(`<button onclick="cpv(this,'${m.sheba}')">کپی شبا</button>`);if(m.phone)b.push(`<button onclick="cpv(this,'${m.phone}')">کپی موبایل</button>`);
+ const who=[m.bank_name,m.account_holder].filter(Boolean).map(esc).join(' · ');return b.length||who?`${who?`<small>${who}</small>`:''}${b.length?`<div class="pb">${b.join('')}</div>`:''}`:''}
+function payMeta(uid){const m=(S.dets||{})[uid||S.me.id]||{},o=[];if(m.phone)o.push(['شماره موبایل',m.phone]);if(m.bank_name||m.account_holder)o.push(['بانک / صاحب حساب',[m.bank_name,m.account_holder].filter(Boolean).join(' — ')]);if(m.card_number)o.push(['شماره کارت',m.card_number.replace(/(\d{4})(?=\d)/g,'$1-')]);if(m.sheba)o.push(['شماره شبا',m.sheba]);return o}
+async function saveDet(){const g=(id,k)=>$(id)?$(id).value:((S.det||{})[k]||''),cl=s=>fa(String(s||'')).replace(/[\s-]/g,''),tx=s=>String(s||'').trim().replace(/[<>&"']/g,''),
+ ph=cl(g('#d_ph','phone')),cd=cl(g('#d_cd','card_number')),sh=cl(g('#d_sh','sheba')).toUpperCase(),bk=tx(g('#d_bk','bank_name')),ho=tx(g('#d_ho','account_holder'));
+ if(ph&&!/^09\d{9}$/.test(ph))return msg('شماره موبایل باید ۱۱ رقم و با ۰۹ شروع شود',1);
+ if(cd&&!/^\d{16}$/.test(cd))return msg('شماره کارت باید ۱۶ رقم باشد',1);
+ if(sh&&!/^IR\d{24}$/.test(sh))return msg('شماره شبا باید با IR شروع شود و ۲۴ رقم داشته باشد',1);
+ const r=await sb.rpc('save_my_details',{p_phone:ph,p_bank:bk,p_holder:ho,p_card:cd,p_sheba:sh});if(r.error)return fail(r.error);
+ S.det=Object.assign(S.det||{},{phone:ph||null,bank_name:bk||null,account_holder:ho||null,card_number:cd||null,sheba:sh||null});S.pfp=null;S.dets=S.dets||{};S.dets[S.me.id]=S.det;home();msg('ذخیره شد ✓')}
+function pfCard(){const me=S.me,dt=S.det||{},k=S.pfp,isPh=me.role=='pharmacist',em=S.email||'',un=em.endsWith('@'+UDOM)?em.slice(0,-(UDOM.length+1)):em,np=S.ms.length;
+ if(k=='acc')return `<div class="card"><div class="fm"><label>نام<input value="${esc(me.full_name)}" disabled></label><label>نام کاربری<input dir="ltr" value="${esc(un)}" disabled></label><label>نقش<input value="${isPh?'داروساز':'موسس'}${me.is_admin?' — ادمین':''}" disabled></label><label>شماره موبایل<input id="d_ph" type="tel" inputmode="numeric" dir="ltr" placeholder="09123456789" value="${esc(dt.phone||'')}"></label></div><button class="p" style="margin-top:10px" onclick="saveDet()">ذخیره</button></div>`;
+ if(k=='bank')return `<div class="card"><p class="mu" style="margin:0 0 10px">این اطلاعات زیر گزارش PDF شما چاپ می‌شود تا موسس برای پرداخت از آن استفاده کند. فقط خودتان آن را ویرایش می‌کنید.</p><div class="fm"><label>نام بانک<input id="d_bk" value="${esc(dt.bank_name||'')}"></label><label>نام صاحب حساب<input id="d_ho" value="${esc(dt.account_holder||'')}"></label><label>شماره کارت (۱۶ رقم)<input id="d_cd" type="tel" inputmode="numeric" dir="ltr" maxlength="25" value="${esc(dt.card_number||'')}"></label><label>شماره شبا (IR و ۲۴ رقم)<input id="d_sh" dir="ltr" maxlength="30" placeholder="IR..." value="${esc(dt.sheba||'')}"></label></div><button class="p" style="margin-top:10px" onclick="saveDet()">ذخیره</button></div>`;
+ if(k=='ph')return `<div class="gc np"><div class="srow tap add" onclick="openNewPh()"><span class="plus">+</span><b>ساخت داروخانهٔ جدید</b></div><div class="srow tap add" onclick="openJoin()"><span class="plus">+</span><b>پیوستن با کد دعوت</b></div></div>
+ <div class="gt">داروخانه‌های من</div><div class="gc" style="padding:0 16px">${S.ms.map(x=>{const ed=canEditPh(x.pharmacies);return `<div class="lr ${ed?'tap':''}" ${ed?`onclick="editPh('${x.pharmacy_id}')"`:''}><div class="lt"><b>${esc(x.pharmacies.name)}</b><span class="mu">${x.ended_at?'پایان‌یافته':'فعال'}${ed?`<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>`:''}</span></div><small class="mu">${x.pharmacies.owner_id?'با موسس':'شخصی'}${x.pharmacies.city?' · '+esc(x.pharmacies.city):''}${ed?' · برای ویرایش یا حذف لمس کنید':''}</small></div>`}).join('')||'<p class="mu" style="padding:14px 0;margin:0">هنوز داروخانه‌ای ندارید.</p>'}</div>`;
+ if(k=='co')return coopCard();
+ if(k=='hrs')return hrsCard();
+ if(k=='sec')return `<div class="card"><div class="ml">تغییر رمز عبور</div><div class="pw" style="margin-top:8px"><input id="pf_p" type="password" placeholder="رمز جدید (حداقل ۶ کاراکتر)" autocomplete="new-password"><button class="p" onclick="chPw()">ذخیره رمز</button></div></div>${mrow('logout','خروج از حساب کاربری','',"logout()",'red')}`;
+ if(k=='dsp'){const th=lsGet('theme')||'auto',ac=lsGet('accent')||'teal',dk=isDark();return `<div class="card"><div class="ml">حالت نمایش</div>${segHtml('seg_th',[['auto','خودکار'],['light','روز'],['dark','شب']],th,'setTheme')}<p class="mu" style="margin:8px 0 0;font-size:12px">«خودکار» از تنظیم گوشی پیروی می‌کند.</p></div><div class="card"><div class="ml">رنگ برنامه</div><div class="sw">${Object.entries(ACC).map(([id,a])=>`<button class="swb ${ac==id?'on':''}" data-id="${id}" style="background:${dk?a[2]:a[1]}" onclick="setAcc('${id}')" aria-label="${a[0]}">${ac==id?'✓':''}</button>`).join('')}</div></div><div class="card"><div class="fb"><div class="mu">واحد نمایش و ورود مبالغ ${unitSel()}</div></div></div>`}
+ if(k=='upd')return `<div class="card"><div class="ml">نسخه‌ی برنامه</div><p style="font-size:18px;font-weight:800;margin:6px 0 4px">${APPV}</p>${S.upd?`<p class="mu" style="margin:0 0 12px">آخرین به‌روزرسانی داده‌ها: ${S.upd.toLocaleTimeString('fa-IR',{hour12:false})}</p>`:''}<button class="p" onclick="reloadApp()">بارگذاری مجدد برنامه</button></div>`;
+ const sec=t=>`<div class="sec">${t}</div>`,ci=np?`<div class="mr" onclick="ciTog()"><div class="ic"><svg viewBox="0 0 24 24">${IC.clock}</svg></div><div class="tx"><b>ورود و خروج جایگزین</b><small>نمایش کارت «الان در داروخانه» در خانه</small></div><span class="tg ${ciOn()?'on':''}"><i></i></span></div>`:'';
+ return `${sec('حساب')}${mrow('user','اطلاعات شخصی','نام، نام کاربری و شماره تلفن',"pfGo('acc')")}${isPh?mrow('bank','اطلاعات پرداخت','کارت و شبا برای چاپ روی گزارش',"pfGo('bank')"):''}${mrow('store','داروخانه‌های من',`${pn(np)} داروخانه`,"pfGo('ph')")}${np?mrow('users','همکاری‌ها','دعوت، ویرایش و فهرست همکاران',"pfGo('co')"):''}${isPh?mrow('clock','ساعت کارکرد','جمع ساعت‌های تأییدشده',"pfGo('hrs')"):''}${mrow('shield','امنیت','رمز عبور و خروج از حساب',"pfGo('sec')")}${sec('تنظیمات')}${mrow('sun','نمایش','حالت روز و شب، رنگ برنامه و واحد مبلغ',"pfGo('dsp')")}${ci}${sec('عمومی')}${mrow('rocket','به‌روزرسانی',APPV,"pfGo('upd')")}<p class="mu" style="text-align:center;margin:18px 0 4px;font-size:12px">فارماشیفت · ${APPV}</p>`}
+function cpCode(b,c){const t=b.textContent,ok=()=>{msg('کد دعوت کپی شد ✓');b.textContent='کپی شد ✓';setTimeout(()=>{b.textContent=t},1600)},
+ fb=()=>{const x=document.createElement('textarea');x.value=c;document.body.appendChild(x);x.select();try{document.execCommand('copy');ok()}catch(e){msg('کپی نشد؛ کد را دستی انتخاب کنید',1)}x.remove()};
+ try{navigator.clipboard.writeText(c).then(ok,fb)}catch(e){fb()}}
+// ---------- صفحهٔ اصلی + منوی پایین ----------
+const IC={user:'<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/>',home:'<path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>',check:'<circle cx="12" cy="12" r="9"/><path d="M8 12.5l3 3 5-6"/>',wallet:'<rect x="3" y="6" width="18" height="13" rx="3"/><path d="M3 10h18M16 14.5h2"/>',doc:'<path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h6"/>',users:'<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.5 3-6 6.5-6s6.5 2.5 6.5 6"/><path d="M16 5a3.5 3.5 0 0 1 0 6.5M18 14.5c2 .8 3.5 2.7 3.5 5.5"/>',clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/>',swap:'<path d="M7 4L3 8l4 4M3 8h14M17 20l4-4-4-4M21 16H7"/>'};
+Object.assign(IC,{shield:'<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/>',bank:'<path d="M3 10l9-6 9 6M5 10v8M9.5 10v8M14.5 10v8M19 10v8M3 20h18"/>',store:'<path d="M4 9l1.5-5h13L20 9v11H4z"/><path d="M4 9c0 1.7 1.3 3 3 3s3-1.3 3-3c0 1.7 1.3 3 3 3s3-1.3 3-3"/><path d="M10 20v-5h4v5"/>',sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/>',rocket:'<path d="M12 3c4 2 6 6 5 11l-5 5-5-5c-1-5 1-9 5-11z"/><circle cx="12" cy="10" r="1.6"/><path d="M9 19l-2 3M15 19l2 3"/>',logout:'<path d="M10 4H5v16h5M15 8l4 4-4 4M19 12H9"/>',bell:'<path d="M6 16V11a6 6 0 0 1 12 0v5l2 2H4z"/><path d="M10 21h4"/>'});
+function navPages(isPh,ph){const pf=['pf','پروفایل','user'];return isPh?[['home','خانه','home'],['sh','شیفت‌ها','clock'],['fin','مالی','wallet'],['rep','گزارش‌ها','doc']]
+ :[['home','خانه','home'],['q','تأیید شیفت‌ها','check'],['pay','پرداخت‌ها','wallet'],['rep','گزارش‌ها','doc']]}
+function goPg(p,t){S.pg=p;if(t)S.ft=t;home();window.scrollTo(0,0);const a=$('#app');a.classList.remove('fd');void a.offsetWidth;a.classList.add('fd')}
+const tile=(l,v,sub,go,cls)=>`<div class="kp ${cls||''}" ${go?`onclick="goPg('${go.split(':')[0]}','${go.split(':')[1]||''}')"`:'style="cursor:default"'}><span>${l}</span><b>${v}</b>${sub?`<small>${sub}</small>`:''}</div>`;
+const monP=()=>{const t=tj();return `${t[0]}/${pad(t[1])}/`};
+function homeOw(){const me=S.me,A=S.shifts.filter(s=>s.status=='confirmed'),pendS=S.shifts.filter(s=>s.status=='pending').length,g=new Map();
+ A.forEach(s=>{const x=g.get(s.pharmacist_id)||{id:s.pharmacist_id,n:s.pharmacist_name,t:0,p:0,c:0};x.t+=s.amount;x.p+=bal(s).paid_confirmed;x.c++;g.set(s.pharmacist_id,x)});
+ const rows=[...g.values()],rem=rows.reduce((a,x)=>a+x.t-x.p,0),pd=rows.reduce((a,x)=>a+x.p,0),pendP=S.pay.filter(p=>p.status=='pending'&&p.created_by!=me.id).length,
+ ban=pendS||pendP?`<div class="bn" onclick="goPg('${pendS?'q':'pay'}')"><div><small>در انتظار تأیید شما</small><b>${[pendS?pn(pendS)+' شیفت':'',pendP?pn(pendP)+' پرداخت':''].filter(Boolean).join(' و ')}</b></div><span>بررسی ←</span></div>`:'';
+ return ban+nextCard(S.shifts.concat(S.plan))+`<div class="kps">${tile('پرداخت‌شده (تأییدشده)',fmt(pd),RL(),'pay')}${tile('مانده کل به داروسازان',fmt(rem),RL()+' — فقط تأییدشده‌ها','pay',rem?'warn':'')}</div>`+calCard(S.shifts.concat(S.plan))+planCard(false)+(ciOn()?ciCard(false):'')+anCard(S.shifts)+
+ `<div class="card"><h2>مانده به هر داروساز</h2>${rows.map(x=>`<div class="pc"><div><b>${esc(x.n)}</b><small>${pn(x.c)} شیفت تأییدشده · جمع ${fmt(x.t)}</small>${payBtns(x.id)}</div><div style="text-align:left"><b>${fmt(x.t-x.p)}</b><small>${x.t-x.p>0?'مانده':'تسویه‌شده'}</small></div></div>`).join('')||'<p class="mu">هنوز شیفت تأییدشده‌ای نیست.</p>'}</div>
+ <div class="gt">آخرین پرداخت‌ها</div>${S.pay.slice(0,5).map(p=>payRow(p,0)).join('')||'<div class="card mu">هنوز پرداختی ثبت نشده است.</div>'}`}
+function homePh(){const me=S.me,ph=curP(),A=S.shifts.filter(s=>s.pharmacist_id==me.id&&s.status!='voided'&&s.status!='rejected'),M=A.filter(s=>s.shift_date.startsWith(monP())),
+ Mc=M.filter(s=>s.status=='confirmed'),r2=v=>Math.round(v*100)/100,hc=r2(Mc.reduce((a,s)=>a+s.hours,0)),ph2=r2(M.filter(s=>s.status=='pending').reduce((a,s)=>a+s.hours,0)),
+ mt=M.reduce((a,s)=>a+s.amount,0),pendS=A.filter(s=>s.status=='pending').length,
+ claim=A.filter(s=>s.status=='confirmed').reduce((a,s)=>a+s.amount-bal(s).paid_confirmed,0),
+ pp=S.pay.filter(p=>p.status=='pending'),mine=pp.filter(p=>p.created_by!=me.id).length,wait=pp.length-mine;
+ return nextCard(A.concat(S.plan.filter(s=>s.pharmacist_id==S.me.id)))+`<div class="kps">${incTile()}${tile('ساعت کارکرد '+MN[tj()[1]-1],hc,`${Mc.length} شیفت تأییدشده${ph2?` — ${ph2} ساعت منتظر تأیید`:''}`,'sh')}${tile('جمع ماه جاری',fmt(mt),`${RL()}${pendS?` — ${pendS} شیفت منتظر تأیید`:''}`,'sh')}
+ ${ph.owner_id?tile('طلب از موسس',fmt(claim),RL()+' — فقط تأییدشده‌ها','fin:rec')+tile('پرداخت منتظر تأیید شما',mine,wait?`${wait} ثبت‌شدهٔ شما منتظر موسس`:'','fin:rec',mine?'warn':''):''}</div>${calCard(A.concat(S.plan.filter(s=>s.pharmacist_id==S.me.id)))}${planCard(true)}${ciOn()?ciCard(true):''}`}
+const pharmCard=()=>{const ph=curP();
+ if(!ph)return `<div class="ob"><div class="logo br">${LOGO}</div><h1>خوش آمدید</h1><p class="mu">هنوز داروخانه‌ای ندارید. یکی بسازید یا با کد دعوت وصل شوید.</p>
+ <div class="gt">داروخانهٔ جدید</div><div class="gc"><div class="srow"><span class="k">نام</span><input id="np" placeholder="نام داروخانه"></div>${npx()}</div>
+ <button class="p bigp" onclick="newPh()">ساخت داروخانه</button>
+ <div class="or"><span>یا</span></div>
+ <div class="gt">پیوستن با کد دعوت</div><div class="gc"><div class="srow"><span class="k">کد</span><input id="ic" dir="ltr" placeholder="کد دعوت" autocapitalize="characters"></div></div>
+ <button class="bigp" onclick="joinPh()">پیوستن</button></div>`;
+ const live=curM()&&!curM().ended_at,row=(f,x)=>`<div class="srow tap add" onclick="${f}()"><span class="plus">+</span><b>${x}</b></div>`;
+ return `<div class="gt">داروخانه‌ها و دعوت</div><p class="mu" style="margin:-2px 6px 10px">${ph.owner_id?'این داروخانه موسس دارد؛ شیفت‌ها نیاز به تأیید دارند.':'داروخانهٔ شخصی؛ شیفت‌ها مستقیم تأییدشده ثبت می‌شوند.'}</p>
+ <div class="gc np">${row('openNewPh','ساخت داروخانهٔ جدید')}${row('openJoin','پیوستن با کد دعوت')}${live?row('openInv','ساخت کد دعوت'):''}</div>`};
+function selOpts(){const o=x=>`<option value="${x.pharmacy_id}" ${x.pharmacy_id==S.cur?'selected':''}>${esc(x.pharmacies.name)}${x.pharmacies.owner_id?' (با موسس)':' (شخصی)'}${x.ended_at?(x.pharmacies.owner_id?' (پایان‌یافته)':' (بایگانی)'):''}</option>`,
+ act=S.ms.filter(x=>!x.ended_at),arc=S.ms.filter(x=>x.ended_at);
+ return act.map(o).join('')+(arc.length?`<optgroup label="بایگانی و پایان‌یافته">${arc.map(o).join('')}</optgroup>`:'')}
+function home(){const me=S.me,m=curM(),ph=curP(),isPh=me.role=='pharmacist',live=m&&!m.ended_at,pgs=ph?navPages(isPh,ph):[];
+ if(!pgs.some(p=>p[0]==S.pg)&&S.pg!='pf')S.pg='home';const pg=S.pg,adm=me.is_admin?admCard():'';let body;
+ if(!ph)body=pharmCard()+adm;
+ else if(pg=='home')body=(isPh?homePh()+incCard():homeOw())+(isPh?adm:'');
+ else if(pg=='q')body=queue()+shiftList();
+ else if(pg=='sh')body=(live?addRows():'')+shiftList();
+ else if(pg=='pay')body=weekCard(S.shifts)+payCard();
+ else if(pg=='rep')body=repCard();
+ else if(pg=='fin')body=weekCard(S.shifts.filter(s=>s.pharmacist_id==S.me.id))+finPage();
+ else if(pg=='pf')body=pfCard();
+ else body=adm;
+ const pendP=ph?S.pay.filter(p=>p.status=='pending'&&p.created_by!=me.id).length:0,pendS=ph?S.shifts.filter(s=>s.status=='pending').length:0,bd={q:pendS,pay:pendP,fin:pendP};
+ const TT={home:'خانه',q:'تأیید شیفت‌ها',sh:'شیفت‌ها',pay:'پرداخت‌ها',fin:'مالی',rep:'گزارش‌ها',co:'همکاری‌ها',pf:'پروفایل'};
+ $('#app').innerHTML=`<div class="hd">${pg=='pf'?`<button class="c rb" onclick="pfBack()" aria-label="بازگشت">→</button>`:`<button class="c av" onclick="${pgs.length?"S.pfp=null;goPg('pf')":'logout()'}" aria-label="پروفایل">${esc((me.full_name||'؟').trim().charAt(0))}</button>`}<div class="t"><b>${pgs.length?(pg=='pf'&&S.pfp?PT[S.pfp]:TT[pg])||'':'فارماشیفت'}</b><small>${esc(me.full_name)} · ${isPh?'داروساز':'موسس'}${me.is_admin?' — ادمین':''}</small></div><button class="c rb" onclick="refreshAll()" aria-label="به‌روزرسانی">↻</button></div>
+ ${S.ms.length&&pg!='pf'?`<div class="ph-sel"><select id="ph_s" hidden onchange="S.cur=this.value;loadShifts().then(home)">${selOpts()}</select><button type="button" class="chip" onclick="pickOpt('ph_s','انتخاب داروخانه')"><span>${phTxt()}</span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>${unitSel()}${S.upd?`<span class="mu upd">آخرین: ${S.upd.toLocaleTimeString('fa-IR',{hour12:false})}</span>`:''}</div>`:''}
+ ${body}${pgs.length&&!(pg=='pf'&&S.pfp)?`<nav class="nav np">${pgs.map(p=>`<button class="${p[0]==pg?'on':''}" onclick="goPg('${p[0]}')"><svg viewBox="0 0 24 24">${IC[p[2]]}</svg>${p[1]}${bd[p[0]]?`<i>${bd[p[0]]}</i>`:''}</button>`).join('')}</nav>`:''}`;
+ if($('#f_s'))prev();split()}
+
+const npx=()=>locRows('np');
+async function newPh(){const n=$('#np').value.trim();if(!n)return msg('نام داروخانه را بنویسید',1);
+ const v=locVals('np');if(!v)return;
+ const r=await sb.rpc('create_pharmacy',{p_name:n});if(r.error)return fail(r.error);S.cur=r.data;
+ let e2=null;if(v.p_province||v.p_city||v.p_address||v.p_phone||v.p_lat!=null){const r2=await sb.rpc('set_pharmacy_info',{p_pharmacy:String(r.data),...v});e2=r2.error}
+ await loadMs();home();if(e2)return rpcFail(e2);msg('داروخانه ساخته شد')}
+async function joinPh(){const c=$('#ic').value.trim();if(!c)return msg('کد را وارد کنید',1);
+ const r=await sb.rpc('accept_invite',{p_code:c});if(r.error)return fail(r.error);S.cur=r.data;await loadMs();home();msg('به داروخانه پیوستید')}
+function mkInv(){const role=$('#ir').value;if(role=='owner'&&!curP().owner_id)return askYes('پذیرفتن دعوت موسس','با پذیرفتن این دعوت، این داروخانه موسس پیدا می‌کند. شیفت‌های قبلی این داروخانه که تأییدشده‌اند و پرداختی برایشان ثبت نشده، در «طلب از موسس» شما حساب می‌شوند. اگر سابقهٔ زیادی دارید، بهتر است داروخانهٔ جدیدی با موسس بسازید. ادامه می‌دهید؟','ادامه',()=>mkInv2(role));mkInv2(role)}
+async function mkInv2(role){const r=await sb.rpc('create_invite',{p_pharmacy:S.cur,p_role:role});if(r.error)return fail(r.error);
+ $('#invo').innerHTML=`<span class="code">${esc(r.data)}</span> <button onclick="cpCode(this,'${esc(r.data)}')">کپی</button> <span class="mu">۷ روز اعتبار، یک‌بار مصرف</span>`}
+
+// ---------- ثبت شیفت ----------
+function shiftFormOld(){const[y,mo,d]=tj(),ys=[];for(let i=1403;i<=1412;i++)ys.push([i,i]);
+ return `<div class="card"><h2>ثبت شیفت</h2><div class="fm">
+ <label>نوع ثبت<select id="f_k"><option value="done">شیفت انجام‌شده</option><option value="plan">برنامه‌ی شیفت آینده</option></select></label>
+ <label>تاریخ شمسی<div class="dt" id="f_d"><select>${opt(ys,y)}</select><select>${opt(MN.map((n,i)=>[i+1,n]),mo)}</select><select>${opt([...Array(31)].map((_,i)=>[i+1,i+1]),d)}</select></div></label>
+ <label>ساعت شروع<input type="time" id="f_s" value="16:00" oninput="prev()"></label>
+ <label>ساعت پایان<input type="time" id="f_e" value="00:00" oninput="prev()"></label>
+ <label>مبلغ (${RL()})<div class="dt"><select id="f_m" onchange="prev()" style="flex:0 0 42%"><option value="total">مبلغ کل شیفت</option><option value="hourly">نرخ هر ساعت</option></select><input id="f_r" inputmode="numeric" oninput="this.value=this.value?fmtN(num(this.value)):'';prev()" style="flex:1;min-width:0"></div></label>
+ <label>جایگزین (فقط اگر خودتان نرفتید)<input id="f_o" placeholder="نام فردی که به‌جای شما رفته"></label>
+ <label>توضیحات<input id="f_n"></label></div>
+ <div class="pv" id="pv"></div><button class="p" onclick="saveShift()">ذخیره شیفت</button></div>`}
+const hrs=(s,e)=>{if(!s||!e)return 0;const[a,b]=s.split(':').map(Number),[c,d]=e.split(':').map(Number);let x=a*60+b,y=c*60+d;if(y<=x)y+=1440;return Math.round((y-x)/60*100)/100};
+function prev(){const h=hrs($('#f_s').value,$('#f_e').value),r=nI($('#f_r').value),t=$('#f_m').value=='total';
+ $('#pv').innerHTML=`مدت: <b>${h}</b> ساعت — مبلغ شیفت: <b>${fmt(t?r:h*r)} ${RL()}</b>`}
+let SVBUSY=false;
+async function saveShift(){const s=document.querySelectorAll('#f_d select'),jy=+s[0].value,jm=+s[1].value,jd=+s[2].value,v=nI($('#f_r').value);
+ if(!v)return msg('مبلغ را وارد کنید',1);if(!$('#f_s').value||!$('#f_e').value)return msg('ساعت‌ها را وارد کنید',1);
+ const[gy,gm,gd]=j2g(jy,jm,jd);
+ if(SVBUSY)return;
+ const ds=`${jy}/${pad(jm)}/${pad(jd)}`;
+ if(S.shifts.concat(S.plan||[]).some(x=>x.shift_date==ds&&x.start_time==$('#f_s').value&&x.pharmacist_id==S.me.id&&x.status!='voided'&&x.status!='rejected'))return msg('این شیفت (همین تاریخ و ساعت شروع) قبلاً ثبت شده است',1);
+ SVBUSY=true;
+ const plan=$('#f_k').value=='plan',r=await sb.rpc(plan?'plan_shift':'save_shift',{...(plan?{}:{p_id:null}),p_pharmacy:S.cur,p_date:`${jy}/${pad(jm)}/${pad(jd)}`,p_gdate:`${gy}-${pad(gm)}-${pad(gd)}`,p_start:$('#f_s').value,p_end:$('#f_e').value,p_mode:$('#f_m').value,p_value:v,p_substitute:$('#f_o').value,p_note:$('#f_n').value});
+ SVBUSY=false;if(r.error)return fail(r.error);await loadShifts();home();msg(plan?'برنامه‌ی شیفت ثبت شد':curP().owner_id?'شیفت ثبت شد و منتظر تأیید موسس است':'شیفت ثبت شد')}
+
+// ---------- لیست شیفت‌ها ----------
+
+const pn=n=>(+n).toLocaleString('fa-IR',{useGrouping:false});
+ST.planned='برنامه‌ریزی‌شده';
+function shSt(s){if(s.status=='planned')return'n';if(s.status=='pending')return'p';if(s.status=='confirmed')return bal(s).paid_confirmed>=s.amount?'s':'c';return''}
+function calMove(d){const c=S.cm||tj().slice(0,2);let y=c[0],m=c[1]+d;if(m>12){m=1;y++}if(m<1){m=12;y--}S.cm=[y,m];S.cd=null;home()}
+function calPick(d){S.cd=S.cd==d?null:d;home()}
+function calCard(list){const t=tj(),c=S.cm||[t[0],t[1]],k=`${c[0]}/${pad(c[1])}/`,g=j2g(c[0],c[1],1),n2=c[1]==12?j2g(c[0]+1,1,1):j2g(c[0],c[1]+1,1),
+ D0=new Date(g[0],g[1]-1,g[2]),n=Math.round((new Date(n2[0],n2[1]-1,n2[2])-D0)/864e5),wd=(D0.getDay()+1)%7,rk={p:3,c:2,s:1,n:0},st={},by={};
+ list.filter(s=>s.status!='voided'&&s.status!='rejected'&&s.shift_date.startsWith(k)).forEach(s=>{const d=+s.shift_date.split('/')[2],x=shSt(s);(by[d]=by[d]||[]).push(s);if(!st[d]||rk[x]>rk[st[d]])st[d]=x});
+ let cells=['ش','ی','د','س','چ','پ','ج'].map(x=>`<div class="h">${x}</div>`).join('')+'<div></div>'.repeat(wd);
+ for(let d=1;d<=n;d++)cells+=`<div class="d ${st[d]||''} ${S.cd==d?'sel':''} ${(c[0]==t[0]&&c[1]==t[1]&&d==t[2])?'tdy':''}" onclick="calPick(${d})">${pn(d)}</div>`;
+ const sel=S.cd&&by[S.cd]?`<div class="dl">${by[S.cd].map(s=>`<div><span>${esc(s.pharmacist_name)} · ${pn(s.hours)} ساعت</span><span><b>${fmt(s.amount)}</b> <span class="b ${s.status}">${ST[s.status]}</span></span></div>`).join('')}</div>`:'';
+ return `<div class="card"><div class="ml">تقویم شیفت‌ها</div><div class="cn"><button onclick="calMove(-1)" aria-label="ماه قبل" style="display:flex;align-items:center"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button><b>${MN[c[1]-1]} <span class="yr">${pn(c[0])}</span></b><button onclick="calMove(1)" aria-label="ماه بعد" style="display:flex;align-items:center"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg></button></div><div class="cal">${cells}</div>
+ <div class="cg"><span><i style="background:var(--wa)"></i>منتظر تأیید</span><span><i style="background:#2b6fd6"></i>تأییدشده</span><span><i style="background:var(--ok)"></i>تسویه‌شده</span><span><i style="border:2px dashed var(--pr);width:6px;height:6px"></i>برنامه‌ریزی‌شده</span></div>${sel}</div>`}
+const sfl=[['all','همه'],['pending','منتظر تأیید'],['confirmed','تأییدشده'],['settled','تسویه‌شده']];
+function shF(s){const f=S.sf||'all';return f=='all'||(f=='settled'?shSt(s)=='s':f=='confirmed'?shSt(s)=='c':s.status=='pending')}
+const todK=()=>{const x=tj();return `${x[0]}/${pad(x[1])}/${pad(x[2])}`};
+const stL=s=>{const x=shSt(s);return s.status=='rejected'||s.status=='voided'?['x',ST[s.status]]:[x,x=='s'?'تسویه‌شده':ST[s.status]]};
+const jd=s=>{const q=s.split('/');return `${pn(+q[2])} ${MN[+q[1]-1]}`};
+function nextCard(list){const L=list.filter(s=>s.status!='voided'&&s.status!='rejected'),k=todK(),up=L.filter(s=>s.shift_date>=k).sort((a,b)=>a.shift_date<b.shift_date?-1:1)[0],
+ s=up||L.slice().sort((a,b)=>a.shift_date<b.shift_date?1:-1)[0];if(!s)return '';const z=stL(s);
+ return `<div class="card nx"><div class="ml">${up?'شیفت بعدی':'آخرین شیفت'}</div><div class="r"><b>${esc(s.pharmacist_name)}</b><b>${fmt(s.amount)}</b></div><div class="r"><small>${jd(s.shift_date)} · ${s.start_time}–${s.end_time} · ${pn(s.hours)} ساعت</small><span class="st ${z[0]}">${z[1]}</span></div></div>`}
+function weekCard(list){const L=list.filter(s=>s.status!='voided'&&s.status!='rejected'),now=new Date(),w0=new Date(now.getFullYear(),now.getMonth(),now.getDate()-(now.getDay()+1)%7),
+ f=new Intl.DateTimeFormat('en-u-ca-persian',{year:'numeric',month:'numeric',day:'numeric'});let cells='',pc=0,all=0,ns=0;
+ ['ش','ی','د','س','چ','پ','ج'].forEach(x=>cells+=`<div class="h">${x}</div>`);
+ for(let i=0;i<7;i++){const d=new Date(w0.getFullYear(),w0.getMonth(),w0.getDate()+i),q=f.formatToParts(d),g=n=>+q.find(x=>x.type==n).value,k=`${g('year')}/${pad(g('month'))}/${pad(g('day'))}`,
+  D=L.filter(s=>s.shift_date==k);let c='';D.forEach(s=>{const x=shSt(s);if(x!='n'){all++;if(x=='p')pc++;if(x!='s')ns++}if(!c||c=='n'||(x=='p')||(x=='c'&&c=='s'))c=x});
+  cells+=`<div class="d ${c} ${k==todK()?'tdy':''}">${pn(g('day'))}</div>`}
+ const m=!all?'این هفته شیفتی ثبت نشده':pc?`${pn(pc)} شیفت این هفته منتظر تأیید است`:ns?'شیفت‌های این هفته تأیید شده‌اند؛ تسویه باقی است':'همه‌ی شیفت‌های این هفته تسویه شده';
+ return `<div class="card wk"><div class="ml">این هفته</div><div class="cal" style="margin-top:8px">${cells}</div><p style="color:var(--${!all?'mu':pc?'wa':ns?'bl':'ok'})">${m}</p></div>`}
+
+function anCard(list){const L=list.filter(s=>s.status=='confirmed'),T=tj(),ms=[];let y=T[0],m=T[1];
+ for(let i=0;i<6;i++){ms.unshift([y,m]);m--;if(m<1){m=12;y--}}
+ const K=a=>`${a[0]}/${pad(a[1])}/`,agg=a=>{const k=K(a),r={h:0,a:0,by:{}};L.filter(s=>s.shift_date.startsWith(k)).forEach(s=>{r.h+=s.hours;r.a+=s.amount;const o=r.by[s.pharmacist_id]||(r.by[s.pharmacist_id]={n:s.pharmacist_name,h:0,a:0,c:0});o.h+=s.hours;o.a+=s.amount;o.c++});return r},
+ D=ms.map(agg),cur=D[5],pre=D[4],mx=Math.max(...D.map(x=>x.a),1),r2=v=>Math.round(v*100)/100,
+ dl=(a,b)=>!b?'<span class="dl2">—</span>':`<span class="dl2 ${a>=b?'u':'d'}">${a>=b?'+':'−'}${pn(Math.abs(Math.round((a-b)/b*100)))}٪</span>`;
+ const rows=Object.entries(cur.by).sort((a,b)=>b[1].a-a[1].a).map(([id,o])=>{const q=pre.by[id];return `<div class="pc"><div><b>${esc(o.n)}</b><small>${pn(r2(o.h))} ساعت · ${pn(o.c)} شیفت</small></div><div style="text-align:left"><b>${fmt(o.a)}</b><small>${q?dl(o.a,q.a):'ماه قبل: —'}</small></div></div>`}).join('');
+ return `<div class="card"><div class="ml">تحلیل ماهانه · فقط شیفت‌های تأییدشده</div>
+ <div class="kps" style="margin:10px 0 0"><div class="kp" style="cursor:default"><span>مبلغ ${MN[T[1]-1]}</span><b>${fmt(cur.a)}</b><small>${RL()} ${dl(cur.a,pre.a)}</small></div><div class="kp" style="cursor:default"><span>ساعت ${MN[T[1]-1]}</span><b>${pn(r2(cur.h))}</b><small>${dl(cur.h,pre.h)} نسبت به ماه قبل</small></div></div>
+ <div class="bars">${D.map((x,i)=>`<div class="c ${i==5?'now':''}"><i style="height:${Math.round(x.a/mx*100)}%" title="${fmt(x.a)}"></i><small>${MN[ms[i][1]-1]}</small></div>`).join('')}</div>
+ ${rows?`<div class="ml" style="margin:12px 0 2px">به تفکیک داروساز مسئول</div>${rows}`:'<p class="mu" style="margin:8px 0 0">این ماه هنوز شیفت تأییدشده‌ای نیست.</p>'}</div>`}
+
+function planCard(own){const L=own?S.plan.filter(s=>s.pharmacist_id==S.me.id):S.plan;if(!L.length&&!own)return'';
+ return `<div class="card"><div class="ml">برنامه‌ی شیفت‌های آینده</div>${L.length?L.map(s=>`<div class="pc"><div><b>${jd(s.shift_date)}${own?'':' · '+esc(s.pharmacist_name)}</b><small>${s.start_time}–${s.end_time} · ${pn(s.hours)} ساعت · ${fmt(s.amount)}${s.substitute_name?' · جایگزین: '+esc(s.substitute_name):''}</small></div>${own?`<div style="display:flex;gap:6px"><button class="p" style="padding:5px 10px" onclick="planDone('${s.id}')">انجام شد</button><button style="padding:5px 10px" onclick="planDel('${s.id}')">حذف</button></div>`:''}</div>`).join(''):'<p class="mu" style="margin:8px 0 0">برنامه‌ای ثبت نشده. در «ثبت شیفت» نوع «برنامه‌ی شیفت آینده» را انتخاب کنید.</p>'}</div>`}
+async function planDone(id){const s=S.plan.find(x=>x.id==id);if(!s)return;const r=await sb.rpc('save_shift',{p_id:id,p_pharmacy:s.pharmacy_id,p_date:s.shift_date,p_gdate:s.shift_gdate,p_start:s.start_time,p_end:s.end_time,p_mode:'total',p_value:s.amount,p_substitute:s.substitute_name||'',p_note:s.note||''});if(r.error)return fail(r.error);await loadShifts();home();msg(curP().owner_id?'شیفت ثبت شد و منتظر تأیید موسس است':'شیفت ثبت شد')}
+function planDel(id){askYes('حذف برنامه','این برنامه حذف شود؟','حذف',async()=>{const r=await sb.rpc('delete_planned',{p_id:id});if(r.error)return fail(r.error);await loadShifts();home();msg('حذف شد')})}
+const hmT=d=>new Date(d).toLocaleTimeString('fa-IR',{hour:'2-digit',minute:'2-digit'}),dyT=d=>{const x=new Date(d);return x.toDateString()==new Date().toDateString()?'امروز':x.toLocaleDateString('fa-IR-u-ca-persian',{month:'long',day:'numeric'})};
+async function loadCi(){if(!S.cur){S.ci=[];return}const r=await sb.from('shift_checkins').select('*').eq('pharmacy_id',S.cur).order('at',{ascending:false}).limit(60);S.ci=r.error?[]:r.data}
+function ciCard(rec){const seen=new Set(),on=[];(S.ci||[]).forEach(c=>{const k=c.person_name.trim().toLowerCase();if(seen.has(k))return;seen.add(k);if(c.kind=='in')on.push(c)});
+ const log=(S.ci||[]).slice(0,5),names=[...new Set([S.me.full_name,...S.shifts.map(s=>s.substitute_name),...(S.ci||[]).map(c=>c.person_name)].filter(Boolean))];
+ return `<div class="card"><div class="ml">الان در داروخانه</div>${on.length?on.map(c=>`<div class="pc"><b>${esc(c.person_name)}</b><small>از ${dyT(c.at)} ساعت ${hmT(c.at)}</small></div>`).join(''):'<p class="mu" style="margin:8px 0">کسی ثبت ورود نکرده است.</p>'}
+ ${rec?`<div class="fm" style="margin-top:10px"><label>نام فرد<input id="ci_n" list="ci_l" value="${esc(S.ciN||'')}" placeholder="جایگزین یا خودتان"></label><datalist id="ci_l">${names.map(n=>`<option value="${esc(n)}">`).join('')}</datalist></div><div style="display:flex;gap:8px;margin-top:8px"><button class="p" style="flex:1" onclick="ciGo('in')">ثبت ورود</button><button style="flex:1" onclick="ciGo('out')">ثبت خروج</button></div>`:''}
+ ${log.length?`<div class="ml" style="margin:12px 0 2px">آخرین ثبت‌ها</div>${log.map(c=>`<div class="pc"><span>${esc(c.person_name)} · ${c.kind=='in'?'ورود':'خروج'}</span><small>${dyT(c.at)} ${hmT(c.at)}</small></div>`).join('')}`:''}</div>`}
+async function ciGo(k){const n=($('#ci_n').value||'').trim();if(!n)return msg('نام را وارد کنید',1);S.ciN=n;const r=await sb.rpc('record_checkin',{p_pharmacy:S.cur,p_person:n,p_kind:k});if(r.error)return fail(r.error);await loadCi();home();msg(k=='in'?'ورود ثبت شد':'خروج ثبت شد')}
+function shiftList(){return segHtml('seg_sf',sfl,S.sf||'all','shFil')+`<div id="sl_rows">${shRows()}</div>`}
+function shRows(){const me=S.me.id,PO=curP()?.owner_id,g={},act=s=>s.status!='voided'&&s.status!='rejected';
+ S.shifts.filter(shF).slice().sort((a,b)=>a.shift_date<b.shift_date?1:-1).forEach(s=>{const k=s.shift_date.slice(0,7);(g[k]=g[k]||[]).push(s)});
+ const rows=Object.keys(g).map(k=>{const q=k.split('/');return `<div class="mh"><span>${MN[+q[1]-1]} ${pn(q[0])}</span><span>${fmt(g[k].filter(act).reduce((a,s)=>a+s.amount,0))}</span></div>`+g[k].map(s=>{const z=stL(s),b=bal(s);
+  return `<div class="sr"><div><b>${esc(s.pharmacist_name)}</b><small>${jd(s.shift_date)} · ${s.start_time}–${s.end_time} · ${pn(s.hours)} ساعت</small>${s.substitute_name?`<small>جایگزین: ${esc(s.substitute_name)}</small>`:''}
+  ${PO&&s.status=='confirmed'?`<small>پرداخت‌شده: ${fmt(b.paid_confirmed)}${b.paid_pending?` (+${fmt(b.paid_pending)} منتظر تأیید)`:''}</small>`:''}${s.reject_reason?`<small>${esc(s.reject_reason)}</small>`:''}${s.void_reason?`<small>${esc(s.void_reason)}</small>`:''}</div>
+  <div class="am"><b>${fmt(s.amount)}</b><span class="st ${z[0]}" style="display:block">${z[1]}</span>${act(s)&&s.pharmacist_id==me&&!(b.paid_confirmed+b.paid_pending>0)?`<button class="d" style="margin-top:6px;padding:3px 10px" onclick="voidS('${s.id}')">ابطال</button>`:''}${act(s)&&s.pharmacist_id==me?`<button style="margin-top:6px;padding:3px 10px" onclick="shareTxt('${s.pharmacy_id}','${s.id}')">اشتراک</button>`:''}</div></div>`}).join('')}).join('');
+ return `${rows||'<div class="card mu">شیفتی برای نمایش نیست.</div>'}`}
+function voidS(id){askWhy('ابطال شیفت','ابطال',async r=>{
+ const x=await sb.rpc('void_shift',{p_id:id,p_reason:r});if(x.error)return fail(x.error);await loadShifts();home();msg('شیفت ابطال شد')})}
+
+// ================= بخش ۲ =================
+const bal=s=>S.bal[s.id]||{paid_confirmed:0,paid_pending:0};
+const rem=s=>s.amount-bal(s).paid_confirmed-bal(s).paid_pending;
+const dsel=id=>{const[y,mo,d]=tj(),ys=[];for(let i=1403;i<=1412;i++)ys.push([i,i]);
+ return `<div class="dt dw" id="${id}"><select>${opt(ys,y)}</select><select>${opt(MN.map((n,i)=>[i+1,n]),mo)}</select><select>${opt([...Array(31)].map((_,i)=>[i+1,i+1]),d)}</select><button type="button" class="dbtn" onclick="pickD('${id}')">${dTx(y,mo,d)}</button></div>`};
+const rd=id=>{const s=document.querySelectorAll('#'+id+' select'),jy=+s[0].value,jm=+s[1].value,jd=+s[2].value,[gy,gm,gd]=j2g(jy,jm,jd);
+ return{j:`${jy}/${pad(jm)}/${pad(jd)}`,g:`${gy}-${pad(gm)}-${pad(gd)}`}};
+const shiftLbl=id=>{const s=S.shifts.find(x=>x.id==id);return s?`${s.shift_date} ${s.start_time}–${s.end_time}`:'—'};
+const nm=v=>v?fmtN(num(v)):'';
+
+// ---------- صف تأیید شیفت (موسس) ----------
+function queue(){const q=S.shifts.filter(s=>s.status=='pending');
+ return `<div class="gt">صف تأیید شیفت‌ها <span class="mu" style="font-weight:400">(${q.length} مورد)</span></div>
+ ${q.length?`<div class="gc" style="padding:0 16px">${q.map(s=>`<div class="lr"><div class="lt"><b>${esc(s.pharmacist_name)}</b><span>${fmt(s.amount)} ${RL()}</span></div>
+ <small class="mu">${s.shift_date} · ${s.start_time}–${s.end_time} · ${s.hours} ساعت${s.substitute_name?' · جایگزین: '+esc(s.substitute_name):''}</small>${s.note?`<div class="mu">${esc(s.note)}</div>`:''}
+ <div class="fb"><button class="p" onclick="okS('${s.id}')">تأیید</button><button class="d" onclick="noS('${s.id}')">رد</button></div></div>`).join('')}</div>`
+ :'<div class="gc"><p class="mu" style="padding:14px 0;margin:0">شیفتی منتظر تأیید نیست.</p></div>'}`}
+async function okS(id){const r=await sb.rpc('confirm_shift',{p_id:id});if(r.error)return fail(r.error);await loadShifts();home();msg('شیفت تأیید شد')}
+function noS(id){askWhy('رد شیفت','رد',async t=>{
+ const r=await sb.rpc('reject_shift',{p_id:id,p_reason:t});if(r.error)return fail(r.error);await loadShifts();home();msg('شیفت رد شد')})}
+
+// ---------- پرداخت‌ها ----------
+function payCard(){const me=S.me,own=curP().owner_id==me.id,live=curM()&&!curM().ended_at;
+ return `<div class="card"><h2>پرداخت‌ها</h2>
+ <p class="mu" style="margin-top:-4px">${own?'پرداخت را شما ثبت می‌کنید و داروساز باید تأیید کند.':'پرداخت دریافتی را می‌توانید ثبت کنید؛ موسس باید تأیید کند.'} فقط پس از تأیید طرف مقابل در حساب شیفت‌ها حساب می‌شود.</p>
+</div>
+ ${live?`<div class="gc np"><div class="srow tap add" onclick="openPay()"><span class="plus">+</span><b>${own?'ثبت پرداخت جدید':'ثبت دریافتی'}</b></div></div>`:''}
+ ${payList()}`}
+const pfl=[['all','همه'],['pending','منتظر تأیید'],['confirmed','تأییدشده'],['void','ردشده و ابطال‌شده']];
+function payList(){return segHtml('seg_pf',pfl,S.pyf||'all','payFil')+`<div id="pl_rows">${payRows()}</div>`}
+function payFil(v){S.pyf=v;segSet($('#seg_pf'),pfl.findIndex(f=>f[0]==v));$('#pl_rows').innerHTML=payRows()}
+function payF(p){const f=S.pyf||'all';return f=='all'||(f=='void'?(p.status=='rejected'||p.status=='voided'):p.status==f)}
+function payRow(p,full){const me=S.me,own=curP().owner_id==me.id,z=p.status=='pending'?'p':p.status=='confirmed'?'s':'x';
+ const who=own?esc(p.pharmacist_name):(p.created_by==me.id?'ثبت: شما':'ثبت: موسس');
+ const sub=`${jd(p.paid_date)} · ${own?who+' · ثبت: '+(p.created_by==me.id?'شما':'داروساز'):who}`;
+ const canOk=p.status=='pending'&&p.created_by!=me.id,canVoid=(p.status=='pending'&&p.created_by==me.id)||(p.status=='confirmed'&&((!curP().owner_id&&p.created_by==me.id)||me.is_admin));
+ return `<div class="sr pr"><div class="pm"><b>${fmt(p.amount)} ${RL()}</b><small>${sub}</small>${p.note?`<small>${esc(p.note)}</small>`:''}${p.reject_reason?`<small>${esc(p.reject_reason)}</small>`:''}${p.void_reason?`<small>${esc(p.void_reason)}</small>`:''}</div>
+ <div class="am"><span class="st ${z}" style="display:block">${ST[p.status]||p.status}</span></div>
+ ${full?`<div class="fb pa"><button onclick="pit('${p.id}',this)">جزئیات</button>${canOk?`<button class="p" onclick="okP('${p.id}')">${own?'تأیید':'تأیید دریافت'}</button><button class="d" onclick="noP('${p.id}')">رد</button>`:''}${canVoid?`<button class="d" onclick="voidP('${p.id}')">ابطال</button>`:''}</div><div id="pi_${p.id}" class="mu pit" hidden></div>`:''}</div>`}
+function payRows(){const g={};S.pay.filter(payF).slice().sort((a,b)=>a.paid_date<b.paid_date?1:a.paid_date>b.paid_date?-1:0).forEach(p=>{const k=p.paid_date.slice(0,7);(g[k]=g[k]||[]).push(p)});
+ const rows=Object.keys(g).map(k=>{const q=k.split('/');return `<div class="mh"><span>${MN[+q[1]-1]} ${pn(q[0])}</span><span>${fmt(g[k].filter(p=>p.status=='confirmed').reduce((a,p)=>a+p.amount,0))}</span></div>`+g[k].map(p=>payRow(p,1)).join('')}).join('');
+ return rows||'<div class="card mu">پرداختی برای نمایش نیست.</div>'}
+function payForm(own){
+ const ps=[...new Map(S.shifts.filter(s=>s.status=='confirmed').map(s=>[s.pharmacist_id,s.pharmacist_name])).entries()];
+ return `<div class="pv">${own?'<b>ثبت پرداخت جدید</b>':''}<div class="fm" style="margin-top:8px">
+ ${own?`<label>داروساز<select id="p_p" onchange="split()">${opt(ps,ps[0]?.[0])}</select></label>`:''}
+ <label>تاریخ پرداخت${dsel('p_d')}</label>
+ <label>مبلغ کل (${RL()})<input id="p_t" inputmode="numeric" oninput="this.value=nm(this.value);split()"></label>
+ <label>توضیحات<input id="p_n"></label></div>
+ <p class="mu" style="margin:8px 0 4px">مبلغ به‌صورت خودکار از قدیمی‌ترین شیفت تأییدشده تقسیم می‌شود؛ می‌توانید هر ردیف را تغییر دهید.</p>
+ <div class="tw" id="p_rows"></div><div id="p_s" style="margin:8px 0"></div>
+ <button class="p" onclick="savePay()">${own?'ثبت پرداخت و ارسال برای تأیید داروساز':'ثبت دریافتی و ارسال برای تأیید موسس'}</button></div>`}
+function cand(){const el=$('#p_p'),pid=el?el.value:S.me.id;
+ return S.shifts.filter(s=>s.status=='confirmed'&&s.pharmacist_id==pid&&rem(s)>0)
+ .sort((a,b)=>a.shift_gdate<b.shift_gdate?-1:a.shift_gdate>b.shift_gdate?1:(a.start_time<b.start_time?-1:1))}
+function split(){if(!$('#p_rows'))return;let left=num($('#p_t').value);const c=cand();
+ $('#p_rows').innerHTML=c.length?`${c.map(s=>{const a=Math.min(left,dvr(rem(s)));left-=a;
+ return `<div class="sr pr" style="align-items:center"><div class="pm"><b>${s.shift_date}</b><small>${s.start_time}–${s.end_time} · مانده: ${fmt(rem(s))}</small></div><input class="am" style="width:120px;text-align:center" data-id="${s.id}" data-max="${rem(s)}" inputmode="numeric" value="${a?fmtN(a):''}" oninput="this.value=nm(this.value);sumP(1)"></div>`}).join('')}`
+ :'<p class="mu">شیفت تأییدشدهٔ تسویه‌نشده‌ای برای این داروساز نیست.</p>';
+ sumP()}
+function sumP(sy){const s=[...document.querySelectorAll('#p_rows .am')].reduce((a,i)=>a+num(i.value),0),t=num($('#p_t').value);
+ if(sy&&$('#p_t'))$('#p_t').value=s?fmtN(s):'';
+ const t2=num($('#p_t').value);
+ $('#p_s').innerHTML=`جمع تخصیص‌یافته به شیفت‌ها: <b>${fmtN(s)} ${RL()}</b>${t2&&t2!=s?` — <span style="color:var(--wa)">${fmtN(t2-s)} ${RL()} از مبلغ کل به شیفتی تخصیص نیافته (بیشتر از مانده‌ها)</span>`:''}`}
+async function savePay(){const own=curP().owner_id==S.me.id,pid=own?($('#p_p')||{}).value:S.me.id,inp=[...document.querySelectorAll('#p_rows .am')];
+ if(!pid)return msg('داروساز انتخاب نشده',1);
+ const amt=i=>{const a=nI(i.value),m=+i.dataset.max;return a>m&&a-m<K()?m:a},items=inp.map(i=>({shift_id:i.dataset.id,amount:amt(i)})).filter(x=>x.amount>0);
+ if(!items.length)return msg('مبلغی به شیفتی تخصیص داده نشده است',1);
+ if(inp.some(i=>amt(i)>+i.dataset.max))return msg('تخصیص یک شیفت از مانده‌اش بیشتر است',1);
+ const t=nI($('#p_t').value),s=items.reduce((a,x)=>a+x.amount,0);
+ if(Math.abs(t-s)>=K()&&!confirm(`فقط ${fmt(s)} ${RL()} به شیفت‌ها تخصیص یافته (مبلغ کل: ${fmt(t)}). با همین مقدار ثبت شود؟`))return;
+ const d=rd('p_d');
+ const r=await sb.rpc('create_payment',{p_pharmacy:S.cur,p_pharmacist:pid,p_date:d.j,p_gdate:d.g,p_items:items,p_note:$('#p_n').value});
+ if(r.error)return fail(r.error);await loadShifts();home();msg('پرداخت ثبت شد و منتظر تأیید طرف مقابل است')}
+async function okP(id){const r=await sb.rpc('confirm_payment',{p_id:id});if(r.error)return fail(r.error);await loadShifts();home();msg('پرداخت تأیید شد')}
+function noP(id){askWhy('رد پرداخت','رد',async t=>{
+ const r=await sb.rpc('reject_payment',{p_id:id,p_reason:t});if(r.error)return fail(r.error);await loadShifts();home();msg('پرداخت رد شد')})}
+function voidP(id){askWhy('ابطال پرداخت','ابطال',async t=>{
+ const r=await sb.rpc('void_payment',{p_id:id,p_reason:t});if(r.error)return fail(r.error);await loadShifts();home();msg('پرداخت ابطال شد')})}
+async function pit(id,b){const c=$('#pi_'+id);if(!c||c.dataset.busy)return;
+ if(!c.hidden){c.dataset.busy=1;c.style.height=c.scrollHeight+'px';c.offsetHeight;c.classList.add('cl');c.style.height='0px';if(b)b.textContent='جزئیات';
+  setTimeout(()=>{c.hidden=true;c.classList.remove('cl');c.style.height='';delete c.dataset.busy},380);return}
+ c.dataset.busy=1;
+ const r=await sb.from('payment_items').select('shift_id,amount').eq('payment_id',id);if(r.error){delete c.dataset.busy;return fail(r.error)}
+ c.innerHTML=r.data.map(x=>`${shiftLbl(x.shift_id)}: <b>${fmt(x.amount)}</b> ${RL()}`).join('<br>')||'—';
+ c.classList.add('cl');c.style.height='0px';c.hidden=false;c.offsetHeight;c.classList.remove('cl');c.style.height=c.scrollHeight+'px';if(b)b.textContent='بستن';
+ setTimeout(()=>{c.style.height='';delete c.dataset.busy},380)}
+
+// ---------- حساب خصوصی جایگزین‌ها (فقط داروساز) ----------
+const EK={owed:'بدهکار شدم (او شیفت رفت)',paid:'به او پرداختم'};
+function subBal(id){return S.ent.filter(e=>e.substitute_id==id).reduce((a,e)=>a+(e.kind=='owed'?e.amount:-e.amount),0)}
+function subView(){const s=S.sft||'sum';
+ return `<div class="gt">حساب خصوصی جایگزین‌ها</div><p class="mu" style="margin:-4px 6px 10px;font-size:13px">فقط خودتان این بخش را می‌بینید؛ موسس به آن دسترسی ندارد.</p>${segHtml('seg_sft',[['sum','خلاصه'],['ent','تراکنش‌ها'],['rep','گزارش']],s,'sftGo')}<div id="sft_c">${subBody(s)}</div>`}
+const subBody=s=>s=='ent'?subEnt():s=='rep'?subRepCard():subSum();
+function sftGo(v){S.sft=v;segSet($('#seg_sft'),['sum','ent','rep'].indexOf(v));$('#sft_c').innerHTML=subBody(v)}
+const noSub='<p class="mu" style="margin:14px 6px">ابتدا از بخش «خلاصه» یک جایگزین اضافه کنید.</p>';
+function subSum(){return subDash()+`<div class="gc np" style="margin-top:12px"><div class="srow tap add" onclick="openSub()"><span class="plus">+</span><b>افزودن جایگزین</b></div></div>`+(S.sub.length?`<div class="gt">مانده حساب‌ها</div><div class="gc" style="padding:0 16px">${S.sub.map(x=>{const b=subBal(x.id);return `<div class="srow"><span class="k">${esc(x.name)}</span><b class="v" style="direction:rtl">${fmt(Math.abs(b))} ${RL()} ${b>0?'<span class="mu">(بدهکارم)</span>':b<0?'<span class="mu">(بیشتر پرداخته‌ام)</span>':'<span class="mu">(تسویه)</span>'}</b></div>`}).join('')}</div>`:'<p class="mu" style="margin:14px 6px">برای شروع، نام یک جایگزین را اضافه کنید.</p>')}
+function subEnt(){if(!S.sub.length)return noSub;
+ return `<div class="gc np"><div class="srow tap add" onclick="openEnt()"><span class="plus">+</span><b>ثبت تراکنش</b></div></div><div class="gc" style="padding:0 16px">${S.ent.map(e=>`<div class="lr"><div class="lt"><b>${esc((S.sub.find(x=>x.id==e.substitute_id)||{}).name||'—')}</b><span>${fmt(e.amount)} ${RL()}</span></div>
+  <small class="mu">${e.entry_date} · ${EK[e.kind]}${e.shift_id?' · '+shiftLbl(e.shift_id):''}</small>${e.note?`<div class="mu">${esc(e.note)}</div>`:''}<div class="fb"><button class="d" onclick="delEnt('${e.id}')">حذف</button></div></div>`).join('')||'<p class="mu" style="padding:14px 0;margin:0">تراکنشی ثبت نشده است.</p>'}</div>`}
+function subRepCard(){if(!S.sub.length)return noSub;
+ return `<p class="mu np" style="margin:0 6px 10px;font-size:13px">مبلغ‌ها از ثبت‌های همین حساب خصوصی می‌آیند (ممکن است با مبلغ شیفت فرق کنند). فقط شیفت‌های داروخانهٔ انتخاب‌شده.</p>
+  <div class="gc np"><div class="srow tap" onclick="pickOpt('sr_s','جایگزین')"><span class="k">جایگزین</span><select id="sr_s" hidden>${opt(S.sub.map(x=>[x.id,x.name]),S.sub[0].id)}</select><b class="v" id="v_sr_s" style="direction:rtl">${esc(S.sub[0].name)}</b></div>
+  <div class="srow tap"><span class="k">از تاریخ</span>${dsv('sr_f',rfi().f)}</div><div class="srow tap"><span class="k">تا تاریخ</span>${dsv('sr_t',rfi().t)}</div><div class="srow"><span class="k">واحد مبلغ</span>${unitSel()}</div></div>
+  <button class="p bigp np" onclick="subRep()">پیش‌نمایش و PDF</button>`}
+async function addSub(){const n=$('#s_n').value.trim();if(!n)return msg('نام جایگزین را بنویسید',1);
+ const r=await sb.from('substitutes').insert({pharmacist_id:S.me.id,name:n});if(r.error)return fail(r.error);await loadSub();home();msg('جایگزین اضافه شد')}
+function pickShift(){const s=S.shifts.find(x=>x.id==$('#e_f').value);if(!s)return;
+ const x=S.sub.find(y=>y.name.trim()==String(s.substitute_name).trim());if(x)$('#e_s').value=x.id;
+ if(!num($('#e_a').value))$('#e_a').value=fmtN(dvr(s.amount))}
+async function addEnt(){const a=nI($('#e_a').value);if(!a)return msg('مبلغ را وارد کنید',1);
+ const d=rd('e_d'),r=await sb.from('substitute_entries').insert({pharmacist_id:S.me.id,substitute_id:$('#e_s').value,shift_id:$('#e_f').value||null,kind:$('#e_k').value,amount:a,entry_date:d.j,note:$('#e_n').value.trim()});
+ if(r.error)return fail(r.error);await loadSub();home();msg('تراکنش ثبت شد')}
+function delEnt(id){askYes('حذف تراکنش','این تراکنش حذف شود؟','حذف',async()=>{
+ const r=await sb.from('substitute_entries').delete().eq('id',id);if(r.error)return fail(r.error);await loadSub();home();msg('حذف شد')})}
+async function loadSub(){S.sub=[];S.ent=[];if(S.me.role!='pharmacist')return;
+ const a=await sb.from('substitutes').select('*').order('name');if(a.error)return fail(a.error);S.sub=a.data;
+ const e=await fetchAll(()=>sb.from('substitute_entries').select('*').order('created_at',{ascending:false}).order('id'));if(e.error)return fail(e.error);S.ent=e.data}
+
+// ================= بخش ۳ =================
+let RF=null,IM=[];
+const rfi=()=>RF||(RF={f:[tj()[0],tj()[1],1],t:tj(),p:''});
+const jk=a=>`${a[0]}/${pad(a[1])}/${pad(a[2])}`;
+// واحد نمایش و ورود مبالغ: toman یا rial (ذخیره در دیتابیس همیشه ریال است)
+let REPU=(()=>{try{return localStorage.getItem('unit2')||'t'}catch(e){return 't'}})();
+const ru=fmt,ux=v=>Math.round(REPU=='t'?v/10:v),RL=()=>REPU=='t'?'تومان':'ریال';
+function setU(v){REPU=v;try{localStorage.setItem('unit2',v)}catch(e){}home()}
+let _us=0;const unitSel=()=>`<span class="usw">${segHtml('seg_u'+(++_us),[['r','ریال'],['t','تومان']],REPU,'setU')}</span>`;
+const dsv=(id,v,u)=>{const ys=[];for(let i=1403;i<=1412;i++)ys.push([i,i]);
+ return `<div class="dt dw" id="${id}"${u?' onchange="repUpd()"':''}><select>${opt(ys,v[0])}</select><select>${opt(MN.map((n,i)=>[i+1,n]),v[1])}</select><select>${opt([...Array(31)].map((_,i)=>[i+1,i+1]),v[2])}</select><button type="button" class="dbtn" onclick="pickD('${id}')">${dTx(v[0],v[1],v[2])}</button></div>`};
+const byDate=(p,q)=>p.shift_date<q.shift_date?-1:p.shift_date>q.shift_date?1:(p.start_time<q.start_time?-1:1);
+function repRows(){const f=rfi(),a=jk(f.f),b=jk(f.t),own=curP().owner_id==S.me.id;
+ return S.shifts.filter(s=>s.status=='confirmed'&&s.shift_date>=a&&s.shift_date<=b&&(!f.p||s.pharmacist_id==f.p)&&(own||s.pharmacist_id==S.me.id)).sort(byDate)}
+function repUpd(){const f=rfi();f.f=rd('r_f').j.split('/').map(Number);f.t=rd('r_t').j.split('/').map(Number);const p=$('#r_p');if(p)f.p=p.value;home();const r=$('#rep');if(r)r.scrollIntoView()}
+function repCard(){const f=rfi(),R=repRows(),PO=curP().owner_id,own=PO==S.me.id,
+ ps=[...new Map(S.shifts.map(s=>[s.pharmacist_id,s.pharmacist_name])).entries()],sm=fn=>R.reduce((a,s)=>a+fn(s),0),
+ tot=sm(s=>s.amount),paid=PO?sm(s=>bal(s).paid_confirmed):0,
+ kp=(t,v)=>`<div class="kp" style="cursor:default"><span>${t}</span><b>${v}</b></div>`;
+ return `<div id="rep"><div class="gt">گزارش‌ها — ${esc(curP().name)}</div>
+ <div class="gc np"><div class="srow tap"><span class="k">از تاریخ</span>${dsv('r_f',f.f,1)}</div><div class="srow tap"><span class="k">تا تاریخ</span>${dsv('r_t',f.t,1)}</div>
+ ${own?`<div class="srow tap" onclick="pickOpt('r_p','داروساز مسئول')"><span class="k">داروساز مسئول</span><select id="r_p" hidden onchange="repUpd()"><option value="">همهٔ داروسازها (هر نفر جدا)</option>${opt(ps,f.p)}</select><b class="v" id="v_r_p" style="direction:rtl">${esc((f.p&&(ps.find(x=>x[0]==f.p)||[])[1])||'همهٔ داروسازها (هر نفر جدا)')}</b></div>`:''}
+ <div class="srow"><span class="k">واحد مبلغ</span>${unitSel()}</div></div>
+ <div class="kps">${kp('تعداد شیفت',R.length)}${kp('جمع ساعت',Math.round(sm(s=>s.hours)*100)/100)}${kp('جمع مبلغ ('+RL()+')',ru(tot))}${PO?kp('وضعیت پرداخت ('+RL()+')','<span style="font-size:15px;line-height:1.7">پرداخت‌شده: '+ru(paid)+'<br>مانده: '+ru(tot-paid)+'</span>'):''}</div>
+ <p class="mu np" style="margin:0 6px 12px">فقط شیفت‌های تأییدشدهٔ این بازه در گزارش می‌آیند.</p>
+ <div class="np"><button class="p bigp" onclick="repPdf()">پیش‌نمایش و PDF</button><button class="bigp" style="margin-top:8px" onclick="xl()">خروجی Excel</button></div></div>`}
+// ---------- برگهٔ گزارش (همیشه روشن، مخصوص PDF) ----------
+function sheetHTML(o){const days={},cnt={},seen={};let H=0,T=0;
+ o.rows.forEach(r=>{days[r.d]=(days[r.d]||0)+r.amt;cnt[r.d]=(cnt[r.d]||0)+1;H+=r.h;T+=r.amt});
+ const cv=!o.noCover,body=o.rows.map(r=>{const f=!seen[r.d];seen[r.d]=1;
+  return `<tr><td>${r.d}</td><td><span dir="ltr" style="unicode-bidi:isolate">${r.t}</span></td>${cv?`<td>${esc(r.c||'—')}</td>`:''}<td>${r.amt&&r.h?ru(r.amt/r.h):'<span style="color:#8aa0a3">بدون اطلاعات</span>'}</td>${f?`<td rowspan="${cnt[r.d]}" class="dy">${days[r.d]?ru(days[r.d]):'<span style="color:#8aa0a3;font-weight:400">بدون اطلاعات</span>'}</td>`:''}</tr>`}).join('')||'<tr><td colspan="5">در این بازه موردی ثبت نشده است.</td></tr>';
+ H=Math.round(H*100)/100;
+ return `<div class="sheet"><div class="sh-h"><div class="sh-br"><i>${LOGO}</i><div class="sh-k">${esc(o.title)}</div></div><div class="sh-n">${esc(o.pharmacy)}</div><div class="sh-m">${o.meta.map(m=>`<div><span>${m[0]}</span><b>${esc(m[1])}</b></div>`).join('')}</div></div>
+ <div class="sh-b"><table><tr><th>تاریخ</th><th>ساعت شروع تا پایان</th>${cv?'<th>کاورکننده</th>':''}<th>نرخ ساعتی (${RL()})</th><th>جمع کارکرد روز (${RL()})</th></tr>${body}</table>
+ <div class="sh-s"><div><span>جمع کل ساعت</span><b>${H}</b></div>${o.noAmt?'':`<div class="am"><span>جمع کل مبلغ (${RL()})</span><b>${ru(T)}</b></div>`}</div>
+ ${o.extra||''}<div class="sh-g"><div>امضای ${o.s1}</div><div>امضای ${o.s2}</div></div></div><div class="sh-f"><i>${LOGO}</i>صادر شده از ${APP}</div></div>`}
+function showSheet(h){const p=$('#pa');p.innerHTML=`<div class="pbar np"><button class="p" onclick="window.print()">ذخیره PDF / چاپ</button><button onclick="closePrint()">بستن</button></div>`+h;p.hidden=false;p.scrollTop=0;document.body.style.overflow='hidden'}
+function closePrint(){$('#pa').hidden=true;document.body.style.overflow=''}
+function repPdf(){const f=rfi(),a=jk(f.f),b=jk(f.t);if(a>b)return msg('تاریخ شروع بعد از تاریخ پایان است',1);
+ const R=repRows(),g=new Map();R.forEach(s=>{if(!g.has(s.pharmacist_id))g.set(s.pharmacist_id,{n:s.pharmacist_name,r:[]});g.get(s.pharmacist_id).r.push(s)});
+ if(!g.size)return msg('در این بازه شیفت تأییدشده‌ای نیست',1);const iss=jk(tj());
+ showSheet([...g.entries()].map(([gid,x])=>sheetHTML({title:'گزارش کارکرد داروساز',pharmacy:curP().name,meta:[['داروساز',x.n],...payMeta(gid),['بازهٔ گزارش',`از ${a} تا ${b}`],['تاریخ صدور',iss]],
+  rows:x.r.map(s=>({d:s.shift_date,t:`${s.start_time}–${s.end_time}`,c:s.substitute_name,h:s.hours,amt:s.amount})),s1:'داروساز',s2:'موسس / کارفرما'})).join(''))}
+// گزارش کارکرد جایگزین: مبلغ‌ها از حساب خصوصی داروساز (نه از مبلغ شیفت)
+function subRep(){const id=$('#sr_s')?$('#sr_s').value:'',x=S.sub.find(y=>y.id==id);if(!x)return msg('جایگزین را انتخاب کنید',1);
+ const a=rd('sr_f').j,b=rd('sr_t').j;if(a>b)return msg('تاریخ شروع بعد از تاریخ پایان است',1);
+ const inR=d=>d>=a&&d<=b,k=String(x.name).trim(),E=S.ent.filter(e=>e.substitute_id==id),owed={};
+ E.filter(e=>e.kind=='owed'&&e.shift_id).forEach(e=>owed[e.shift_id]=(owed[e.shift_id]||0)+e.amount);
+ const sh=S.shifts.filter(s=>s.pharmacist_id==S.me.id&&s.status!='voided'&&s.status!='rejected'&&String(s.substitute_name||'').trim()==k&&inR(s.shift_date)).sort(byDate),
+ rows=sh.map(s=>({d:s.shift_date,t:`${s.start_time}–${s.end_time}`,h:s.hours,amt:owed[s.id]||0})),
+ oth=E.filter(e=>e.kind=='owed'&&!e.shift_id&&inR(e.entry_date)),pd=E.filter(e=>e.kind=='paid'&&inR(e.entry_date)),
+ sum=l=>l.reduce((q,e)=>q+e.amount,0),so=rows.reduce((q,r)=>q+r.amt,0)+sum(oth),sp=sum(pd),
+ mini=(t,l)=>`<div class="sh-x"><b>${t}</b><table><tr><th>تاریخ</th><th>توضیحات</th><th>مبلغ (${RL()})</th></tr>${l.map(e=>`<tr><td>${e.entry_date}</td><td>${esc(e.note||'بدون توضیحات')}</td><td>${ru(e.amount)}</td></tr>`).join('')}</table></div>`;
+ if(!rows.length&&!oth.length&&!pd.length)return msg('در این بازه شیفت یا تراکنشی برای این جایگزین نیست',1);
+ const extra=(rows.some(r=>!r.amt)?'<p style="color:#8a5a00;font-size:12px;margin:8px 0 0">برای شیفت‌هایی که «بدون اطلاعات» نوشته شده، بدهی در حساب خصوصی ثبت نشده است.</p>':'')+(oth.length?mini('سایر بدهی‌های ثبت‌شده',oth):'')+(pd.length?mini('پرداخت‌ها به جایگزین',pd):'')
+ +`<div class="sh-s"><div><span>جمع بدهی (${RL()})</span><b>${ru(so)}</b></div><div><span>جمع پرداخت‌ها (${RL()})</span><b>${ru(sp)}</b></div><div class="am"><span>مانده در این بازه (${RL()})</span><b>${ru(so-sp)}</b></div></div>`;
+ showSheet(sheetHTML({title:'گزارش کارکرد جایگزین',pharmacy:curP().name,meta:[['داروساز',S.me.full_name],['جایگزین',x.name],['بازهٔ گزارش',`از ${a} تا ${b}`],['تاریخ صدور',jk(tj())]],rows,noCover:1,noAmt:1,extra,s1:'داروساز',s2:'جایگزین'}))}
+function repGroups(){const g=new Map();repRows().forEach(s=>{if(!g.has(s.pharmacist_id))g.set(s.pharmacist_id,{id:s.pharmacist_id,n:s.pharmacist_name,r:[]});g.get(s.pharmacist_id).r.push(s)});return [...g.values()]}
+function xlName(){const f=rfi();return `shifts-${jk(f.f).replace(/\//g,'-')}_${jk(f.t).replace(/\//g,'-')}.xlsx`}
+function xlPlain(){if(typeof XLSX=='undefined')return msg('کتابخانهٔ Excel بارگذاری نشده؛ اینترنت را بررسی کنید',1);
+ const R=repRows(),PO=curP().owner_id,
+ a=[['تاریخ','شروع','پایان','ساعت','نرخ ساعتی ('+RL()+')','مبلغ ('+RL()+')','داروساز','کاورکننده',...(PO?['پرداخت‌شده ('+RL()+')']:[])],
+ ...R.map(s=>[s.shift_date,s.start_time,s.end_time,s.hours,s.hours?ux(s.amount/s.hours):0,ux(s.amount),s.pharmacist_name,s.substitute_name||'—',...(PO?[ux(bal(s).paid_confirmed)]:[])])],
+ ws=XLSX.utils.aoa_to_sheet(a),wb=XLSX.utils.book_new();wb.Workbook={Views:[{RTL:true}]};
+ XLSX.utils.book_append_sheet(wb,ws,'شیفت‌ها');XLSX.writeFile(wb,xlName())}
+async function xl(){
+ if(typeof ExcelJS=='undefined')return xlPlain();
+ const f=rfi(),a=jk(f.f),b=jk(f.t),iss=jk(tj());if(a>b)return msg('تاریخ شروع بعد از تاریخ پایان است',1);
+ const G=repGroups();if(!G.length)return msg('در این بازه شیفت تأییدشده‌ای نیست',1);
+ try{
+ const wb=new ExcelJS.Workbook();wb.creator=APP;
+ const TEAL='FF0B6E66',TL='FFE3F2EF',WH='FFFFFFFF',BR={style:'thin',color:{argb:'FFCFE3DF'}},BD={top:BR,bottom:BR,left:BR,right:BR},nf='#,##0',used={};
+ const sn=t=>{const n=String(t||'گزارش').replace(/[\\\/\?\*\[\]:]/g,' ').slice(0,28)||'گزارش';let k=n,i=2;while(used[k])k=n+' '+(i++);used[k]=1;return k};
+ const fill=c=>({type:'pattern',pattern:'solid',fgColor:{argb:c}});
+ const put=(ws,ad,v,o={})=>{const c=ws.getCell(ad);c.value=v;c.font={name:'B Nazanin',size:o.sz||13,bold:!!o.b,color:{argb:o.fc||'FF18262B'}};if(o.fill)c.fill=fill(o.fill);c.alignment={vertical:'middle',horizontal:'center',wrapText:true};if(o.bd)c.border=BD;if(o.nf)c.numFmt=o.nf;return c};
+ const sheet=(name,cols)=>{const ws=wb.addWorksheet(sn(name),{views:[{rightToLeft:true,showGridLines:false}],pageSetup:{paperSize:9,fitToPage:true,fitToWidth:1,fitToHeight:0}});ws.columns=cols.map(w=>({width:w}));return ws};
+ const band=(ws,n,rowsN)=>{for(let r=1;r<=rowsN;r++)for(let c=1;c<=n;c++)ws.getCell(r,c).fill=fill(TEAL)};
+ const sign=(ws,r,ad,t)=>{ws.mergeCells(ad);put(ws,ad.split(':')[0],t,{fc:'FF667A80',sz:12});const [x,y]=ad.split(':');for(const k of [x,y]){const c=ws.getCell(k);c.border={top:{style:'thin',color:{argb:'FF9FB5B2'}}}}};
+ // خلاصه (فقط وقتی چند داروساز هست)
+ if(G.length>1){const ws=sheet('خلاصه',[22,12,14,22,22,22]);band(ws,6,3);ws.mergeCells('A1:F1');ws.mergeCells('A2:F2');ws.mergeCells('A3:F3');
+  put(ws,'A1','خلاصهٔ گزارش داروسازان',{fill:TEAL,fc:'FFD6EFEB',sz:12});put(ws,'A2',curP().name,{fill:TEAL,fc:WH,b:1,sz:22});put(ws,'A3',`از ${a} تا ${b}  |  تاریخ صدور: ${iss}`,{fill:TEAL,fc:WH,sz:13});
+  ws.getRow(2).height=34;ws.getRow(3).height=22;
+  ['داروساز','تعداد شیفت','جمع ساعت','جمع مبلغ ('+RL()+')','پرداخت‌شده ('+RL()+')','مانده ('+RL()+')'].forEach((h,i)=>put(ws,String.fromCharCode(65+i)+'5',h,{fill:TL,fc:TEAL,b:1,bd:1}));
+  ws.getRow(5).height=28;let r=6,tH=0,tA=0,tP=0,tN=0;
+  G.forEach(g=>{const H=Math.round(g.r.reduce((q,s)=>q+s.hours,0)*100)/100,A=g.r.reduce((q,s)=>q+s.amount,0),P=g.r.reduce((q,s)=>q+bal(s).paid_confirmed,0);tH+=H;tA+=A;tP+=P;tN+=g.r.length;
+   put(ws,'A'+r,g.n,{bd:1,b:1});put(ws,'B'+r,g.r.length,{bd:1});put(ws,'C'+r,H,{bd:1});put(ws,'D'+r,ux(A),{bd:1,nf});put(ws,'E'+r,ux(P),{bd:1,nf});put(ws,'F'+r,ux(A-P),{bd:1,nf,b:1,fill:'FFFFF7E6'});r++});
+  put(ws,'A'+r,'جمع کل',{fill:TL,fc:TEAL,b:1,bd:1});put(ws,'B'+r,tN,{fill:TL,fc:TEAL,b:1,bd:1});put(ws,'C'+r,Math.round(tH*100)/100,{fill:TL,fc:TEAL,b:1,bd:1});put(ws,'D'+r,ux(tA),{fill:TL,fc:TEAL,b:1,bd:1,nf});put(ws,'E'+r,ux(tP),{fill:TL,fc:TEAL,b:1,bd:1,nf});put(ws,'F'+r,ux(tA-tP),{fill:'FFFFF7E6',fc:'FF8A5A00',b:1,bd:1,nf})}
+ // یک برگه برای هر داروساز، هم‌شکل PDF
+ G.forEach(g=>{const ws=sheet(g.n,[15,22,22,22,26]);band(ws,5,4);['A1:E1','A2:E2','A3:B3','C3:D3','A4:B4','C4:D4'].forEach(x=>ws.mergeCells(x));
+  put(ws,'A1','گزارش کارکرد داروساز',{fill:TEAL,fc:'FFD6EFEB',sz:12});put(ws,'A2',curP().name,{fill:TEAL,fc:WH,b:1,sz:22});
+  put(ws,'A3','داروساز',{fill:TEAL,fc:'FFD6EFEB',sz:12});put(ws,'C3','بازهٔ گزارش',{fill:TEAL,fc:'FFD6EFEB',sz:12});put(ws,'E3','تاریخ صدور',{fill:TEAL,fc:'FFD6EFEB',sz:12});
+  put(ws,'A4',g.n,{fill:TEAL,fc:WH,b:1,sz:15});put(ws,'C4',`از ${a} تا ${b}`,{fill:TEAL,fc:WH,b:1,sz:14});put(ws,'E4',iss,{fill:TEAL,fc:WH,b:1,sz:14});
+  ws.getRow(2).height=34;ws.getRow(4).height=24;
+  ['تاریخ','ساعت شروع تا پایان','کاورکننده','نرخ ساعتی ('+RL()+')','جمع کارکرد روز ('+RL()+')'].forEach((h,i)=>put(ws,String.fromCharCode(65+i)+'6',h,{fill:TL,fc:TEAL,b:1,bd:1}));
+  ws.getRow(6).height=28;let r=7,H=0,T=0;const cnt={},sum={},first={};
+  g.r.forEach(s=>{cnt[s.shift_date]=(cnt[s.shift_date]||0)+1;sum[s.shift_date]=(sum[s.shift_date]||0)+s.amount});
+  g.r.forEach(s=>{H+=s.hours;T+=s.amount;if(first[s.shift_date]==null)first[s.shift_date]=r;
+   put(ws,'A'+r,s.shift_date,{bd:1});put(ws,'B'+r,`${s.start_time}–${s.end_time}`,{bd:1});put(ws,'C'+r,s.substitute_name||'—',{bd:1});
+   if(s.amount&&s.hours)put(ws,'D'+r,ux(s.amount/s.hours),{bd:1,nf});else put(ws,'D'+r,'بدون اطلاعات',{bd:1,fc:'FF8AA0A3'});
+   put(ws,'E'+r,sum[s.shift_date]?ux(sum[s.shift_date]):'بدون اطلاعات',{bd:1,nf,b:1,fill:'FFF1F8F6',fc:TEAL});r++});
+  Object.keys(first).forEach(d=>{if(cnt[d]>1)ws.mergeCells(`E${first[d]}:E${first[d]+cnt[d]-1}`)});
+  r++;ws.mergeCells(`A${r}:B${r}`);put(ws,'A'+r,'جمع کل ساعت',{fill:TL,fc:TEAL,b:1});put(ws,'C'+r,Math.round(H*100)/100,{fill:TL,fc:TEAL,b:1,sz:15});
+  put(ws,'D'+r,`جمع کل مبلغ (${RL()})`,{fill:'FFFFF7E6',fc:'FF8A5A00',b:1});put(ws,'E'+r,ux(T),{fill:'FFFFF7E6',fc:'FF8A5A00',b:1,sz:15,nf});ws.getRow(r).height=30;
+ const pm=payMeta(g.id);if(pm.length){r+=2;ws.mergeCells(`A${r}:E${r}`);put(ws,'A'+r,'اطلاعات پرداخت',{fill:TL,fc:TEAL,b:1});pm.forEach(x=>{r++;ws.mergeCells(`B${r}:E${r}`);put(ws,'A'+r,x[0],{bd:1,b:1});put(ws,'B'+r,String(x[1]),{bd:1})})}
+  r+=2;ws.getRow(r).height=42;r++;sign(ws,r,`A${r}:B${r}`,'امضای داروساز');sign(ws,r,`D${r}:E${r}`,'امضای موسس / کارفرما');
+  r+=2;ws.mergeCells(`A${r}:E${r}`);put(ws,'A'+r,`صادر شده از ${APP}`,{fc:'FF8AA0A3',sz:9})});
+ const buf=await wb.xlsx.writeBuffer(),u=URL.createObjectURL(new Blob([buf],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'})),l=document.createElement('a');
+ l.href=u;l.download=xlName();document.body.appendChild(l);l.click();l.remove();setTimeout(()=>URL.revokeObjectURL(u),5000)
+ }catch(e){console.error(e);msg('خروجی رنگی ساخته نشد؛ فایل ساده داده شد',1);xlPlain()}}
+
+// ---------- ورود گروهی از متن تلگرام ----------
+const impCard=()=>`<div class="np">
+ <p class="mu" style="margin-top:-4px">متن شیفت‌ها را از تلگرام بچسبانید (برچسب‌ها: تاریخ، زمان شیفت، نرخ، کاور شده توسط). همه در داروخانهٔ انتخاب‌شدهٔ بالا ثبت می‌شوند و نرخ، هر ساعت حساب می‌شود.</p>
+ <textarea id="i_t" rows="6" style="width:100%;font:inherit;color:var(--tx);background:var(--cd);border:1px solid var(--bd);border-radius:8px;padding:8px"></textarea>
+ <div class="fb" style="margin-top:8px"><label class="mu">ضرب نرخ در <input id="i_k" value="1" size="7" dir="ltr"></label><button onclick="impParse()">تحلیل متن</button></div><div id="i_p"></div></div>`;
+function impParse(){const t=fa($('#i_t').value),k=Number($('#i_k').value)||1;
+ IM=t.split(/\n(?=[^\n]*تاریخ\s*[:：])/).map(b=>{
+  const g=l=>{const m=b.match(new RegExp(l+'[^:：\\n]*[:：]\\s*([^\\n]+)'));return m?m[1].trim():''},d=g('تاریخ'),z=g('زمان'),r=g('نرخ'),c=g('کاور'),o={err:''};
+  let m=d.match(/(\d{4})[\/\-.](\d{1,2})[\/\-.](\d{1,2})/);
+  if(m)o.j=[+m[1],+m[2],+m[3]];else{m=d.match(new RegExp('(\\d{1,2})\\s*('+MN.join('|')+')\\s*(\\d{4})'));if(m)o.j=[+m[3],MN.indexOf(m[2])+1,+m[1]]}
+  m=z.match(/(\d{1,2})(?::(\d{2}))?\s*(?:تا|الی|-|–|to)\s*(\d{1,2})(?::(\d{2}))?/);
+  if(m){o.s=pad(m[1]%24)+':'+(m[2]||'00');o.e=pad(m[3]%24)+':'+(m[4]||'00')}
+  o.v=Math.round(num(r.replace(/[^\d,٬]/g,''))*(/ریال/.test(r)?1:10)*k);o.sub=/^(-|—|ندارد|خودم|خودش)?$/.test(c)?'':c;
+  if(!o.j)o.err='تاریخ نامعتبر';else if(!o.s)o.err='ساعت نامعتبر';else if(!o.v)o.err='نرخ نامعتبر';
+  if(!o.err){o.h=hrs(o.s,o.e);o.ds=`${o.j[0]}/${pad(o.j[1])}/${pad(o.j[2])}`;
+   o.dup=S.shifts.some(x=>x.shift_date==o.ds&&x.start_time==o.s&&x.pharmacist_id==S.me.id&&x.status!='voided'&&x.status!='rejected')}
+  return o}).filter(o=>o.j||o.s||o.v);
+ const n=IM.filter(o=>!o.err&&!o.dup).length;
+ $('#i_p').innerHTML=IM.length?`<div class="tw" style="margin-top:10px"><table><tr><th></th><th>تاریخ</th><th>ساعت</th><th>مدت</th><th>نرخ ساعتی (${RL()})</th><th>مبلغ شیفت</th><th>جایگزین</th><th></th></tr>
+ ${IM.map((o,i)=>o.err?`<tr><td></td><td colspan="6" class="mu">ردیف ${i+1}</td><td style="color:var(--er)">${o.err}</td></tr>`
+ :`<tr><td><input type="checkbox" class="ick" value="${i}" ${o.dup?'':'checked'}></td><td>${o.ds}</td><td>${o.s}–${o.e}</td><td>${o.h}</td><td>${fmt(o.v)}</td><td>${fmt(o.v*o.h)}</td><td>${esc(o.sub||'—')}</td><td style="color:var(--wa)">${o.dup?'تکراری':''}</td></tr>`).join('')}</table></div>
+ <p><button class="p" onclick="impSave()">ثبت شیفت‌های انتخاب‌شده</button> <span class="mu">${n} مورد آمادهٔ ثبت</span></p>`:'<p class="mu">شیفتی در متن پیدا نشد. هر شیفت باید خطی با «تاریخ: …» داشته باشد.</p>'}
+let IMBUSY=false;
+async function impSave(){if(IMBUSY)return;IMBUSY=true;const btn=document.querySelector('button[onclick="impSave()"]');if(btn){btn.disabled=true;btn.textContent='در حال ثبت… لطفاً صبر کنید'}
+ let ok=0,bad=0,skip=0,last='';
+ try{await loadShifts()}catch(e){}
+ for(const i of [...document.querySelectorAll('.ick:checked')].map(x=>+x.value)){const o=IM[i],[gy,gm,gd]=j2g(...o.j);
+  if(S.shifts.some(x=>x.shift_date==o.ds&&x.start_time==o.s&&x.pharmacist_id==S.me.id&&x.status!='voided'&&x.status!='rejected')){skip++;continue}
+  const r=await sb.rpc('save_shift',{p_id:null,p_pharmacy:S.cur,p_date:o.ds,p_gdate:`${gy}-${pad(gm)}-${pad(gd)}`,p_start:o.s,p_end:o.e,p_mode:'hourly',p_value:o.v,p_substitute:o.sub,p_note:''});
+  if(r.error){bad++;last=r.error.message}else{ok++;S.shifts.push({shift_date:o.ds,start_time:o.s,pharmacist_id:S.me.id,status:'pending'})}}
+ IMBUSY=false;
+ await loadShifts();IM=[];home();msg(`${ok} شیفت ثبت شد`+(skip?`، ${skip} مورد تکراری ردشد`:'')+(bad?`، ${bad} مورد خطا داد: ${last}`:''),bad&&!ok)}
+
+// ================= بخش ۴ =================
+let MB=[];
+async function loadMb(){MB=[];if(!S.cur)return;
+ const r=await sb.from('memberships').select('id,user_id,role,started_at,ended_at,history_visible_from').eq('pharmacy_id',S.cur).order('started_at');
+ if(r.error)return fail(r.error);const ids=[...new Set(r.data.map(x=>x.user_id))],nmap={};
+ const p=await sb.from('profiles').select('id,full_name').in('id',ids);(p.data||[]).forEach(x=>nmap[x.id]=x.full_name);
+ MB=r.data.map(x=>({...x,name:nmap[x.user_id]||'—'}))}
+const fd=d=>d?new Date(d).toLocaleDateString('fa-IR'):'—';
+function coopCard(){const me=S.me,ph=curP(),adm=me.is_admin,mine=ph.owner_id==me.id,RL={owner:'موسس',pharmacist:'داروساز'},live=curM()&&!curM().ended_at,
+ own=MB.find(x=>x.role=='owner'&&!x.ended_at),share=own&&MB.some(x=>x.user_id==me.id&&x.role=='pharmacist'&&!x.ended_at)&&MB.filter(x=>x.role=='pharmacist'&&!x.ended_at).length==1;
+ return `<div class="gt np" style="display:flex;justify-content:space-between;align-items:center"><span>${ph.owner_id?'همکاری‌ها':'داروخانهٔ شخصی'}</span><span style="display:flex;gap:8px">${canEditPh(ph)?`<button class="chipb" onclick="editPh('${S.cur}')">ویرایش</button>`:''}${live?`<button class="chipb" onclick="openInv()">+ دعوت</button>`:''}</span></div>
+ <div class="gc" style="padding:0 16px">${MB.map(x=>`<div class="lr"><div class="lt"><b>${esc(x.name)}</b><span class="b ${x.ended_at?'':'confirmed'}">${RL[x.role]||x.role}</span></div>
+ <small class="mu">شروع ${fd(x.started_at)} · ${x.ended_at?(ph.owner_id?'پایان‌یافته ':'بایگانی‌شده ')+fd(x.ended_at):'فعال'}</small>
+ ${x.role=='pharmacist'&&!x.ended_at&&(x.user_id==me.id||mine||adm)?`<div class="fb np"><button class="d" onclick="endCo('${x.id}',false)">${ph.owner_id?'پایان همکاری':'بایگانی داروخانه'}</button>${adm?`<button class="d" onclick="endCo('${x.id}',true)">پایان اجباری (ادمین)</button>`:''}</div>`:''}</div>`).join('')||'<p class="mu" style="padding:14px 0;margin:0">هنوز عضوی نیست.</p>'}</div>
+ ${share?`<div class="gt np">اشتراک تاریخچه با موسس</div><p class="mu np" style="margin:-4px 6px 10px;font-size:13px">موسس فعلاً شیفت‌های بعد از ${fd(own.history_visible_from)} را می‌بیند. می‌توانید تاریخچهٔ قبل‌تر را هم نشان دهید.</p><div class="gc np"><div class="srow tap"><span class="k">از تاریخ</span>${dsel('h_d')}</div></div><button class="bigp np" onclick="shareH()">نمایش از این تاریخ</button>`:''}`}
+function endCo(id,force){const pers=!curP().owner_id;askYes('پایان همکاری',force?'همکاری بدون بررسی تسویه پایان داده شود؟':pers?'داروخانهٔ شخصی بایگانی شود؟ دیگر نمی‌توانید شیفت جدید ثبت کنید و این کار برگشت ندارد؛ ولی همهٔ شیفت‌ها و ساعت‌ها در گزارش‌ها و پروفایل باقی می‌مانند.':'همکاری پایان داده شود؟ فقط وقتی همهٔ شیفت‌ها تسویه شده باشد انجام می‌شود.','تأیید',async()=>{
+ const r=await sb.rpc('end_cooperation',{p_membership:id,p_force:force});if(r.error)return fail(r.error);await loadMs();home();msg(pers&&!force?'داروخانه بایگانی شد':'همکاری پایان یافت')})}
+async function shareH(){const r=await sb.rpc('share_history',{p_pharmacy:S.cur,p_from:rd('h_d').g});if(r.error)return fail(r.error);await loadShifts();home();msg('تاریخچه برای موسس نمایش داده می‌شود')}
+const admCard=()=>`<div class="gt np">ابزار ادمین</div><div class="gc np"><div class="srow tap" onclick="admLoad()"><span class="k">نمایش همهٔ داروخانه‌ها و همکاری‌ها</span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg></div></div><div id="adm" class="tw"></div>`;
+async function admLoad(){const r=await sb.rpc('admin_overview');if(r.error)return fail(r.error);
+ $('#adm').innerHTML=r.data.map(p=>`<h3 style="margin:12px 0 4px">${esc(p.name)} <span class="mu" style="font-weight:400">— موسس: ${esc(p.owner||'ندارد')}</span></h3>${p.members.map(m=>`<div class="sr pr" style="align-items:center"><div class="pm"><b>${esc(m.name)}</b><small>${m.role=='owner'?'موسس':'داروساز'} · ${m.ended?'پایان‌یافته':'فعال'}</small></div>${m.role=='pharmacist'&&!m.ended?`<button class="d" onclick="admEnd('${m.id}')">پایان اجباری</button>`:''}</div>`).join('')}`).join('')||'<p class="mu">داروخانه‌ای نیست.</p>'}
+function admEnd(id){askYes('پایان همکاری','همکاری بدون بررسی تسویه پایان داده شود؟','تأیید',async()=>{
+ const r=await sb.rpc('end_cooperation',{p_membership:id,p_force:true});if(r.error)return fail(r.error);await loadMs();home();msg('همکاری پایان یافت');admLoad()})}
+
+// ---------- شروع ----------
+sb.auth.onAuthStateChange((ev,ses)=>{
+ if(ev=='PASSWORD_RECOVERY'||(REC&&ses&&ses.user)){REC=true;setTimeout(recView,0)}
+ else if(ses&&ses.user){if(!S.me||S.me.id!==ses.user.id)setTimeout(()=>boot(ses.user),0)}
+ else{S={me:null,ms:[],cur:null,shifts:[],pay:[],bal:{},sub:[],ent:[],tab:'login'};authView()}});
+
+// ---------- بازخورد فوری برای همهٔ دکمه‌ها: «صبر کنید…» تا پایان کار ----------
+document.addEventListener('click',e=>{
+ const b=e.target.closest&&e.target.closest('button[onclick]');
+ if(!b||b.dataset.nobusy)return;
+ const code=b.getAttribute('onclick');
+ if(/\bthis\b|\bevent\b/.test(code))return;
+ e.stopPropagation();e.preventDefault();
+ if(b.disabled||b.classList.contains('busy'))return;
+ let r;
+ try{r=(0,eval)(code)}catch(err){console.error(err);return}
+ if(r&&typeof r.then==='function'){
+  const html=b.innerHTML;b.disabled=true;b.classList.add('busy');b.textContent='صبر کنید…';
+  const done=()=>{if(b.isConnected){b.disabled=false;b.classList.remove('busy');b.innerHTML=html}};
+  r.then(done,err=>{console.error(err);done()});
+ }
+},true);
+
+// ---------- bottom sheets / wheels / drag-switch ----------
+const fdg=s=>String(s).replace(/\d/g,d=>'۰۱۲۳۴۵۶۷۸۹'[d]);
+function openSheet(title,html,lv){lv=lv||1;closeSheet(lv,1);const w=document.createElement('div');w.className='shw';w.id='sh'+lv;w.style.zIndex=40+lv;
+ w.innerHTML=`<div class="shb"></div><div class="shp"><div class="shh"><div class="shg"></div><div class="sht">${title}</div></div><div class="stoast"></div><div class="shc">${html}</div></div>`;
+ document.body.appendChild(w);requestAnimationFrame(()=>requestAnimationFrame(()=>w.classList.add('on')));
+ w.querySelector('.shb').onclick=()=>closeSheet(lv);
+ const p=w.querySelector('.shp'),h=w.querySelector('.shh');let y0=null,dy=0;
+ h.addEventListener('pointerdown',e=>{y0=e.clientY;dy=0;p.classList.add('dg');h.setPointerCapture(e.pointerId)});
+ h.addEventListener('pointermove',e=>{if(y0==null)return;dy=Math.max(0,e.clientY-y0);p.style.transform=`translateY(${dy}px)`});
+ const up=()=>{if(y0==null)return;y0=null;p.classList.remove('dg');p.style.transform='';if(dy>90)closeSheet(lv)};
+ h.addEventListener('pointerup',up);h.addEventListener('pointercancel',up);return w}
+function closeSheet(lv,now){const w=$('#sh'+lv);if(!w)return;if(now)w.remove();else{w.classList.remove('on');setTimeout(()=>w.remove(),340)}}
+const _home=home;home=function(){closeSheet(2,1);closeSheet(1,1);return _home.apply(this,arguments)};
+const _msg=msg;msg=function(t,err){const el=[...document.querySelectorAll('.shw .stoast')].pop();
+ if(el){el.textContent=t;el.className='stoast on'+(err?' e':'');clearTimeout(el._t);el._t=setTimeout(()=>el.classList.remove('on'),3500);return}
+ return _msg(t,err)};
+
+function wheel(title,cols,ok,ltr){const h=40;
+ openSheet(title,`<div class="wh" ${ltr?'dir="ltr"':''}><div class="wband"></div>${cols.map(c=>`<div class="wc">${c.it.map(x=>`<div>${x[1]}</div>`).join('')}</div>`).join('')}</div><button class="p wide" id="wok">تأیید</button>`,2);
+ const E=[...document.querySelectorAll('#sh2 .wc')];
+ setTimeout(()=>E.forEach((el,i)=>{el.style.scrollBehavior='auto';el.scrollTop=Math.max(0,cols[i].it.findIndex(x=>x[0]==cols[i].v))*h}),30);
+ E.forEach((el,i)=>[...el.children].forEach((c,k)=>c.onclick=()=>{el.style.scrollBehavior='smooth';el.scrollTop=k*h}));
+ $('#wok').onclick=()=>{const v=E.map((el,i)=>cols[i].it[Math.min(cols[i].it.length-1,Math.max(0,Math.round(el.scrollTop/h)))][0]);closeSheet(2);ok(v)}}
+
+function dateTxt(){const s=document.querySelectorAll('#f_d select');return `${fdg(s[2].value)} ${MN[s[1].value-1]} ${fdg(s[0].value)}`}
+function pickDate(){const s=document.querySelectorAll('#f_d select'),ys=[];for(let i=1403;i<=1412;i++)ys.push([i,fdg(i)]);
+ wheel('تاریخ شیفت',[{it:ys,v:+s[0].value},{it:MN.map((n,i)=>[i+1,n]),v:+s[1].value},{it:[...Array(31)].map((_,i)=>[i+1,fdg(i+1)]),v:+s[2].value}],v=>{v.forEach((x,i)=>s[i].value=x);$('#v_d').textContent=dateTxt();prev()})}
+function pickTime(id){const cur=($('#'+id).value||'09:00').split(':'),H=[...Array(24)].map((_,i)=>[pad(i),pad(i)]),M=[...Array(60)].map((_,i)=>[pad(i),pad(i)]);
+ wheel(id=='f_s'?'ساعت شروع':'ساعت پایان',[{it:H,v:cur[0]},{it:M,v:cur[1]}],v=>{$('#'+id).value=v[0]+':'+v[1];$('#v_'+id).textContent=v[0]+':'+v[1];prev()},true)}
+function fkGo(v){$('#f_k').value=v;segSet($('#seg_fk'),v=='done'?0:1)}
+function fmGo(v){$('#f_m').value=v;segSet($('#seg_fm'),v=='total'?0:1);prev()}
+
+const addRows=()=>`<div class="gc np"><div class="srow tap add" onclick="openShift()"><span class="plus">+</span><b>ثبت شیفت</b></div><div class="srow tap add" onclick="openImp()"><span class="plus">+</span><b>ورود دسته‌ای</b></div></div>`;
+function openImp(){openSheet('ورود دسته‌ای شیفت‌ها',impCard())}
+function openShift(){const[y,mo,d]=tj(),ys=[];for(let i=1403;i<=1412;i++)ys.push([i,i]);
+ openSheet('ثبت شیفت',`<div class="np">
+ <select id="f_k" hidden><option value="done">done</option><option value="plan">plan</option></select>
+ <select id="f_m" hidden><option value="total">total</option><option value="hourly">hourly</option></select>
+ <div id="f_d" hidden><select>${opt(ys,y)}</select><select>${opt(MN.map((n,i)=>[i+1,n]),mo)}</select><select>${opt([...Array(31)].map((_,i)=>[i+1,i+1]),d)}</select></div>
+ <input type="hidden" id="f_s" value="16:00"><input type="hidden" id="f_e" value="00:00">
+ <div class="gc"><div class="srow sg">${segHtml('seg_fk',[['done','شیفت انجام‌شده'],['plan','برنامهٔ شیفت آینده']],'done','fkGo')}</div>
+  <div class="srow tap" onclick="pickDate()"><span class="k">تاریخ</span><b class="v" id="v_d" style="direction:rtl">${fdg(d)} ${MN[mo-1]} ${fdg(y)}</b></div></div>
+ <div class="gc"><div class="srow tap" onclick="pickTime('f_s')"><span class="k">ساعت شروع</span><b class="v" id="v_f_s">16:00</b></div>
+  <div class="srow tap" onclick="pickTime('f_e')"><span class="k">ساعت پایان</span><b class="v" id="v_f_e">00:00</b></div></div>
+ <div class="gc"><div class="srow sg">${segHtml('seg_fm',[['total','مبلغ کل شیفت'],['hourly','نرخ هر ساعت']],'total','fmGo')}</div>
+  <div class="srow"><span class="k">مبلغ (${RL()})</span><input id="f_r" inputmode="numeric" dir="ltr" oninput="this.value=this.value?fmtN(num(this.value)):'';prev()"></div></div>
+ <div class="gc"><div class="srow"><span class="k">به‌جای من جایگزین رفت</span><button type="button" class="ios" id="t_sub" onclick="subTg()" aria-label="جایگزین"></button></div>
+  <div class="srow xr" id="x_sub"><span class="k">نام جایگزین</span><input id="f_o"></div>
+  <div class="srow"><span class="k">توضیحات</span><input id="f_n"></div></div>
+ <div class="pv" id="pv"></div><button class="p wide" onclick="saveShift()">ذخیره شیفت</button></div>`);prev()}
+
+// hold & drag on any segmented switch
+(function(){let g=null;
+ const idxAt=(sg,x)=>{let best=0,bd=1e9;[...sg.querySelectorAll('button')].forEach((b,i)=>{const r=b.getBoundingClientRect(),d=x<r.left?r.left-x:x>r.right?x-r.right:0;if(d<bd){bd=d;best=i}});return best};
+ document.addEventListener('pointerdown',e=>{const sg=e.target.closest&&e.target.closest('.seg,.nav');if(!sg)return;const b=[...sg.querySelectorAll('button')];g={sg,b,x0:e.clientX,i0:b.findIndex(k=>k.classList.contains('on')),i:-1,mv:false,id:e.pointerId}});
+ document.addEventListener('pointermove',e=>{if(!g||e.pointerId!=g.id)return;if(!g.mv&&Math.abs(e.clientX-g.x0)<8)return;g.mv=true;const i=idxAt(g.sg,e.clientX);if(i!=g.i){g.i=i;dragSet(g.sg,i)}});
+ const end=e=>{if(!g)return;const o=g;g=null;if(o.mv){o.sg._nc=Date.now();if(o.i>=0&&o.i!=o.i0)o.b[o.i].click();else dragSet(o.sg,o.i0)}};
+ document.addEventListener('pointerup',end);document.addEventListener('pointercancel',end);
+  document.addEventListener('click',e=>{const r=e.target.closest&&e.target.closest('.srow');if(!r||e.target.closest('.dbtn'))return;const b=r.querySelector(':scope>.dt.dw>.dbtn');if(b)b.click()});
+  let sbT=null;const sbOn=sg=>{sg.classList.add('sbar');clearTimeout(sg._sbT)};const sbOff=sg=>{clearTimeout(sg._sbT);sg._sbT=setTimeout(()=>sg.classList.remove('sbar'),350)};
+  document.addEventListener('pointermove',e=>{if(g&&g.mv&&e.pointerId==g.id)sbOn(g.sg)});
+  document.addEventListener('scroll',e=>{const t=e.target;if(t&&t.classList&&(t.classList.contains('seg')||t.classList.contains('pl'))){sbOn(t);sbOff(t)}},true);
+  const sbEnd=()=>document.querySelectorAll('.sbar').forEach(sbOff);
+  document.addEventListener('pointerup',sbEnd);document.addEventListener('pointercancel',sbEnd);
+ document.addEventListener('click',e=>{const sg=e.target.closest&&e.target.closest('.seg,.nav');if(sg&&sg._nc&&Date.now()-sg._nc<350&&e.isTrusted){e.stopPropagation();e.preventDefault()}},true)})();
+
+// ---------- round 2: toggle, profile + payment sheets ----------
+function subTg(){const b=$('#t_sub'),on=!b.classList.contains('on');b.classList.toggle('on',on);$('#x_sub').classList.toggle('on',on);
+ if(on)setTimeout(()=>$('#f_o').focus(),280);else $('#f_o').value=''}
+function openPay(){const own=curP().owner_id==S.me.id;openSheet(own?'ثبت پرداخت جدید':'ثبت دریافتی',payForm(own));split()}
+const _pfGo=pfGo;pfGo=function(k){if(k=='acc'||k=='bank'){const o=S.pfp;S.pfp=k;const h=pfCard();S.pfp=o;openSheet(k=='acc'?'اطلاعات شخصی':'اطلاعات پرداخت',h);return}return _pfGo(k)};
+
+// ---------- round 3: date wheels everywhere + transaction sheet ----------
+const dTx=(y,m,d)=>`${fdg(d)} ${MN[m-1]} ${fdg(y)}`;
+function pickD(id){const s=document.querySelectorAll('#'+id+' select'),ys=[];for(let i=1403;i<=1412;i++)ys.push([i,fdg(i)]);
+ wheel('تاریخ',[{it:ys,v:+s[0].value},{it:MN.map((n,i)=>[i+1,n]),v:+s[1].value},{it:[...Array(31)].map((_,i)=>[i+1,fdg(i+1)]),v:+s[2].value}],v=>{v.forEach((x,i)=>s[i].value=x);const b=document.querySelector('#'+id+' .dbtn');if(b)b.textContent=dTx(v[0],v[1],v[2]);s[0].dispatchEvent(new Event('change',{bubbles:true}))})}
+function entForm(sh){return `<div class="pv"><div class="fm" style="margin-top:8px">
+ <label>جایگزین<select id="e_s">${opt(S.sub.map(x=>[x.id,x.name]),S.sub[0].id)}</select></label>
+ <label>نوع<select id="e_k">${opt(Object.entries(EK),'owed')}</select></label>
+ <label>مبلغ (${RL()})<input id="e_a" inputmode="numeric" oninput="this.value=nm(this.value)"></label>
+ <label>تاریخ${dsel('e_d')}</label>
+ <label>شیفت مرتبط (اختیاری)<select id="e_f" onchange="pickShift()"><option value="">—</option>${sh.map(s=>`<option value="${s.id}">${s.shift_date} ${s.start_time}–${s.end_time} (${esc(s.substitute_name)})</option>`).join('')}</select></label>
+ <label>توضیحات<input id="e_n"></label></div><p><button class="p" onclick="addEnt()">ثبت تراکنش</button></p></div>`}
+function openEnt(){const sh=S.shifts.filter(s=>s.substitute_name&&s.status!='voided'&&s.status!='rejected'&&s.pharmacist_id==S.me.id);openSheet('ثبت تراکنش',entForm(sh))}
+
+// ---------- round 4: login + pharmacy pages ----------
+function arGo(v){$('#a_r').value=v;segSet($('#seg_ar'),v=='pharmacist'?0:1)}
+function irGo(v){$('#ir').value=v;segSet($('#seg_ir'),v=='owner'?0:1)}
+function openNewPh(){openSheet('داروخانهٔ جدید','<div class="gc"><div class="srow"><span class="k">نام</span><input id="np" placeholder="نام داروخانه"></div>'+npx()+'</div><button class="p wide" onclick="newPh()">ساخت داروخانه</button>');setTimeout(()=>$('#np')&&$('#np').focus(),380)}
+function openJoin(){openSheet('پیوستن با کد دعوت','<div class="gc"><div class="srow"><span class="k">کد</span><input id="ic" dir="ltr" placeholder="کد دعوت" autocapitalize="characters"></div></div><button class="p wide" onclick="joinPh()">پیوستن</button>');setTimeout(()=>$('#ic')&&$('#ic').focus(),380)}
+function openInv(){const isPh=S.me.role=='pharmacist';
+ openSheet('ساخت کد دعوت',`<select id="ir" hidden>${isPh?'<option value="owner">owner</option>':''}<option value="pharmacist">pharmacist</option></select>
+ <div class="gc"><div class="srow sg">${isPh?segHtml('seg_ir',[['owner','دعوت موسس'],['pharmacist','دعوت داروساز']],'owner','irGo'):'<b>دعوت داروساز</b>'}</div></div>
+ <button class="p wide" onclick="mkInv()">ساخت کد دعوت</button><div id="invo" style="margin-top:12px"></div>`);
+ if(isPh)irGo('owner');else $('#ir').value='pharmacist'}
+
+// ---------- round 5: option sheets, report page ----------
+const phTxt=()=>{const x=S.ms.find(x=>x.pharmacy_id==S.cur)||S.ms[0];return x?esc(x.pharmacies.name)+(x.pharmacies.owner_id?' (با موسس)':' (شخصی)'):''};
+const orow=(o,s)=>`<div class="srow tap" data-v="${esc(o.value)}"><b class="v" style="direction:rtl;font-weight:${o.value==s.value?800:500}">${esc(o.textContent)}</b>${o.value==s.value?'<span class="ck">✓</span>':''}</div>`;
+function pickOpt(id,title){const s=$('#'+id);let h='<div class="gc">';
+ [...s.children].forEach(c=>{if(c.tagName=='OPTGROUP'){h+='</div><div class="gt">'+esc(c.label)+'</div><div class="gc">';[...c.children].forEach(o=>h+=orow(o,s))}else h+=orow(c,s)});
+ openSheet(title,h+'</div>');
+ document.querySelectorAll('#sh1 .srow[data-v]').forEach(r=>r.onclick=()=>{s.value=r.dataset.v;const b=$('#v_'+id);if(b)b.textContent=r.textContent.replace('✓','').trim();closeSheet(1);s.dispatchEvent(new Event('change',{bubbles:true}))})}
+
+function openSub(){openSheet('افزودن جایگزین','<div class="gc"><div class="srow"><span class="k">نام</span><input id="s_n" placeholder="نام جایگزین جدید"></div></div><button class="p wide" onclick="addSub()">افزودن جایگزین</button>');setTimeout(()=>$('#s_n')&&$('#s_n').focus(),380)}
+
+function chDet(k){const d=CHD[k];if(!d)return;const{ms,ser}=d,rows=ms.slice().reverse().map(m=>{const r=ser.map(s=>s.v[mkM(m[0],m[1])]||0);return{m,r,t:r.reduce((a,b)=>a+b,0)}}).filter(x=>x.t>0);
+ openSheet('جزئیات ماه‌ها',rows.length?`<div class="gc" style="padding:0 16px">${rows.map(x=>`<div class="lr"><div class="lt"><b>${MN[x.m[1]-1]} ${fdg(x.m[0])}</b><span><b>${ru(x.t)}</b> ${RL()}</span></div>${ser.length>1?x.r.map((v,i)=>v?`<small class="mu">${esc(ser[i].n)}: ${ru(v)}</small>`:'').join(''):''}</div>`).join('')}</div>`:'<p class="mu">موردی در این بازه ثبت نشده است.</p>')}
+
+// ---------- edit / delete pharmacy ----------
+const canEditPh=p=>!!p&&(p.owner_id?p.owner_id==S.me.id:true);
+const rpcFail=e=>/Could not find the function|PGRST202/.test((e.message||'')+(e.code||''))?msg('ابتدا فایل SQL مربوط به این بخش (pharmacy_address_v2.sql) را در Supabase اجرا کنید',1):fail(e);
+function editPh(id){const x=S.ms.find(m=>m.pharmacy_id==id);if(!x)return;
+ openSheet('ویرایش داروخانه',`<div class="gc"><div class="srow"><span class="k">نام</span><input id="ep_n" value="${esc(x.pharmacies.name)}"></div>
+ ${locRows('ep',x.pharmacies)}</div>
+ <button class="wide" onclick="shareTxt('${id}')">اشتراک‌گذاری آدرس</button>
+ <button class="p wide" style="margin-top:8px" onclick="savePhN('${id}')">ذخیره</button><button class="d wide" style="margin-top:8px" onclick="delPh('${id}')">حذف داروخانه</button>
+ <p class="mu" style="font-size:12px;margin:10px 6px 0">حذف فقط وقتی ممکن است که شیفت یا پرداختی ثبت نشده باشد. در غیر این صورت، داروخانه را از کارت همکاری‌ها بایگانی کنید.</p>`)}
+async function savePhN(id){const n=$('#ep_n').value.trim();if(!n)return msg('نام داروخانه را بنویسید',1);
+ const v=locVals('ep');if(!v)return;
+ const r=await sb.rpc('rename_pharmacy',{p_pharmacy:String(id),p_name:n});if(r.error)return rpcFail(r.error);
+ const r2=await sb.rpc('set_pharmacy_info',{p_pharmacy:String(id),...v});if(r2.error)return rpcFail(r2.error);
+ await loadMs();home();msg('اطلاعات داروخانه ذخیره شد')}
+function delPh(id){askYes('حذف داروخانه','این داروخانه برای همیشه حذف شود؟ این کار برگشت ندارد.','حذف',async()=>{
+ const r=await sb.rpc('delete_pharmacy',{p_pharmacy:String(id)});if(r.error)return rpcFail(r.error);await loadMs();home();msg('داروخانه حذف شد')})}
+
+// ---------- sliding highlight: sized and moved to the selected label (switches + bottom nav) ----------
+function segPlace(sg,inst){if(!sg)return;const ind=sg.querySelector(':scope>.ind'),b=sg.querySelector(':scope>button.on');if(!ind||!b)return;const w=b.offsetWidth;if(!w)return;
+ const quick=inst||!ind._set;if(quick)ind.style.transition='none';
+ ind.style.width=w+'px';ind.style.transform=`translateX(${b.offsetLeft}px)`;
+ if(quick){void ind.offsetWidth;ind.style.transition=''}
+ ind._set=1;
+ const mx=sg.scrollWidth-sg.clientWidth;if(mx>2){const rtl=getComputedStyle(sg).direction=='rtl';let t=b.offsetLeft+w/2-sg.clientWidth/2;t=rtl?Math.max(-mx,Math.min(0,t)):Math.max(0,Math.min(mx,t));sg.scrollTo({left:t,behavior:quick?'auto':'smooth'})}}
+let _navPrev=null;
+function navSet(n,i){n.querySelectorAll(':scope>button').forEach((b,k)=>b.classList.toggle('on',k==i));navPlace(n)}
+function dragSet(el,i){el.classList.contains('nav')?navSet(el,i):segSet(el,i)}
+function navPlace(nav,inst){if(!nav)return;const b=nav.querySelector(':scope>button.on');let ind=nav.querySelector(':scope>.nind');
+ if(!b){if(ind)ind.style.opacity=0;return}
+ const w=b.offsetWidth;if(!w)return;
+ if(!ind){ind=document.createElement('span');ind.className='nind';nav.insertBefore(ind,nav.firstChild)}
+ ind.style.opacity=1;ind.style.top=b.offsetTop+'px';ind.style.height=b.offsetHeight+'px';ind.style.borderRadius='99px';
+ if(!ind._set){ind.style.transition='none';ind.style.width=(_navPrev?_navPrev.w:w)+'px';ind.style.transform=`translateX(${_navPrev?_navPrev.l:b.offsetLeft}px)`;void ind.offsetWidth;ind.style.transition=''}
+ else if(inst){ind.style.transition='none'}
+ ind.style.width=w+'px';ind.style.transform=`translateX(${b.offsetLeft}px)`;
+ if(inst&&ind._set){void ind.offsetWidth;ind.style.transition=''}
+ ind._set=1;_navPrev={l:b.offsetLeft,w}}
+(function(){const ro=new ResizeObserver(es=>es.forEach(e=>{const t=e.target,k=t.offsetWidth+'x'+t.offsetHeight;if(t._k===k)return;t._k=k;if(t.classList.contains('seg'))segPlace(t,true);else if(t.classList.contains('nav'))navPlace(t,true)}));
+ const scan=force=>{document.querySelectorAll('.seg').forEach(sg=>{const i=sg.querySelector(':scope>.ind');if(i&&(force||!i._set))segPlace(sg,true);if(sg._k===undefined)sg._k=sg.offsetWidth+'x'+sg.offsetHeight;ro.observe(sg)});
+  document.querySelectorAll('.nav').forEach(n=>{const i=n.querySelector(':scope>.nind');if(force||!i||!i._set)navPlace(n,!!force);if(n._k===undefined)n._k=n.offsetWidth+'x'+n.offsetHeight;ro.observe(n)})};
+ new MutationObserver(()=>scan(false)).observe(document.body,{childList:true,subtree:true});
+ if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>scan(true));
+ window.addEventListener('resize',()=>scan(true));scan(false)})();
+
+const IRC=Object.fromEntries(Object.entries({
+'آذربایجان شرقی':'تبریز،مراغه،مرند،میانه،اهر،بناب،سراب،شبستر،هادی‌شهر،آذرشهر،اسکو،ملکان،بستان‌آباد،هشترود،جلفا،ورزقان،عجب‌شیر،کلیبر',
+'آذربایجان غربی':'ارومیه،خوی،میاندوآب،بوکان،مهاباد،سلماس،پیرانشهر،نقده،تکاب،شاهین‌دژ،ماکو،اشنویه،سردشت،چالدران،پلدشت',
+'اردبیل':'اردبیل،پارس‌آباد،مشگین‌شهر،خلخال،گرمی،بیله‌سوار،نمین،نیر،کوثر',
+'اصفهان':'اصفهان،کاشان،خمینی‌شهر،نجف‌آباد،شاهین‌شهر،شهرضا،فولادشهر،زرین‌شهر،مبارکه،گلپایگان،فلاورجان،نطنز،آران و بیدگل،خوانسار،سمیرم،نائین،اردستان،داران،چادگان،دهاقان،تیران،زواره،بوئین و میاندشت',
+'البرز':'کرج،فردیس،نظرآباد،اشتهارد،ساوجبلاغ،طالقان،کمال‌شهر،محمدشهر،مشکین‌دشت،هشتگرد،چهارباغ',
+'ایلام':'ایلام،دهلران،آبدانان،ایوان،مهران،دره‌شهر،سرابله،چوار',
+'بوشهر':'بوشهر،برازجان،کنگان،گناوه،دیر،جم،خورموج،دیلم،عسلویه،بندر ریگ',
+'تهران':'تهران،شهریار،اسلامشهر،ری،ورامین،پاکدشت،قدس،ملارد،رباط‌کریم،بهارستان،پردیس،قرچک،دماوند،فیروزکوه،پیشوا،نسیم‌شهر،صالح‌آباد،پرند،باغستان،لواسان،اندیشه،صباشهر،چهاردانگه،وحیدیه،کهریزک',
+'چهارمحال و بختیاری':'شهرکرد،بروجن،فارسان،لردگان،سامان،فرادنبه،اردل،کیار،جونقان',
+'خراسان جنوبی':'بیرجند،قائن،فردوس،طبس،نهبندان،سرایان،بشرویه،سربیشه،درمیان',
+'خراسان رضوی':'مشهد،نیشابور،سبزوار،تربت حیدریه،قوچان،کاشمر،تربت جام،گناباد،چناران،سرخس،بردسکن،تایباد،درگز،خواف،فریمان،طرقبه،شاندیز،رشتخوار،کلات،مه‌ولات',
+'خراسان شمالی':'بجنورد،شیروان،اسفراین،جاجرم،آشخانه،فاروج،گرمه،راز و جرگلان',
+'خوزستان':'اهواز،آبادان،خرمشهر،دزفول،ماهشهر،بندر امام خمینی،اندیمشک،بهبهان،شوشتر،ایذه،مسجدسلیمان،شادگان،رامهرمز،شوش،سوسنگرد،دهدز،لالی،باغ‌ملک،هندیجان،رامشیر،هویزه،گتوند،حمیدیه',
+'زنجان':'زنجان،ابهر،خرمدره،قیدار،ماه‌نشان،خدابنده،طارم،سلطانیه',
+'سمنان':'سمنان،شاهرود،دامغان،گرمسار،مهدی‌شهر،ایوانکی،میامی،سرخه',
+'سیستان و بلوچستان':'زاهدان،چابهار،زابل،ایرانشهر،سراوان،خاش،کنارک،سرباز،نیک‌شهر،میرجاوه،زهک،راسک،کنارک',
+'فارس':'شیراز،مرودشت،جهرم،فسا،کازرون،لار،داراب،آباده،فیروزآباد،اقلید،نی‌ریز،استهبان،سپیدان،سروستان،صدرا،زرقان،ممسنی،لامرد،مهر،بوانات',
+'قزوین':'قزوین،تاکستان،بوئین‌زهرا،آبیک،محمدیه،الوند،آوج،بیدستان،اقبالیه',
+'قم':'قم،کهک،جعفریه،سلفچگان',
+'کردستان':'سنندج،سقز،بانه،مریوان،قروه،بیجار،کامیاران،دیواندره،دهگلان،سروآباد',
+'کرمان':'کرمان،رفسنجان،سیرجان،بم،جیرفت،زرند،بردسیر،کهنوج،شهربابک،راور،بافت،عنبرآباد،قلعه‌گنج،منوجان،رودبار جنوب،انار،ریگان،فهرج',
+'کرمانشاه':'کرمانشاه،اسلام‌آباد غرب،سنقر،هرسین،کنگاور،صحنه،جوانرود،پاوه،قصر شیرین،سرپل ذهاب،گیلانغرب،روانسر،ثلاث باباجانی،دالاهو',
+'کهگیلویه و بویراحمد':'یاسوج،دهدشت،گچساران،دوگنبدان،سی‌سخت،لنده،چرام،لیکک',
+'گلستان':'گرگان،گنبد کاووس،علی‌آباد کتول،آق‌قلا،بندر ترکمن،آزادشهر،کردکوی،مینودشت،رامیان،گالیکش،کلاله،بندر گز،مراوه‌تپه،گمیشان',
+'گیلان':'رشت،بندر انزلی،لاهیجان،لنگرود،آستارا،تالش،رودسر،آستانه اشرفیه،صومعه‌سرا،فومن،رودبار،ماسال،سیاهکل،شفت،املش،رضوانشهر',
+'لرستان':'خرم‌آباد،بروجرد،دورود،الیگودرز،ازنا،کوهدشت،نورآباد،الشتر،پلدختر،سپیددشت،چگنی،رومشکان',
+'مازندران':'ساری،بابل،آمل،قائم‌شهر،بابلسر،تنکابن،نوشهر،چالوس،بهشهر،نکا،محمودآباد،رامسر،فریدون‌کنار،جویبار،گلوگاه،سوادکوه،عباس‌آباد،کلاردشت،نور،سرخرود،میاندورود',
+'مرکزی':'اراک،ساوه،خمین،محلات،دلیجان،شازند،آشتیان،تفرش،زرندیه،کمیجان،خنداب،فراهان',
+'هرمزگان':'بندرعباس،میناب،بندر لنگه،قشم،رودان،حاجی‌آباد،جاسک،پارسیان،بستک،کیش،بندر خمیر،سیریک،ابوموسی،بشاگرد',
+'همدان':'همدان،ملایر،نهاوند،تویسرکان،اسدآباد،کبودرآهنگ،رزن،بهار،فامنین،دمق،لالجین',
+'یزد':'یزد،میبد،اردکان،ابرکوه،مهریز،بافق،اشکذر،تفت،مروست،هرات،خاتم،بهاباد،زارچ'
+}).map(([k,v])=>[k,[...new Set(v.split('،'))]]));
+
+function locRows(p,o){o=o||{};const h=(i,v)=>`<input type="hidden" id="${p}_${i}" value="${esc(v==null?'':v)}">`;
+ return h('pr',o.province)+h('c',o.city)+h('la',o.lat)+h('ln',o.lng)+
+ `<div class="srow tap" onclick="pickProv('${p}')"><span class="k">استان</span><b class="v" id="${p}_pv" style="direction:rtl">${esc(o.province||'انتخاب')}</b></div>
+ <div class="srow tap" onclick="pickCity('${p}')"><span class="k">شهر</span><b class="v" id="${p}_cv" style="direction:rtl">${esc(o.city||'انتخاب')}</b></div>
+ <div class="srow"><span class="k">آدرس</span><input id="${p}_a" value="${esc(o.address||'')}"></div>
+ <div class="srow"><span class="k">تلفن</span><input id="${p}_t" type="tel" inputmode="numeric" dir="ltr" value="${esc(o.phone||'')}"></div>
+ <div class="srow tap" onclick="pickMap('${p}')"><span class="k">موقعیت روی نقشه</span><b class="v" id="${p}_mv" style="direction:rtl">${o.lat!=null&&o.lng!=null?'ثبت شد ✓':'انتخاب'}</b></div>`}
+function locVals(p){const g=k=>($('#'+p+'_'+k).value||'').trim(),t=fa(g('t')).replace(/[\s-]/g,'');
+ if(t&&!/^0\d{9,10}$/.test(t)){msg('شماره تلفن معتبر نیست (مثلاً ۰۲۱۲۲۳۳۴۴۵۵)',1);return null}
+ return{p_province:g('pr'),p_city:g('c'),p_address:g('a'),p_lat:g('la')===''?null:+g('la'),p_lng:g('ln')===''?null:+g('ln'),p_phone:t}}
+function srchSheet(title,items,cb,custom){
+ const nz=x=>fa(String(x)).replace(/ي/g,'ی').replace(/ك/g,'ک').replace(/[\u200c\s]/g,'').toLowerCase();
+ openSheet(title,`<div class="gc"><div class="srow"><span class="k">جستجو</span><input id="sq" autocomplete="off"></div></div><div class="gc" id="sl" style="padding:0 16px"></div>`,2);
+ const draw=()=>{const raw=$('#sq').value.trim(),q=nz(raw),f=items.filter(x=>!q||nz(x).includes(q));
+  $('#sl').innerHTML=f.map(x=>`<div class="srow tap" data-v="${esc(x)}"><b class="v" style="direction:rtl;font-weight:500">${esc(x)}</b></div>`).join('')+(custom&&q&&!items.some(x=>nz(x)==q)?`<div class="srow tap" data-v="${esc(raw.slice(0,60))}"><b class="v" style="direction:rtl;color:var(--pr)">افزودن «${esc(raw.slice(0,60))}»</b></div>`:'')||'<p class="mu" style="padding:14px 0;margin:0">موردی پیدا نشد</p>'};
+ draw();$('#sq').oninput=draw;
+ $('#sl').onclick=e=>{const r=e.target.closest('.srow[data-v]');if(!r)return;closeSheet(2);cb(r.dataset.v)};
+ setTimeout(()=>$('#sq')&&$('#sq').focus(),380)}
+function pickProv(p){srchSheet('انتخاب استان',Object.keys(IRC),v=>{if($('#'+p+'_pr').value!=v){$('#'+p+'_pr').value=v;$('#'+p+'_c').value='';$('#'+p+'_cv').textContent='انتخاب'}$('#'+p+'_pv').textContent=v})}
+function pickCity(p){const pr=$('#'+p+'_pr').value;if(!pr)return msg('اول استان را انتخاب کنید',1);
+ srchSheet('انتخاب شهر',IRC[pr]||[],v=>{$('#'+p+'_c').value=v;$('#'+p+'_cv').textContent=v},1)}
+const NKEY='web.c66a9c0f610b4d1cbf098a6d378175c8';let NSH=false;
+const loadJs=u=>new Promise((ok,no)=>{const sc=document.createElement('script');sc.src=u;sc.onload=ok;sc.onerror=()=>no(new Error('load'));document.head.appendChild(sc)}),
+ loadCss=u=>{const l=document.createElement('link');l.rel='stylesheet';l.href=u;document.head.appendChild(l)};
+async function loadLeaflet(){if(window.L&&window.L.map)return;
+ try{loadCss('https://static.neshan.org/sdk/leaflet/1.4.0/leaflet.css');await loadJs('https://static.neshan.org/sdk/leaflet/1.4.0/leaflet.js');NSH=true}
+ catch(e){loadCss('https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css');
+  try{await loadJs('https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js')}catch(e2){throw new Error('نقشه بارگذاری نشد؛ اینترنت را بررسی کنید')}}}
+let MP={};
+async function mapGo(q,z){try{const r=await fetch('https://nominatim.openstreetmap.org/search?format=json&limit=1&accept-language=fa&countrycodes=ir&q='+encodeURIComponent(q)),d=await r.json();
+ if(!d.length)return false;if(MP.map)MP.map.setView([+d[0].lat,+d[0].lon],z);return true}catch(e){return false}}
+async function mapFind(){const q=($('#mq').value||'').trim();if(!q)return;const ok=await mapGo([q,MP.c,MP.pr].filter(Boolean).join('، '),16);if(!ok)msg('جایی پیدا نشد؛ عبارت دیگری را امتحان کنید',1)}
+function mapMe(){if(!navigator.geolocation)return msg('مرورگر موقعیت‌یابی ندارد',1);
+ navigator.geolocation.getCurrentPosition(q=>{if(MP.map)MP.map.setView([q.coords.latitude,q.coords.longitude],17)},()=>msg('دسترسی به موقعیت داده نشد',1),{enableHighAccuracy:true,timeout:10000})}
+async function pickMap(p){try{await loadLeaflet()}catch(e){return fail(e)}
+ const la=parseFloat($('#'+p+'_la').value),ln=parseFloat($('#'+p+'_ln').value),has=isFinite(la)&&isFinite(ln),pr=$('#'+p+'_pr').value,c=$('#'+p+'_c').value;
+ openSheet('انتخاب موقعیت',`<div style="position:relative;border-radius:20px;overflow:hidden;margin-bottom:12px"><div id="mp" dir="ltr" style="height:52vh;background:var(--cd)"></div><div class="mpin"></div>
+ <div class="mps"><input id="mq" placeholder="جستجوی محله یا خیابان" onkeydown="if(event.key=='Enter')mapFind()"><button onclick="mapFind()">جستجو</button></div>
+ <button class="mloc" onclick="mapMe()">موقعیت من</button></div>
+ <p class="mu" style="margin:0 6px 10px;font-size:13px;text-align:center">نقشه را حرکت بدهید تا سنجاق روی محل داروخانه قرار بگیرد.</p>
+ <button class="p wide" id="mok">تأیید موقعیت</button>`,2);
+ setTimeout(()=>{if(!$('#mp'))return;const ctr=has?[la,ln]:[32.4,53.7],zm=has?17:5,
+   m=NSH?new L.Map('mp',{key:NKEY,maptype:isDark()?'standard-night':'standard-day',poi:true,traffic:false,zoomControl:false,center:ctr,zoom:zm}):L.map('mp',{zoomControl:false}).setView(ctr,zm);
+  if(!NSH)L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',{subdomains:'abcd',maxZoom:19,attribution:'© OpenStreetMap © CARTO'}).addTo(m);
+  L.control.zoom({position:'bottomright'}).addTo(m);
+  MP={map:m,pr,c};m.invalidateSize();
+  if(!has&&(c||pr))mapGo([c,pr].filter(Boolean).join('، '),c?12:8);
+  $('#mok').onclick=()=>{const k=m.getCenter();$('#'+p+'_la').value=k.lat.toFixed(6);$('#'+p+'_ln').value=k.lng.toFixed(6);const b=$('#'+p+'_mv');if(b)b.textContent='ثبت شد ✓';closeSheet(2)}},420)}
+function shareTxt(pid,sid){const x=S.ms.find(m=>m.pharmacy_id==pid),p=x&&x.pharmacies;if(!p)return;
+ const lv=!!($('#ep_a')&&$('#ep_n')),v=(k,f)=>lv?($('#ep_'+k).value||'').trim():(p[f]==null?'':String(p[f])),T=['داروخانه '+(lv?$('#ep_n').value.trim():p.name)],
+ pr=v('pr','province'),c=v('c','city'),a=v('a','address'),t=v('t','phone'),la=v('la','lat'),ln=v('ln','lng'),s=sid&&S.shifts.find(y=>y.id==sid),ad=[pr,c==pr?'':c,a].filter(Boolean).join('، ');
+ if(ad)T.push('آدرس: '+ad);if(t)T.push('تلفن: '+t);if(la&&ln)T.push('موقعیت روی نقشه: https://www.google.com/maps?q='+la+','+ln);
+ if(s)T.push('','شیفت: '+jd(s.shift_date)+' · ساعت '+s.start_time+' تا '+s.end_time);
+ if(T.length<2)return msg('آدرس این داروخانه هنوز ثبت نشده؛ از «داروخانه‌های من» ثبتش کنید',1);
+ const txt=T.join('\n'),cp=()=>{const z=document.createElement('textarea');z.value=txt;document.body.appendChild(z);z.select();try{document.execCommand('copy');msg('متن کپی شد ✓')}catch(e){msg('کپی نشد',1)}z.remove()};
+ if(navigator.share)navigator.share({text:txt}).catch(e=>{if(e&&e.name!='AbortError')cp()});else cp()}
+function askWhy(title,ok,cb){openSheet(title,`<div class="gc"><div class="srow"><span class="k">دلیل</span><input id="why" placeholder="دلیل را بنویسید"></div></div><button class="p wide" id="why_ok">${ok}</button>`,3);setTimeout(()=>{const x=$('#why');x&&x.focus()},380);$('#why_ok').onclick=()=>{const v=$('#why').value.trim();if(!v)return msg('دلیل را بنویسید',1);closeSheet(3);cb(v)}}
+function askYes(title,text,ok,cb){openSheet(title,`<p class="mu" style="margin:0 6px 14px;line-height:1.9">${text}</p><button class="p wide" id="yn_ok">${ok}</button>`,3);$('#yn_ok').onclick=()=>{closeSheet(3);cb()}}
+</script>
+</body>
+</html>
