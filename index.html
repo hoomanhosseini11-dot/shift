@@ -448,6 +448,12 @@ input,select,textarea,.srow input,.card input,.card select,.card textarea{font-s
 .sba{display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-end;width:100%;margin-top:4px}
 .sba button{margin-top:0!important}
 .sba .shi{padding:3px 10px;display:inline-flex;align-items:center;justify-content:center}
+.sr.swr.shift-work{display:grid;grid-template-columns:minmax(0,1fr) auto}
+.shift-work .shift-context{overflow-wrap:anywhere}
+.shift-work>.sba{grid-column:1/-1}
+.shift-work>.sba>button{min-height:38px;padding:6px 12px;line-height:1.35}
+.shift-work>.sba>.shi{min-width:38px;padding-inline:8px}
+
 .shw2{display:flex;align-items:center;justify-content:center;gap:8px}
 .pib{padding:7px 11px;min-width:40px;display:inline-flex;align-items:center;justify-content:center}
 .plc{display:flex;flex-direction:column;gap:6px;margin-bottom:10px}
@@ -1365,8 +1371,8 @@ function shRows(outgoing=false){const me=S.me.id,PO=curP()?.owner_id,cs=stOpen()
   const total=`جمع${pnm&&!personal?' '+esc(pnm):''}: ${fmt(A.reduce((a,s)=>a+s.amount,0))} ${RL()}`;
   const pending=pend?`<span class="st p mp">${pn(pend)} منتظر تأیید</span>`:'';
   const head=monthHeader(k,g[k].length,'شیفت',total,op,`shMo(this,'${outgoing?'out-':''}${k}')`,pending);
-  const body=g[k].map(s=>{if(s.incoming)return incomingShiftCard(s);const z=stL(s),b=bal(s),bt=s.pharmacy_id!==S.cur?'':`${!curM()?.ended_at&&act(s)&&s.pharmacist_id==me&&!(b.paid_confirmed+b.paid_pending>0)?`<button class="d" style="margin-top:6px;padding:3px 10px" onclick="voidS('${s.id}')">ابطال</button>`:''}${cs&&act(s)&&s.status=='confirmed'&&rem(s)>0?`<button class="p" style="margin-top:6px;padding:3px 10px" onclick="settleOne('${s.id}')">تسویه شد</button>`:''}${act(s)&&s.pharmacist_id==me?`<button class="shi" aria-label="اشتراک‌گذاری" title="اشتراک‌گذاری" onclick="shareTxt('${s.pharmacy_id}','${s.id}')"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg></button>`:''}`;
-  return shiftWorkCard(s,s.pharmacist_name,z,`${personal&&s.pharmacy_id!==S.cur?`<small>${esc(phNm(s.pharmacy_id))}</small>`:''}${s.substitute_name?`<small>جایگزین: ${esc(s.substitute_name)}</small>`:''}
+  const body=g[k].map(s=>{if(s.incoming)return incomingShiftCard(s);const z=stL(s),b=bal(s),bt=s.pharmacy_id!==S.cur?'':`${!curM()?.ended_at&&act(s)&&s.pharmacist_id==me&&!(b.paid_confirmed+b.paid_pending>0)?`<button class="d" onclick="voidS('${s.id}')">ابطال</button>`:''}${cs&&act(s)&&s.status=='confirmed'&&rem(s)>0?`<button class="p" onclick="settleOne('${s.id}')">تسویه شد</button>`:''}${act(s)&&s.pharmacist_id==me?`<button class="shi" aria-label="اشتراک‌گذاری" title="اشتراک‌گذاری" onclick="shareTxt('${s.pharmacy_id}','${s.id}')"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg></button>`:''}`;
+  return shiftWorkCard(s,s.pharmacist_name,z,`${s.substitute_name?`<small>جایگزین: ${esc(s.substitute_name)}</small>`:''}
   ${(personal?S.ms.find(m=>m.pharmacy_id===s.pharmacy_id)?.pharmacies.owner_id:PO)&&s.status=='confirmed'?`<small>پرداخت‌شده: ${fmt(b.paid_confirmed)}${b.paid_pending?` (+${fmt(b.paid_pending)} منتظر تأیید)`:''}</small>`:''}${s.reject_reason?`<small>${esc(s.reject_reason)}</small>`:''}${s.void_reason?`<small>${esc(s.void_reason)}</small>`:''}`,bt)}).join('');
   return `<div class="smo ${op?'open':''}" data-mk="${k}">${head}<div class="cw ${op?'open':''}" ${op?'':'inert'}><div class="mb">${body}</div></div></div>`}).join('');
  return `${rows||'<div class="card mu">شیفتی برای نمایش نیست.</div>'}`}
@@ -1606,7 +1612,7 @@ function workedShiftRows(){
  return rows.concat(incomingShiftRows().filter(s=>!ids.has(s.id)));
 }
 function shiftWorkCard(s,title,state,extra='',actions=''){
- return `<div class="sr swr"><div><b>${esc(title)}</b><small>${esc(jd(s.shift_date))} · <bdi dir="ltr">${esc(s.start_time)}–${esc(s.end_time)}</bdi> · ${fh(s.hours)}</small>${extra}</div>
+ return `<div class="sr swr shift-work"><div><b>${esc(title)}</b><small>${esc(jd(s.shift_date))} · <bdi dir="ltr">${esc(s.start_time)}–${esc(s.end_time)}</bdi> · ${fh(s.hours)}</small>${extra}</div>
  <div class="am">${s.amount==null?'':`<b>${fmt(s.amount)}</b><span class="un">${RL()}</span>`}${state?`<span class="st ${state[0]}" style="display:block">${state[1]}</span>`:''}</div>${actions?`<div class="sba">${actions}</div>`:''}</div>`;
 }
 function incomingShiftState(s){
@@ -1615,16 +1621,19 @@ function incomingShiftState(s){
  if(s.paid_amount>=s.amount)return ['s','تسویه‌شده'];
  return s.paid_amount>0?['p','بخشی پرداخت شده']:['p','تسویه‌نشده'];
 }
+function incomingShiftContext(s){
+ return `<small class="shift-context">جایگزینی${s.pharmacy_name?' · '+esc(s.pharmacy_name):''}</small>`;
+}
 function incomingShiftCard(s){
  const remaining=s.amount-s.paid_amount;
- const extra='<small>جایگزینی</small>'+(s.paid_amount>0&&remaining>0?`<small>مانده: ${fmt(remaining)} ${RL()}</small>`:'');
- return shiftWorkCard(s,s.pharmacy_name,incomingShiftState(s),extra,`<button onclick="incomingShiftDetail('${s.id}')">جزئیات</button>`);
+ const extra=incomingShiftContext(s)+(s.paid_amount>0&&remaining>0?`<small>مانده: ${fmt(remaining)} ${RL()}</small>`:'');
+ return shiftWorkCard(s,s.pharmacist_name,incomingShiftState(s),extra,`<button onclick="incomingShiftDetail('${s.id}')">جزئیات</button>`);
 }
 function incomingShiftDetail(id){
  const s=incomingShiftRows().find(row=>row.id===id);
  if(!s)return;
- openSheet(esc(s.pharmacy_name),shiftWorkCard(s,s.pharmacy_name,incomingShiftState(s),
-  '<small>جایگزینی</small>'+(s.paid_amount==null?'':`<small>پرداخت تأییدشده: ${fmt(s.paid_amount)} ${RL()}</small>`))+
+ openSheet('جزئیات شیفت جایگزینی',shiftWorkCard(s,s.pharmacist_name,incomingShiftState(s),
+  incomingShiftContext(s)+(s.paid_amount==null?'':`<small>پرداخت تأییدشده: ${fmt(s.paid_amount)} ${RL()}</small>`))+
   (s.collaboration_ended?'<p class="mu">همکاری پایان یافته است. پرداخت‌های مربوط به این شیفت تا تسویهٔ کامل قابل پیگیری‌اند.</p>':''));
 }
 function substituteShiftHistory(){
