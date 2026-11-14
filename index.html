@@ -717,7 +717,7 @@ async function loadShifts0(){
   S.loadedPh=pid;S.shifts=[];S.plan=[];S.ci=[];S.pay=[];S.bal={};
  }
  if(!pid){
-  await Promise.all([loadNt(),loadInc(),loadCal(null),loadPc()]);
+  await Promise.all([loadNt(),loadInc(),loadCal(null),loadPc(),loadHrs()]);
   if(tk===S._lt)rtStart();
   return;
  }
@@ -789,16 +789,16 @@ function incChart(ms,ser){const key=m=>mkM(m[0],m[1]),tot=m=>ser.reduce((a,s)=>a
 function icPick(k){S.icm=S.icm==k?null:k;const ch=$('#icch');if(!ch)return;ch.classList.toggle('has',!!S.icm);ch.querySelectorAll('.cm').forEach(e=>e.classList.toggle('on',e.dataset.m==S.icm));const d=$('#icd');if(d)d.innerHTML=S.icm?icDet(S.icm):''}
 function icDet(k){const L=incL().filter(x=>String(x.d).startsWith(k+'/')),p=k.split('/');if(!L.length)return'';
  const g={};L.forEach(x=>(g[x.ph]=g[x.ph]||[]).push(x));
- const ids=S.ms.map(m=>String(m.pharmacy_id)).filter(i=>g[i]),tot=L.reduce((a,x)=>a+x.a,0),CV='<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>';
+ const ids=Object.keys(g),tot=L.reduce((a,x)=>a+x.a,0),CV='<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>';
  return `<div class="dls"><div class="dh ich-h"><span>${MN[+p[1]-1]} ${fdg(p[0])} · جمع ${ru(tot)} ${RL()}</span><button type="button" class="icx" onclick="icPick('${k}')" aria-label="بستن">✕</button></div>${ids.map(i=>{const A=g[i],sum=A.reduce((a,x)=>a+x.a,0),hs=A.reduce((a,x)=>a+(+x.h||0),0);
-  return `<div class="dr tap" onclick="icAll('${k}','${i}')"><div class="dm"><b class="dn"><i class="pdt" style="background:${phCol(i)}"></i>${esc(phNm(i))}</b><small class="mu">${pn(A.length)} شیفت · ${fh(hs)}</small></div><div class="dv"><b>${ru(sum)}</b></div>${CV}</div>`}).join('')}<div class="gc np" style="margin:10px 0 0"><div class="srow tap" onclick="icAll('${k}')"><span class="k">لیست همهٔ شیفت‌ها (${pn(L.length)})</span>${CV}</div></div></div>`}
+  return `<div class="dr tap" onclick="icAll('${k}','${i}')"><div class="dm"><b class="dn"><i class="pdt" style="background:${phCol(i)}"></i>${esc(i==='incoming-substitute'?'شیفت‌های جایگزینی':phNm(i))}</b><small class="mu">${pn(A.length)} شیفت · ${fh(hs)}</small></div><div class="dv"><b>${ru(sum)}</b></div>${CV}</div>`}).join('')}<div class="gc np" style="margin:10px 0 0"><div class="srow tap" onclick="icAll('${k}')"><span class="k">لیست همهٔ شیفت‌ها (${pn(L.length)})</span>${CV}</div></div></div>`}
 function icAll(k,pid){const p=k.split('/'),tm=x=>x?String(x).slice(0,5):'',L=incL().filter(x=>String(x.d).startsWith(k+'/')&&(!pid||x.ph==String(pid))),g={};L.forEach(x=>(g[x.ph]=g[x.ph]||[]).push(x));
- const ids=S.ms.map(m=>String(m.pharmacy_id)).filter(i=>g[i]);
+ const ids=Object.keys(g);
  openSheet(`${MN[+p[1]-1]} ${fdg(p[0])}`,ids.length?ids.map(i=>{const A=g[i].slice().sort((a,b)=>String(a.d)<String(b.d)?-1:String(a.d)>String(b.d)?1:0),hs=A.reduce((a,x)=>a+(+x.h||0),0);
-  return `<div class="gt"><i class="pdt" style="background:${phCol(i)}"></i>${esc(phNm(i))} · ${pn(A.length)} شیفت · ${fh(hs)}</div><div class="gc" style="padding:0 16px">${A.map(x=>{const t1=tm(x.st),t2=tm(x.en);return `<div class="lr"><div class="lt"><b>${pn(+String(x.d).split('/')[2])} ${MN[+p[1]-1]}</b><span><b>${ru(x.a)}</b> ${RL()}</span></div><small class="mu">${t1&&t2?`<bdi dir="ltr">${t1}–${t2}</bdi> · `:''}${fh(x.h)}${x.a<x.t?` · از ${ru(x.t)}`:''}</small></div>`}).join('')}</div>`}).join(''):'<p class="mu">موردی در این ماه ثبت نشده است.</p>')}
-function incCard(){const I=incL(),nm={},by={},ms=last6(),ks=new Set(ms.map(m=>mkM(m[0],m[1])));S.ms.forEach(x=>nm[String(x.pharmacy_id)]=x.pharmacies.name);
+  return `<div class="gt"><i class="pdt" style="background:${phCol(i)}"></i>${esc(i==='incoming-substitute'?'شیفت‌های جایگزینی':phNm(i))} · ${pn(A.length)} شیفت · ${fh(hs)}</div><div class="gc" style="padding:0 16px">${A.map(x=>{const t1=tm(x.st),t2=tm(x.en);return `<div class="lr"><div class="lt"><b>${pn(+String(x.d).split('/')[2])} ${MN[+p[1]-1]}</b><span><b>${ru(x.a)}</b> ${RL()}</span></div><small class="mu">${t1&&t2?`<bdi dir="ltr">${t1}–${t2}</bdi> · `:''}${fh(x.h)}${x.a<x.t?` · از ${ru(x.t)}`:''}</small></div>`}).join('')}</div>`}).join(''):'<p class="mu">موردی در این ماه ثبت نشده است.</p>')}
+function incCard(){const I=incL(),nm={},by={},ms=last6(),ks=new Set(ms.map(m=>mkM(m[0],m[1])));S.ms.forEach(x=>nm[String(x.pharmacy_id)]=x.pharmacies.name);nm['incoming-substitute']='شیفت‌های جایگزینی';
  I.forEach(x=>{const k=String(x.d).slice(0,7);if(!ks.has(k)||!nm[x.ph]||!(x.a>0))return;const o=by[x.ph]||(by[x.ph]={id:x.ph,n:nm[x.ph],v:{}});o.v[k]=(o.v[k]||0)+x.a});
- const ord=S.ms.map(m=>String(m.pharmacy_id)),ser=Object.values(by).sort((a,b)=>ord.indexOf(a.id)-ord.indexOf(b.id)),per=S.ms.some(m=>!m.pharmacies.owner_id);
+ const ord=[...S.ms.map(m=>String(m.pharmacy_id)),'incoming-substitute'],ser=Object.values(by).sort((a,b)=>ord.indexOf(a.id)-ord.indexOf(b.id)),per=S.ms.some(m=>!m.pharmacies.owner_id);
  return `<div class="card"><h2>درآمد ماهانه <span class="mu" style="font-weight:400">(بر اساس ماه شیفت)</span></h2><div class="fb"><div class="mu">واحد ${unitSel()}</div></div>
  ${ser.length?incChart(ms,ser)+`<p class="mu" style="margin:8px 0 0;font-size:12px">فقط مبلغ پرداخت‌شده و تأییدشده (${RL()}) برای شیفت‌های هر ماه. روی هر ماه بزنید تا ریزش بیاید.${per?' در داروخانهٔ شخصی، شیفت‌های تأییدشده حساب می‌شوند.':''}</p>`:'<p class="mu">هنوز مبلغ پرداخت‌شدهٔ تأییدشده‌ای ثبت نشده است.</p>'}</div>`}
 function subDash(){const by={};S.sub.forEach(x=>by[x.id]={n:x.name,v:{}});let any=false;
@@ -813,22 +813,22 @@ function recCard(){const me=S.me,live=curM()&&!curM().ended_at,conf=S.shifts.fil
  ${live&&mine.length?`<div class="card" style="border:2px solid var(--wa)"><h2>منتظر تأیید شما (${mine.length})</h2>${mine.map(p=>`<div class="pv fb" style="justify-content:space-between"><div><b>${fmt(p.amount)} ${RL()}</b><div class="mu">${p.paid_date} — ثبت‌شده توسط موسس</div></div><div class="fb"><button class="p" onclick="okP('${p.id}')">تأیید دریافت</button><button class="d" onclick="noP('${p.id}')">رد</button></div></div>`).join('')}</div>`:''}
  ${live?`<div class="card"><div class="dsm" role="button" onclick="this.nextElementSibling.classList.toggle('open')">＋ ثبت دریافتیِ جدید</div><div class="cw"><div>${payForm(false)}</div></div></div>`:''}
  <div class="gt">تاریخچهٔ دریافتی‌ها</div><p class="mu" style="margin:-4px 6px 10px;font-size:12px">هر دریافتی بعد از تأیید طرف مقابل از مانده بستانکاری شما کم می‌شود و در «درآمد» حساب می‌شود.</p>${payList()}`}
-function finTabs(){const hasRec=!!curP().owner_id,hasCr=(S.cr||[]).length>0,T=[];
+function finTabs(){const hasRec=!!curP()?.owner_id,hasCr=(S.cr||[]).length>0,T=[];
  if(hasRec)T.push(['rec',(hasCr?'از موسس':'دریافتی از موسس')+bdg(pendMe())]);
  T.push(['sub',hasCr?'جایگزین‌های من':'تسویه با جایگزین‌ها']);
  if(hasCr)T.push(['cr','طلب من'+bdg(crPendN())]);return T}
 function finBody(){return S.ft=='sub'?subView():S.ft=='cr'?crView():recCard()}
-function finPage(){if(curM()?.ended_at)return recCard();const T=finTabs(),ids=T.map(x=>x[0]);if(!ids.includes(S.ft))S.ft=ids.includes('rec')?'rec':'sub';
+function finPage(){if(curM()?.ended_at&&!(S.cr||[]).length)return recCard();const T=finTabs(),ids=T.map(x=>x[0]);if(!ids.includes(S.ft))S.ft=ids.includes('rec')?'rec':'sub';
  const tabs=T.length>1?segHtml('seg_ft',T,S.ft,'ftGo'):'';
  return tabs+`<div id="ft_c">${finBody()}</div>`}
 async function loadHrs(){S.hrs=[];if(S.me.role!='pharmacist')return;
- const r=await fetchAll(()=>sb.from('shifts').select('pharmacy_id,shift_date,hours,status,pharmacist_id').eq('pharmacist_id',S.me.id).in('status',['confirmed','pending']).order('id'));if(!r.error)S.hrs=r.data}
-function hrsCard(){const H=S.hrs||[],nm={};S.ms.forEach(x=>nm[x.pharmacy_id]=x.pharmacies);
+ const r=await fetchAll(()=>sb.from('shifts').select('id,pharmacy_id,shift_date,start_time,end_time,hours,amount,substitute_name,status,pharmacist_id').eq('pharmacist_id',S.me.id).in('status',['confirmed','pending']).order('id'));if(!r.error)S.hrs=r.data.map(s=>({...s,hours:Number(s.hours),amount:Number(s.amount)}))}
+function hrsCard(){const H=workedShiftRows(),nm={};S.ms.forEach(x=>nm[x.pharmacy_id]=x.pharmacies);
  const r2=v=>Math.round(v*100)/100,sm=l=>r2(l.reduce((a,s)=>a+(+s.hours||0),0)),C=H.filter(s=>s.status=='confirmed'),P=H.filter(s=>s.status=='pending'),t=tj(),cm=mkM(t[0],t[1])+'/';
  if(!H.length)return '<div class="card mu">هنوز شیفتی ثبت نشده است.</div>';
  const first=C.reduce((a,s)=>!a||s.shift_date<a?s.shift_date:a,''),mm=ms=>sm(C.filter(s=>s.shift_date.startsWith(mkM(ms[0],ms[1])+'/'))),m6=last6(),mv=m6.map(mm),mx=Math.max(1,...mv),
  by={},gm={};C.forEach(s=>{const o=by[s.pharmacy_id]||(by[s.pharmacy_id]={h:0,n:0});o.h+=+s.hours||0;o.n++;const k=s.shift_date.slice(0,7),g=gm[k]||(gm[k]={});const q=g[s.pharmacy_id]||(g[s.pharmacy_id]={h:0,n:0});q.h+=+s.hours||0;q.n++});
- const pname=id=>{const p=nm[id];return esc(p?p.name:'داروخانه')},ptype=id=>{const p=nm[id];return p&&p.owner_id?'با موسس':'شخصی'};
+ const pname=id=>esc(id==='incoming-substitute'?'شیفت‌های جایگزینی':nm[id]?.name||'داروخانه'),ptype=id=>id==='incoming-substitute'?'جایگزینی':nm[id]?.owner_id?'با موسس':'شخصی';
  const months=Object.keys(gm).sort().reverse().map(k=>{const q=k.split('/'),g=gm[k],tot=r2(Object.values(g).reduce((a,x)=>a+x.h,0));
   return `<div class="mh"><span>${MN[+q[1]-1]} ${pn(q[0])}</span><span>${fh(tot)}</span></div>`+Object.entries(g).map(([id,x])=>`<div class="sr"><div><b>${pname(id)}</b><small>${ptype(id)} · ${pn(x.n)} شیفت</small></div><div class="am"><b>${fh(r2(x.h))}</b></div></div>`).join('')}).join('');
  return `<div class="kps">${tile('جمع کل ساعت',fhT(r2(sm(C))),`${pn(C.length)} شیفت تأییدشده${first?' — از '+first:''}`)}${tile('ساعت '+MN[t[1]-1],fhT(mm(t)),'ماه جاری')}${P.length?tile('منتظر تأیید',fhT(sm(P)),`${pn(P.length)} شیفت — هنوز حساب نشده`,null,'warn'):''}</div>
@@ -898,7 +898,7 @@ function segSet(el,i){if(!el)return;el.querySelectorAll('button').forEach((b,k)=
 const segHtml=(id,o,cur,fn,cls)=>`<div class="${cls||'pl'} seg np" id="${id}" style="--n:${o.length}"><i class="ind"></i>${o.map(x=>`<button class="${x[0]==cur?'on':''}" onclick="${fn}('${x[0]}')">${x[1]}</button>`).join('')}</div>`;
 function auGo(v){if(v=='signup')return startSU();if(S.tab==v)return;segSet($('#seg_au'),v=='login'?0:1);S.tab=v;authApply()}
 function ftGo(v){S.ft=v;segSet($('#seg_ft'),finTabs().findIndex(x=>x[0]==v));$('#ft_c').innerHTML=finBody()}
-function shFil(v){S.sf=v;S.shO={};segSet($('#seg_sf'),sfl.findIndex(f=>f[0]==v));$('#sl_rows').innerHTML=shRows()}
+function shFil(v){S.sf=v;S.shO={};segSet($('#seg_sf'),sfl.findIndex(f=>f[0]==v));$('#sl_rows').innerHTML=shRows();const out=$('#out_shift_rows');if(out)out.innerHTML=shRows(true)}
 function cpv(b,v){const t=b.textContent,ok=()=>{b.textContent='کپی شد ✓';setTimeout(()=>{b.textContent=t},1500)},fb=()=>{const x=document.createElement('textarea');x.value=v;document.body.appendChild(x);x.select();try{document.execCommand('copy');ok()}catch(e){msg('کپی نشد',1)}x.remove()};try{navigator.clipboard.writeText(v).then(ok,fb)}catch(e){fb()}}
 function payBtns(uid){const m=(S.dets||{})[uid];if(!m||uid==S.me.id)return'';const b=[];if(m.card_number)b.push(`<button onclick="cpv(this,'${m.card_number}')">کپی کارت</button>`);if(m.sheba)b.push(`<button onclick="cpv(this,'${m.sheba}')">کپی شبا</button>`);if(m.phone)b.push(`<button onclick="cpv(this,'${m.phone}')">کپی موبایل</button>`);
  const who=[m.bank_name,m.account_holder].filter(Boolean).map(esc).join(' · ');return b.length||who?`${who?`<small>${who}</small>`:''}${b.length?`<div class="pb">${b.join('')}</div>`:''}`:''}
@@ -1053,11 +1053,13 @@ function homeOw(){const me=S.me,A=S.shifts.filter(s=>s.status=='confirmed'),pend
  `</div></div>
  <div class="gt">آخرین پرداخت‌ها</div>${S.pay.slice(0,5).map(p=>payRow(p,0)).join('')||'<div class="card mu">هنوز پرداختی ثبت نشده است.</div>'}`}
 function homePh(){const me=S.me,ph=curP(),A=S.shifts.filter(s=>s.pharmacist_id==me.id&&s.status!='voided'&&s.status!='rejected'),M=A.filter(s=>s.shift_date.startsWith(monP())),
- Mc=M.filter(s=>s.status=='confirmed'&&!isSubSh(s)),r2=v=>Math.round(v*100)/100,hc=r2(Mc.reduce((a,s)=>a+s.hours,0)),hsub=r2(M.filter(s=>s.status=='confirmed'&&isSubSh(s)).reduce((a,s)=>a+s.hours,0)),subAmt=M.filter(isSubSh).reduce((a,s)=>a+s.amount,0),ph2=r2(M.filter(s=>s.status=='pending'&&!isSubSh(s)).reduce((a,s)=>a+s.hours,0)),
+ subAmt=M.filter(isSubSh).reduce((a,s)=>a+s.amount,0),
  mt=M.reduce((a,s)=>a+s.amount,0),pendS=A.filter(s=>s.status=='pending').length,
  claim=A.filter(s=>s.status=='confirmed').reduce((a,s)=>a+s.amount-bal(s).paid_confirmed,0),
  pp=S.pay.filter(p=>p.status=='pending'),mine=pp.filter(p=>p.created_by!=me.id).length,wait=pp.length-mine;
- return nextCard(A.concat(S.plan.filter(s=>s.pharmacist_id==S.me.id)))+`<div class="kps">${incTile()}${tile('ساعت کارکرد '+MN[tj()[1]-1],fhT(hc),`${Mc.length} شیفت تأییدشده${ph2?` — ${fh(ph2)} منتظر تأیید`:''}${hsub?` — + ${fh(hsub)} جایگزین`:''}`,'sh')}${tile('جمع ماه جاری',fmt(mt),`${RL()}${pendS?` — ${pendS} شیفت منتظر تأیید`:''}${subAmt?` — شامل ${fmt(subAmt)} برای جایگزین`:''}`,'sh')}
+ const worked=workedShiftRows().filter(s=>s.status==='confirmed'&&s.shift_date.startsWith(monP())),
+  incoming=worked.filter(s=>s.incoming),workedHours=worked.reduce((total,s)=>total+s.hours,0);
+ return nextCard(A.concat(S.plan.filter(s=>s.pharmacist_id==S.me.id)))+`<div class="kps">${incTile()}${tile('ساعت کارکرد '+MN[tj()[1]-1],fhT(workedHours),`${pn(worked.length)} شیفت تأییدشده${incoming.length?` · ${pn(incoming.length)} جایگزینی`:''}`,'sh')}${tile('جمع ماه جاری',fmt(mt),`${RL()}${pendS?` — ${pendS} شیفت منتظر تأیید`:''}${subAmt?` — شامل ${fmt(subAmt)} برای جایگزین`:''}`,'sh')}
  ${ph.owner_id?tile('بستانکاری از موسس',fmt(claim),RL()+' — فقط تأییدشده‌ها','fin:rec')+tile('پرداخت منتظر تأیید شما',mine,wait?`${wait} ثبت‌شدهٔ شما منتظر موسس`:'','fin:rec',mine?'warn':''):''}</div><div class="cols"><div class="c1">${calCard(A.concat(S.plan.filter(s=>s.pharmacist_id==S.me.id)),1)}${curM()?.ended_at?'':planCard(true)+(ciOn()?ciCard(true):'')}</div><div class="c2">${incCard()}</div></div>`}
 const pharmCard=()=>{const ph=curP();
  if(!ph)return `<div class="ob"><div class="logo br">${LOGO}</div><h1>خوش آمدید</h1><p class="mu">هنوز داروخانه‌ای ندارید. یکی بسازید یا با کد دعوت وصل شوید.</p>
@@ -1070,18 +1072,20 @@ const pharmCard=()=>{const ph=curP();
  return `<div class="gt">داروخانه‌ها و دعوت</div><p class="mu" style="margin:-2px 6px 10px">${ph.owner_id?'این داروخانه موسس دارد؛ شیفت‌ها نیاز به تأیید دارند.':'داروخانهٔ شخصی؛ شیفت‌ها مستقیم تأییدشده ثبت می‌شوند.'}</p>
  <div class="gc np">${row('openNewPh','ساخت داروخانهٔ جدید')}${row('openJoin','پیوستن با کد دعوت')}${live?row('openInv','ساخت کد دعوت'):''}</div>`};
 function selOpts(){return S.ms.filter(m=>!m.ended_at).map(m=>`<option value="${esc(m.pharmacy_id)}" ${m.pharmacy_id===S.cur?'selected':''}>${esc(m.pharmacies.name)}${m.pharmacies.owner_id?' (با موسس)':' (شخصی)'}</option>`).join('')}
-function home(){$('#app').classList.remove('fd');const me=S.me,m=curM(),ph=curP(),isPh=me.role=='pharmacist',live=m&&!m.ended_at,pgs=ph?navPages(isPh,ph):isPh?[['home','خانه','home'],['sh','شیفت‌ها','clock']]:[];
+function home(){$('#app').classList.remove('fd');const me=S.me,m=curM(),ph=curP(),isPh=me.role=='pharmacist',live=m&&!m.ended_at,pgs=ph?navPages(isPh,ph):isPh?[['home','خانه','home'],['sh','شیفت‌ها','clock'],['fin','مالی','wallet'],['rep','گزارش‌ها','doc']]:[];
  if(!pgs.some(p=>p[0]==S.pg)&&S.pg!='pf')S.pg='home';const pg=S.pg;let body;const PFM=pg=='pf'&&!S.pfp;
  if(pg=='pf')body=pfCard();
- else if(pg=='sh'&&!ph)body=substituteShiftHistory();
+ else if(pg=='sh'&&!ph)body=pharmacistShiftPage(false);
+ else if(!ph&&pg=='fin')body=finPage();
+ else if(!ph&&pg=='rep')body=repPage();
  else if(!ph&&S.ms.length)body=`<div class="card"><button type="button" class="p" onclick="S.pfp='ph';S.pg='pf';setPhTab('arch');home()">مشاهدهٔ سوابق داروخانه‌ها</button></div>`+
   (isPh?calCard([],1)+incCard():'');
  else if(!ph)body=me.is_admin?admDash():pharmCard();
  else if(pg=='home')body=(isPh?homePh():homeOw());
  else if(pg=='q')body=(live?queue():'')+shiftList();
- else if(pg=='sh')body=(live?addRows():'')+shiftList()+substituteShiftHistory();
+ else if(pg=='sh')body=isPh?pharmacistShiftPage(live):(live?addRows():'')+shiftList();
  else if(pg=='pay')body=payCard();
- else if(pg=='rep')body=repCard();
+ else if(pg=='rep')body=isPh?repPage():repCard();
  else if(pg=='fin')body=finPage();
  else body='';
  if(m?.ended_at&&pg!='pf')body='<div class="card mu np">سوابق داروخانه · فقط برای مشاهده</div>'+body;
@@ -1164,6 +1168,7 @@ async function saveShift(button){
  const s=document.querySelectorAll('#f_d select'),jy=+s[0].value,jm=+s[1].value,jday=+s[2].value,pharmacy=S.cur;
  const mode=$('#f_m').value,lockedRate=phLock(pharmacy)?phRate(pharmacy):0,value=lockedRate||rateI($('#f_r').value,mode);
  const start=$('#f_s').value,end=$('#f_e').value,substitute=$('#f_o').value,note=$('#f_n').value;
+ if(S.sub.some(x=>endedSub(x)&&subKey(x.name)===subKey(substitute)))return msg('همکاری با این جایگزین پایان یافته است',1);
  if(!value)return msg('مبلغ را وارد کنید',1);
  if(!start||!end)return msg('ساعت‌ها را وارد کنید',1);
  const [gy,gm,gd]=j2g(jy,jm,jday),date=`${jy}/${pad(jm)}/${pad(jday)}`,gdate=`${gy}-${pad(gm)}-${pad(gd)}`;
@@ -1202,7 +1207,7 @@ async function saveShift(button){
 
 const pn=n=>(+n).toLocaleString('fa-IR',{useGrouping:false});
 ST.planned='برنامه‌ریزی‌شده';
-function shSt(s){if(s.status=='planned')return'n';if(s.status=='pending')return'p';if(s.status=='confirmed')return bal(s).paid_confirmed>=s.amount?'s':'c';return''}
+function shSt(s){if(s.incoming)return s.financial_voided?'x':s.amount>0&&s.paid_amount>=s.amount?'s':'c';if(s.status=='planned')return'n';if(s.status=='pending')return'p';if(s.status=='confirmed')return bal(s).paid_confirmed>=s.amount?'s':'c';return''}
 function calMove(d){
  const c=S.cm||tj().slice(0,2),hidden=calHid();
  const selected=calPhs(c).filter(m=>!hidden.includes(String(m.pharmacy_id)));
@@ -1261,7 +1266,7 @@ function calCard(list0,mine){const M=calSrc(list0,mine),list=M.list;const t=tj()
  return `<div class="card"><div class="ml">تقویم شیفت‌ها</div>${calChips(M)}<div class="cn"><button onclick="calMove(-1)" aria-label="ماه قبل" style="display:flex;align-items:center"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button><b>${MN[c[1]-1]} <span class="yr">${pn(c[0])}</span></b><button onclick="calMove(1)" aria-label="ماه بعد" style="display:flex;align-items:center"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg></button></div><div class="cal">${cells}</div>
  <div class="cg">${M.single?`<span><i class="lg" style="--c:var(--wa)"></i>منتظر تأیید</span><span><i class="lg" style="--c:var(--bl,#2b6fd6)"></i>تأییدشده</span><span><i class="lg" style="--c:var(--ok)"></i>تسویه‌شده</span>`:''}<span><i style="border:2px dashed var(--pr);width:6px;height:6px"></i>برنامه‌ریزی‌شده</span></div>${M.single?'':`<p class="mu" style="font-size:12px;margin:8px 2px 0;line-height:1.9">برای دیدن وضعیت شیفت‌ها (منتظر تأیید، تأییدشده، تسویه‌شده) یک داروخانه را انتخاب کن.</p>`}${sel}</div>`}
 const sfl=[['all','همه'],['pending','منتظر تأیید'],['confirmed','تأییدشده'],['settled','تسویه‌شده'],['rejected','ردشده و ابطال‌شده']];
-function shF(s){const f=S.sf||'all';return f=='all'||(f=='settled'?shSt(s)=='s':f=='confirmed'?shSt(s)=='c':f=='rejected'?(s.status=='rejected'||s.status=='voided'):s.status=='pending')}
+function shF(s){const f=S.sf||'all';return f=='all'||(f=='settled'?shSt(s)=='s':f=='confirmed'?shSt(s)=='c':f=='rejected'?(s.status=='rejected'||s.status=='voided'||s.financial_voided):s.status=='pending')}
 const todK=()=>{const x=tj();return `${x[0]}/${pad(x[1])}/${pad(x[2])}`};
 const stL=s=>{const x=shSt(s);return s.status=='rejected'||s.status=='voided'?['x',ST[s.status]]:[x,x=='s'?'تسویه‌شده':ST[s.status]]};
 const jd=s=>{const q=s.split('/');return `${pn(+q[2])} ${MN[+q[1]-1]}`};
@@ -1347,19 +1352,22 @@ async function fixFut(){
 }
 async function autoFut(){S._af=S._af||{};if(!S.cur||S._af[S.cur]||!S.me||!futL().length)return;S._af[S.cur]=1;await fixFut()}
 function shiftList(){return (curM()?.ended_at?'':futBanner())+segHtml('seg_sf',sfl,S.sf||'all','shFil')+`<div id="sl_rows">${shRows()}</div>`}
-function shRows(){const me=S.me.id,PO=curP()?.owner_id,cs=stOpen(),g={},act=s=>s.status!='voided'&&s.status!='rejected',pnm=(phNm(S.cur)||curP()?.name||'').trim(),fl=(S.sf||'all')!='all',ck=monP().slice(0,7);
+function shRows(outgoing=false){const me=S.me.id,PO=curP()?.owner_id,cs=stOpen(),g={},act=s=>s.status!='voided'&&s.status!='rejected',pnm=(phNm(S.cur)||curP()?.name||'').trim(),fl=(S.sf||'all')!='all',ck=monP().slice(0,7);
  S.shO=S.shO||{};
- S.shifts.filter(shF).slice().sort((a,b)=>a.shift_date<b.shift_date?1:-1).forEach(s=>{const k=s.shift_date.slice(0,7);(g[k]=g[k]||[]).push(s)});
+ const personal=!outgoing&&S.pg==='sh'&&S.me.role==='pharmacist'&&!curM()?.ended_at;
+ const base=personal?[...S.shifts,...(S.calAll||[])].filter(s=>s.pharmacist_id===me&&!isSubSh(s)&&s.status!=='planned'):outgoing?S.shifts.filter(isSubSh):S.shifts;
+ const received=personal?incomingShiftRows():[];
+ const seen=new Set(base.map(s=>s.id));
+ [...base,...received.filter(s=>!seen.has(s.id))].filter(shF).sort((a,b)=>byDate(b,a)).forEach(s=>{const k=s.shift_date.slice(0,7);(g[k]=g[k]||[]).push(s)});
  const keys=Object.keys(g);
- const rows=keys.map((k,ix)=>{const A=g[k].filter(act),pend=S.shifts.filter(s=>s.shift_date.startsWith(k+'/')&&s.status=='pending').length,
-  op=S.shO[k]!==undefined?S.shO[k]:(fl||k==ck||(ix==0&&!keys.includes(ck)));
-  const total=`جمع${pnm?' '+esc(pnm):''}: ${fmt(A.reduce((a,s)=>a+s.amount,0))} ${RL()}`;
+ const rows=keys.map((k,ix)=>{const A=g[k].filter(s=>act(s)&&!s.financial_voided),pend=base.filter(s=>s.shift_date.startsWith(k+'/')&&s.status=='pending').length,
+  op=S.shO[(outgoing?'out-':'')+k]!==undefined?S.shO[(outgoing?'out-':'')+k]:(fl||k==ck||(ix==0&&!keys.includes(ck)));
+  const total=`جمع${pnm&&!personal?' '+esc(pnm):''}: ${fmt(A.reduce((a,s)=>a+s.amount,0))} ${RL()}`;
   const pending=pend?`<span class="st p mp">${pn(pend)} منتظر تأیید</span>`:'';
-  const head=monthHeader(k,g[k].length,'شیفت',total,op,`shMo(this,'${k}')`,pending);
-  const body=g[k].map(s=>{const z=stL(s),b=bal(s),bt=`${!curM()?.ended_at&&act(s)&&s.pharmacist_id==me&&!(b.paid_confirmed+b.paid_pending>0)?`<button class="d" style="margin-top:6px;padding:3px 10px" onclick="voidS('${s.id}')">ابطال</button>`:''}${cs&&act(s)&&s.status=='confirmed'&&rem(s)>0?`<button class="p" style="margin-top:6px;padding:3px 10px" onclick="settleOne('${s.id}')">تسویه شد</button>`:''}${act(s)&&s.pharmacist_id==me?`<button class="shi" aria-label="اشتراک‌گذاری" title="اشتراک‌گذاری" onclick="shareTxt('${s.pharmacy_id}','${s.id}')"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg></button>`:''}`;
-  return `<div class="sr swr"><div><b>${esc(s.pharmacist_name)}</b><small>${jd(s.shift_date)} · <bdi dir="ltr">${s.start_time}–${s.end_time}</bdi> · ${fh(s.hours)}</small>${s.substitute_name?`<small>جایگزین: ${esc(s.substitute_name)}</small>`:''}
-  ${PO&&s.status=='confirmed'?`<small>پرداخت‌شده: ${fmt(b.paid_confirmed)}${b.paid_pending?` (+${fmt(b.paid_pending)} منتظر تأیید)`:''}</small>`:''}${s.reject_reason?`<small>${esc(s.reject_reason)}</small>`:''}${s.void_reason?`<small>${esc(s.void_reason)}</small>`:''}</div>
-  <div class="am"><b>${fmt(s.amount)}</b><span class="un">${RL()}</span><span class="st ${z[0]}" style="display:block">${z[1]}</span></div>${bt?`<div class="sba">${bt}</div>`:''}</div>`}).join('');
+  const head=monthHeader(k,g[k].length,'شیفت',total,op,`shMo(this,'${outgoing?'out-':''}${k}')`,pending);
+  const body=g[k].map(s=>{if(s.incoming)return incomingShiftCard(s);const z=stL(s),b=bal(s),bt=s.pharmacy_id!==S.cur?'':`${!curM()?.ended_at&&act(s)&&s.pharmacist_id==me&&!(b.paid_confirmed+b.paid_pending>0)?`<button class="d" style="margin-top:6px;padding:3px 10px" onclick="voidS('${s.id}')">ابطال</button>`:''}${cs&&act(s)&&s.status=='confirmed'&&rem(s)>0?`<button class="p" style="margin-top:6px;padding:3px 10px" onclick="settleOne('${s.id}')">تسویه شد</button>`:''}${act(s)&&s.pharmacist_id==me?`<button class="shi" aria-label="اشتراک‌گذاری" title="اشتراک‌گذاری" onclick="shareTxt('${s.pharmacy_id}','${s.id}')"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg></button>`:''}`;
+  return shiftWorkCard(s,s.pharmacist_name,z,`${personal&&s.pharmacy_id!==S.cur?`<small>${esc(phNm(s.pharmacy_id))}</small>`:''}${s.substitute_name?`<small>جایگزین: ${esc(s.substitute_name)}</small>`:''}
+  ${(personal?S.ms.find(m=>m.pharmacy_id===s.pharmacy_id)?.pharmacies.owner_id:PO)&&s.status=='confirmed'?`<small>پرداخت‌شده: ${fmt(b.paid_confirmed)}${b.paid_pending?` (+${fmt(b.paid_pending)} منتظر تأیید)`:''}</small>`:''}${s.reject_reason?`<small>${esc(s.reject_reason)}</small>`:''}${s.void_reason?`<small>${esc(s.void_reason)}</small>`:''}`,bt)}).join('');
   return `<div class="smo ${op?'open':''}" data-mk="${k}">${head}<div class="cw ${op?'open':''}" ${op?'':'inert'}><div class="mb">${body}</div></div></div>`}).join('');
  return `${rows||'<div class="card mu">شیفتی برای نمایش نیست.</div>'}`}
 function shMo(button,key){S.shO[key]=toggleMonth(button)}
@@ -1368,7 +1376,7 @@ function voidS(id){askWhy('ابطال شیفت','ابطال',async r=>{
  const x=await sb.rpc('void_shift',{p_id:id,p_reason:r});if(x.error)return fail(x.error);await dropOwed(id);quick('شیفت ابطال شد',()=>setSt(S.shifts,id,'voided','void_reason',r))})}
 
 // ================= بخش ۲ =================
-const bal=s=>S.bal[s.id]||{paid_confirmed:0,paid_pending:0};
+const bal=s=>(s.pharmacy_id!==S.cur?S.calBal?.[s.id]:S.bal[s.id])||{paid_confirmed:0,paid_pending:0};
 const rem=s=>s.amount-bal(s).paid_confirmed-bal(s).paid_pending;
 const dsel=id=>{const[y,mo,d]=tj(),ys=[];for(let i=1403;i<=1412;i++)ys.push([i,i]);
  return `<div class="dt dw" id="${id}"><select>${opt(ys,y)}</select><select>${opt(MN.map((n,i)=>[i+1,n]),mo)}</select><select>${opt([...Array(31)].map((_,i)=>[i+1,i+1]),d)}</select><button type="button" class="dbtn" onclick="pickD('${id}')">${dTx(y,mo,d)}</button></div>`};
@@ -1459,6 +1467,7 @@ async function pit(id,b){const c=$('#pi_'+id);if(!c||c.dataset.busy)return;
 // ---------- حساب خصوصی جایگزین‌ها (فقط داروساز) ----------
 const EK={owed:'بستانکار (او شیفت رفت)',paid:'بدهکار (به او پرداختم)'};
 const entOK=e=>!e.status||e.status=='confirmed',isLk=x=>!!x&&x.link_status=='active',isLkP=x=>!!x&&x.link_status=='pending';
+const endedSub=x=>x?.link_status==='ended';
 const ES={pending:['در انتظار تأیید','p'],confirmed:['تأییدشده','s'],rejected:['ردشده','x'],voided:['ابطال‌شده','x']};
 const ENT_CHIP=e=>e.status&&ES[e.status]?`<span class="st ${ES[e.status][1]}">${ES[e.status][0]}</span>`:'';
 function subBal(id){return S.ent.filter(e=>e.substitute_id==id&&entOK(e)).reduce((a,e)=>a+(e.kind=='owed'?e.amount:-e.amount),0)}
@@ -1469,7 +1478,7 @@ const subBody=s=>s=='ent'?subEnt():s=='rep'?subRepCard():subSum();
 function sftGo(v){S.sft=v;segSet($('#seg_sft'),['sum','ent','rep'].indexOf(v));$('#sft_c').innerHTML=subBody(v)}
 const noSub='<p class="mu" style="margin:14px 6px">ابتدا از بخش «خلاصه» یک جایگزین اضافه کنید.</p>';
 const subLast=id=>{const d=S.ent.filter(e=>e.substitute_id==id&&e.kind=='owed').map(e=>String(e.entry_date)).sort().pop();return d||''};
-function subRow(o){const x=o.x,b=o.b,l=subLast(x.id),pd=subPend(x.id),chip=isLk(x)?'<span class="st s" style="margin-inline-start:6px">متصل</span>':isLkP(x)?'<span class="st p" style="margin-inline-start:6px">منتظر پذیرش</span>':'';return `<div class="srow tap" data-n="${esc(subKey(x.name))}" onclick="subHist('${x.id}')"><span class="k"><b>${esc(x.name)}</b>${chip}${l?`<small class="mu" style="display:block;font-size:12px">آخرین شیفت: ${l}</small>`:''}${pd.n?`<small style="display:block;font-size:12px;color:var(--wa)">${pn(pd.n)} مورد منتظر تأیید جایگزین</small>`:''}</span><span class="v" style="direction:rtl;display:flex;align-items:center;gap:10px"><b>${fmt(Math.abs(b))} ${RL()}</b>${b>0?`<button class="p" style="padding:6px 14px;font-size:13px" onclick="event.stopPropagation();openEnt('${x.id}')">تسویه</button>`:b<0?'<span class="mu">(اضافه‌پرداخت)</span>':pd.n?'<span class="mu">(منتظر تأیید)</span>':'<span class="mu">(تسویه)</span>'}</span></div>`}
+function subRow(o){const x=o.x,b=o.b,l=subLast(x.id),pd=subPend(x.id),chip=endedSub(x)?'<span class="st p">پایان‌یافته</span>':isLk(x)?'<span class="st s" style="margin-inline-start:6px">متصل</span>':isLkP(x)?'<span class="st p" style="margin-inline-start:6px">منتظر پذیرش</span>':'';return `<div class="srow tap" data-n="${esc(subKey(x.name))}" onclick="subHist('${x.id}')"><span class="k"><b>${esc(x.name)}</b>${chip}${l?`<small class="mu" style="display:block;font-size:12px">آخرین شیفت: ${l}</small>`:''}${pd.n?`<small style="display:block;font-size:12px;color:var(--wa)">${pn(pd.n)} مورد منتظر تأیید جایگزین</small>`:''}</span><span class="v" style="direction:rtl;display:flex;align-items:center;gap:10px"><b>${fmt(Math.abs(b))} ${RL()}</b>${b>(endedSub(x)?pd.p:0)?`<button class="p" style="padding:6px 14px;font-size:13px" onclick="event.stopPropagation();openEnt('${x.id}')">${endedSub(x)?'ثبت پرداخت':'تسویه'}</button>`:b<0?'<span class="mu">(اضافه‌پرداخت)</span>':pd.n?'<span class="mu">(منتظر تأیید)</span>':'<span class="mu">(تسویه)</span>'}</span></div>`}
 function subDups(){const g={};S.sub.forEach(x=>{const k=subKey(x.name);if(k)(g[k]=g[k]||[]).push(x)});return Object.values(g).filter(a=>a.length>1&&!a.some(x=>x.link_status))}
 function subDupCard(){const D=subDups();if(!D.length)return'';return `<div class="gt">احتمالاً تکراری</div><div class="gc" style="padding:0 16px;margin-bottom:12px">${D.map((a,i)=>`<div class="srow"><span class="k">${a.map(x=>esc(x.name)).join('، ')}</span><button class="p" style="padding:6px 14px;font-size:13px" onclick="mergeAsk(${i})">ادغام</button></div>`).join('')}</div>`}
 function mergeAsk(i){const a=subDups()[i];if(!a)return;const t=a.find(x=>/^[\p{L}\p{N}\s\u200c]+$/u.test(String(x.name).trim()))||a[0],o=a.filter(x=>x!==t);
@@ -1489,13 +1498,14 @@ function subSum(){const A=S.sub.map(x=>({x,b:subBal(x.id)})),O=A.filter(o=>o.b!=
 async function subGapRun(){const G=S.subGap||[];if(!G.length)return;const rows=[];
  const ex=await sb.from('substitute_entries').select('shift_id').eq('kind','owed').in('shift_id',G.map(g=>g.id));if(ex.error)return fail(ex.error);
  const had=new Set(ex.data.map(e=>String(e.shift_id)));
- G.forEach(g=>{if(had.has(String(g.id)))return;const x=S.sub.find(y=>subKey(y.name)==subKey(g.name));if(x)rows.push({pharmacist_id:S.me.id,substitute_id:x.id,shift_id:g.id,kind:'owed',amount:g.amount,entry_date:g.date,note:'ثبت از شیفت‌های قبلی'})});
+ G.forEach(g=>{if(had.has(String(g.id)))return;const x=S.sub.find(y=>subKey(y.name)==subKey(g.name));if(x&&!endedSub(x))rows.push({pharmacist_id:S.me.id,substitute_id:x.id,shift_id:g.id,kind:'owed',amount:g.amount,entry_date:g.date,note:'ثبت از شیفت‌های قبلی'})});
  if(!rows.length)return msg('جایگزینی برای ثبت پیدا نشد',1);
  for(let i=0;i<rows.length;i+=100){const r=await sb.from('substitute_entries').insert(rows.slice(i,i+100));if(r.error)return fail(r.error)}
  await loadSub();await syncSubNames();home();msg(pn(rows.length)+' بستانکاری ثبت شد')}
 function subGapAsk(){const G=S.subGap||[];askYes('ثبت به‌عنوان بدهی','برای '+pn(G.length)+' شیفت، بستانکاری جایگزین (برابر مبلغ همان شیفت) ثبت شود؟ پرداخت‌هایی که کرده‌اید را بعداً با «تسویه» ثبت کنید.','ثبت',subGapRun)}
 function subGapIgn(){try{localStorage.setItem('ps_gap_ign',JSON.stringify([...gapIgn(),...(S.subGap||[]).map(g=>String(g.id))]))}catch(e){}S.subGap=[];home()}
 function subLkCard(x){
+ if(endedSub(x))return '<div class="card"><div class="ml">همکاری پایان یافته</div><p class="mu">پرداخت ماندهٔ شیفت‌های قبلی تا تسویهٔ کامل قابل ثبت است.</p></div>';
  if(isLk(x))return `<div class="card"><div class="ml">اتصال به کاربر واقعی</div><p style="font-weight:700;margin:6px 0 2px">${esc(x.linked_name||'')}${x.linked_username?` <small class="mu" dir="ltr">@${esc(x.linked_username)}</small>`:''}</p><p class="mu" style="margin:0 0 10px;font-size:13px;line-height:1.9">بستانکاری‌ها و پرداخت‌هایی که ثبت می‌کنید برای تأیید یا رد به او می‌رسد. تراکنش تأییدشده قفل می‌شود و فقط با «ابطال» و ذکر دلیل اصلاح می‌شود.</p><div class="fb"><button onclick="subOld('${x.id}')">ثبت شیفت‌های قدیمی</button><button class="d" onclick="subUnlinkAsk('${x.id}')">قطع اتصال</button></div></div>`;
  if(isLkP(x))return `<div class="card"><div class="ml">اتصال به کاربر واقعی</div><p style="margin:6px 0 10px;line-height:1.9">درخواست برای <b>${esc(x.linked_name||'')}</b>${x.linked_username?` <small class="mu" dir="ltr">@${esc(x.linked_username)}</small>`:''} فرستاده شد و منتظر پذیرش اوست.</p><div class="fb"><button class="d" onclick="subUnlink('${x.id}')">لغو درخواست</button></div></div>`;
  return `<div class="card"><div class="ml">اتصال به کاربر واقعی</div><p class="mu" style="margin:6px 0 10px;font-size:13px;line-height:1.9">اگر این جایگزین در فارماشیفت حساب دارد، او را وصل کنید تا بستانکاری‌ها و پرداخت‌ها را تأیید یا رد کند. تا وصل نکنید این حساب فقط برای خودتان است.</p><div class="fb"><button class="p" onclick="subLkUser('${x.id}')">با نام کاربری</button><button onclick="subLkInv('${x.id}')">با لینک دعوت</button></div></div>`}
@@ -1506,18 +1516,18 @@ async function subLkInv(id){const r=await sb.rpc('create_sub_invite',{p_sub:Stri
  const x=S.sub.find(y=>y.id==id),url=location.origin+location.pathname+'?sub='+r.data;S._lkTxt=`سلام ${x?x.name:''}، برای وصل شدن حساب شیفت‌هایمان در فارماشیفت این لینک را باز کن:\n${url}`;
  openSheet('لینک دعوت',`<p class="mu" style="margin:0 6px 12px;line-height:1.9">این لینک ۷ روز اعتبار دارد و یک‌بار مصرف است. جایگزین باید با حساب داروساز وارد (یا ثبت‌نام) شود و دعوت را بپذیرد. تا نپذیرد چیزی برایش نمایش داده نمی‌شود.</p><div class="gc"><div class="srow"><span class="k">لینک</span><input id="lk_l" dir="ltr" readonly value="${esc(url)}"></div></div><div class="wl-r" style="margin-top:10px"><button class="bigp wl-s" onclick="cpv(this,S._lkTxt)">کپی</button><button class="p bigp" onclick="lkShare()">ارسال</button></div>`,2)}
 function lkShare(){const x=S._lkTxt||'';if(navigator.share)navigator.share({text:x}).catch(()=>{});else cpx(x)}
-function subUnlinkAsk(id){const x=S.sub.find(y=>y.id==id);if(!x)return;askYes('قطع اتصال','اتصال «'+esc(x.name)+'» به کاربر قطع شود؟ او دیگر حساب را نمی‌بیند و بعد از قطع، تراکنش‌های تأییدشده دوباره در اختیار خودتان است. طرف مقابل باخبر می‌شود.','قطع اتصال',()=>subUnlink(id))}
+function subUnlinkAsk(id){const x=S.sub.find(y=>y.id==id);if(!x)return;askYes('قطع اتصال','اتصال «'+esc(x.name)+'» به کاربر قطع شود؟ ثبت شیفت جدید برای این اتصال متوقف می‌شود. موارد قبلی تا تسویهٔ کامل قابل پیگیری‌اند و طرف مقابل باخبر می‌شود.','قطع اتصال',()=>subUnlink(id))}
 async function subUnlink(id){const r=await sb.rpc('unlink_sub',{p_sub:String(id)});if(r.error)return fail(r.error);await loadSub();home();subHist(id);msg('اتصال قطع شد')}
 function subVoid(eid,sid){askWhy('ابطال تراکنش','ابطال',async t=>{const r=await sb.rpc('sub_void_entry',{p_id:String(eid),p_reason:t});if(r.error)return fail(r.error);await loadSub();home();if(sid)subHist(sid);msg('ابطال شد و جایگزین باخبر می‌شود')})}
 function subHist(id){const x=S.sub.find(y=>y.id==id);if(!x)return;const b=subBal(id),pd=subPend(id),k=subKey(x.name),lk=isLk(x),
   E=S.ent.filter(e=>e.substitute_id==id).sort((a,c)=>String(c.entry_date).localeCompare(String(a.entry_date))),gp=(S.subGap||[]).filter(g=>subKey(g.name)==k),g={};
  E.forEach(e=>{const m=String(e.entry_date).slice(0,7);(g[m]=g[m]||[]).push(e)});
- const row=e=>{const sl=e.shift_id?shiftLbl(e.shift_id):'—',bt=e.status=='voided'?'':e.status=='confirmed'&&lk?`<button class="d" onclick="subVoid('${e.id}','${id}')">ابطال</button>`:`<button class="d" onclick="subDelEnt('${e.id}','${id}')">حذف</button>`;
+ const row=e=>{const sl=e.shift_id?shiftLbl(e.shift_id):'—',bt=e.status=='voided'||endedSub(x)?'':e.status=='confirmed'&&lk?`<button class="d" onclick="subVoid('${e.id}','${id}')">ابطال</button>`:`<button class="d" onclick="subDelEnt('${e.id}','${id}')">حذف</button>`;
   return `<div class="lr"><div class="lt"><b>${e.kind=='owed'?'شیفت‌رفته (بستانکاری)':'پرداخت به او'}</b><span>${fmt(e.amount)} ${RL()}</span></div><small class="mu">${e.entry_date}${sl!='—'?' · '+sl:''}${e.status?' · '+ENT_CHIP(e):''}</small>${e.reject_reason&&(e.status=='rejected'||e.status=='voided')?`<div class="mu" style="color:var(--er)">${e.status=='voided'?'دلیل ابطال':'دلیل رد'}: ${esc(e.reject_reason)}</div>`:''}${e.note?`<div class="mu">${esc(e.note)}</div>`:''}${bt?`<div class="fb">${bt}</div>`:''}</div>`};
  const months=Object.keys(g).map(m=>{const q=m.split('/');return `<div class="mh"><span>${MN[+q[1]-1]} ${pn(q[0])}</span><span>${pn(g[m].length)} مورد</span></div><div class="gc g2" style="padding:0 16px">${g[m].map(row).join('')}</div>`}).join('')||'<p class="mu" style="margin:10px 6px">هنوز تراکنشی ثبت نشده است.</p>';
  const gapT=gp.length&&!lk?`<p class="mu" style="margin:12px 6px;line-height:1.9">${pn(gp.length)} شیفت قدیمی (${fmt(gp.reduce((a,t)=>a+t.amount,0))} ${RL()}) بدون حساب است؛ از کارت بالای صفحهٔ خلاصه ثبتشان کنید.</p>`:'';
- const del=lk||(!S.subNames||S.subNames.has(k))?'':`<button class="d wide" style="margin-top:14px" onclick="subDelAsk('${id}')">حذف جایگزین</button>`;
- openSheet(esc(x.name),`<div class="card"><div class="ml">مانده حساب</div><p style="font-size:22px;font-weight:800;margin:6px 0 2px">${fmt(Math.abs(b))} ${RL()}</p><p class="mu" style="margin:0 0 10px">${b>0?'به او بدهکارید':b<0?'اضافه‌پرداخت کرده‌اید':'تسویه‌شده'}</p>${pd.n?`<p style="margin:0 0 10px;font-size:13px;line-height:1.9;color:var(--wa)">${pn(pd.n)} مورد منتظر تأیید جایگزین است${pd.o?` (بستانکاری ${fmt(pd.o)} ${RL()})`:''}${pd.p?` (پرداخت ${fmt(pd.p)} ${RL()})`:''}؛ تا تأیید نشود در مانده نمی‌آید.</p>`:''}<div class="fb"><button class="p" onclick="closeSheet(1);openEnt('${id}')">${b>0?'تسویه':'ثبت تراکنش'}</button></div></div>${subLkCard(x)}${gapT}${months}${del}`)}
+ const del=lk||endedSub(x)||(!S.subNames||S.subNames.has(k))?'':`<button class="d wide" style="margin-top:14px" onclick="subDelAsk('${id}')">حذف جایگزین</button>`;
+ openSheet(esc(x.name),`<div class="card"><div class="ml">مانده حساب</div><p style="font-size:22px;font-weight:800;margin:6px 0 2px">${fmt(Math.abs(b))} ${RL()}</p><p class="mu" style="margin:0 0 10px">${b>0?'به او بدهکارید':b<0?'اضافه‌پرداخت کرده‌اید':'تسویه‌شده'}</p>${pd.n?`<p style="margin:0 0 10px;font-size:13px;line-height:1.9;color:var(--wa)">${pn(pd.n)} مورد منتظر تأیید جایگزین است${pd.o?` (بستانکاری ${fmt(pd.o)} ${RL()})`:''}${pd.p?` (پرداخت ${fmt(pd.p)} ${RL()})`:''}؛ تا تأیید نشود در مانده نمی‌آید.</p>`:''}${!endedSub(x)||b>pd.p?`<div class="fb"><button class="p" onclick="closeSheet(1);openEnt('${id}')">${endedSub(x)?'ثبت پرداخت':b>0?'تسویه':'ثبت تراکنش'}</button></div>`:''}</div>${subLkCard(x)}${gapT}${months}${del}`)}
 async function subOld(id){const x=S.sub.find(y=>y.id==id);if(!x)return;
  const q=await fetchAll(()=>sb.from('shifts').select('id,pharmacy_id,shift_date,start_time,end_time,hours,amount,substitute_name,status').eq('pharmacist_id',S.me.id).not('substitute_name','is',null).order('id'));if(q.error)return fail(q.error);
  const have=new Set(S.ent.filter(e=>e.kind=='owed'&&e.shift_id).map(e=>String(e.shift_id))),
@@ -1532,7 +1542,7 @@ async function oldGo(){const o=S._old;if(!o)return;const ids=[...document.queryS
  S._old=null;await loadSub();closeSheet(2);home();subHist(o.id);msg(pn(rows.length)+' شیفت برای تأیید جایگزین ثبت شد')}
 function subDelEnt(eid,sid){askYes('حذف تراکنش','این تراکنش حذف شود؟','حذف',async()=>{const r=await sb.from('substitute_entries').delete().eq('id',eid);if(r.error)return fail(r.error);S.ent=S.ent.filter(x=>x.id!=eid);await syncSubNames();home();subHist(sid);msg('حذف شد')})}
 function subDelAsk(id){const x=S.sub.find(y=>y.id==id);if(!x)return;askYes('حذف جایگزین','«'+esc(x.name)+'» و همهٔ تراکنش‌هایش حذف شود؟','حذف',async()=>{const a=await sb.from('substitute_entries').delete().eq('substitute_id',id);if(a.error)return fail(a.error);const r=await sb.from('substitutes').delete().eq('id',id);if(r.error)return fail(r.error);await loadSub();closeSheet(1);home();msg('جایگزین حذف شد')})}
-function subEntBtn(e){const x=S.sub.find(y=>y.id==e.substitute_id);return e.status=='voided'?'':e.status=='confirmed'&&isLk(x)?`<button class="d" onclick="subVoid('${e.id}','')">ابطال</button>`:`<button class="d" onclick="delEnt('${e.id}')">حذف</button>`}
+function subEntBtn(e){const x=S.sub.find(y=>y.id==e.substitute_id);return e.status=='voided'||endedSub(x)?'':e.status=='confirmed'&&isLk(x)?`<button class="d" onclick="subVoid('${e.id}','')">ابطال</button>`:`<button class="d" onclick="delEnt('${e.id}')">حذف</button>`}
 function subEnt(){if(!S.sub.length)return noSub;
   return `<div class="gc np"><div class="srow tap add" onclick="openEnt()"><span class="plus">+</span><b>ثبت تراکنش</b></div></div><div class="gc g2" style="padding:0 16px">${S.ent.map(e=>`<div class="lr"><div class="lt"><b>${esc((S.sub.find(x=>x.id==e.substitute_id)||{}).name||'—')}</b><span>${fmt(e.amount)} ${RL()}</span></div>
    <small class="mu">${e.entry_date} · ${EK[e.kind]}${e.shift_id?' · '+shiftLbl(e.shift_id):''}${e.status?' · '+ENT_CHIP(e):''}</small>${e.reject_reason&&(e.status=='rejected'||e.status=='voided')?`<div class="mu" style="color:var(--er)">${e.status=='voided'?'دلیل ابطال':'دلیل رد'}: ${esc(e.reject_reason)}</div>`:''}${e.note?`<div class="mu">${esc(e.note)}</div>`:''}${subEntBtn(e)?`<div class="fb">${subEntBtn(e)}</div>`:''}</div>`).join('')||'<p class="mu" style="padding:14px 0;margin:0">تراکنشی ثبت نشده است.</p>'}</div>`}
@@ -1544,11 +1554,11 @@ function subRepCard(){if(!S.sub.length)return noSub;
 async function addSub(){const n=$('#s_n').value.trim();if(!n)return msg('نام جایگزین را بنویسید',1);
  const r=await sb.from('substitutes').insert({pharmacist_id:S.me.id,name:n});if(r.error)return fail(r.error);await loadSub();home();msg('جایگزین اضافه شد')}
 function pickShift(){const s=S.shifts.find(x=>x.id==$('#e_f').value);if(!s)return;
- const x=S.sub.find(y=>subKey(y.name)==subKey(s.substitute_name));if(x)$('#e_s').value=x.id;
+ const x=S.sub.find(y=>subKey(y.name)==subKey(s.substitute_name));if(x&&!$('#e_s').disabled)$('#e_s').value=x.id;
  if(!num($('#e_a').value))$('#e_a').value=fmtN(dvr(s.amount))}
 async function addEnt(){const a=nI($('#e_a').value);if(!a)return msg('مبلغ را وارد کنید',1);
  const d=rd('e_d'),r=await sb.from('substitute_entries').insert({pharmacist_id:S.me.id,substitute_id:$('#e_s').value,shift_id:$('#e_f').value||null,kind:$('#e_k').value,amount:a,entry_date:d.j,note:$('#e_n').value.trim()});
- if(r.error)return fail(r.error);const lx=S.sub.find(y=>y.id==$('#e_s').value);await loadSub();home();msg(isLk(lx)?'ثبت شد و برای تأیید به '+(lx.linked_name||lx.name)+' رفت':'تراکنش ثبت شد')}
+ if(r.error)return fail(r.error);const lx=S.sub.find(y=>y.id==$('#e_s').value);await loadSub();home();msg(isLk(lx)||endedSub(lx)?'ثبت شد و برای تأیید به '+(lx.linked_name||lx.name)+' رفت':'تراکنش ثبت شد')}
 function delEnt(id){askYes('حذف تراکنش','این تراکنش حذف شود؟','حذف',async()=>{
  const r=await sb.from('substitute_entries').delete().eq('id',id);if(r.error)return fail(r.error);S.ent=S.ent.filter(x=>x.id!=id);home();msg('حذف شد')})}
 async function loadSub(){S.sub=[];S.ent=[];if(S.me.role!='pharmacist')return;
@@ -1560,36 +1570,94 @@ async function loadCr(){
  const request=S.crRequest=(S.crRequest||0)+1;
  const [ledger,history]=await Promise.allSettled([
   sb.rpc('my_sub_ledger'),
-  fetchAll(()=>sb.rpc('my_substitute_shift_history').order('shift_gdate',{ascending:false}).order('start_time',{ascending:false}).order('shift_id'))
+  fetchAll(()=>sb.rpc('my_substitute_shift_details').order('shift_gdate',{ascending:false}).order('start_time',{ascending:false}).order('shift_id'))
  ]);
  if(S.me?.id!==userId||S.crRequest!==request)return;
  if(ledger.status==='fulfilled'&&!ledger.value.error&&Array.isArray(ledger.value.data))S.cr=ledger.value.data;
  if(history.status==='fulfilled'&&!history.value.error)S.subShiftHistory=history.value.data;
  S.subShiftHistoryError=history.status==='rejected'||!!history.value?.error;
 }
-function substituteShiftHistory(){
- const rows=S.subShiftHistory||[];
- const list=rows.map(s=>`<div class="sr swr"><div><b>${esc(s.pharmacy_name)}</b><small>${esc(jd(s.shift_date))} · <bdi dir="ltr">${esc(s.start_time)}–${esc(s.end_time)}</bdi> · ${fh(s.hours)}</small></div></div>`).join('');
- const error=S.subShiftHistoryError?'<p class="mu">بارگذاری سوابق جایگزینی انجام نشد. دوباره به‌روزرسانی کنید.</p>':'';
- return `<div class="gt">سوابق شیفت‌های جایگزینی</div>${error}${list||(!error?'<div class="card mu">هنوز شیفت جایگزینی تأییدشده‌ای ثبت نشده است.</div>':'')}`;
+const shiftPageTabs=[['mine','شیفت‌های من'],['sub','شیفت‌های جایگزینی']];
+function pharmacistShiftPage(live){
+ return segHtml('seg_sh_kind',shiftPageTabs,S.shiftKind||'mine','shiftKindGo')+
+  `<div id="sh_kind_body">${pharmacistShiftBody(live)}</div>`;
 }
+function pharmacistShiftBody(live){
+ if(S.shiftKind==='sub')return substituteShiftHistory();
+ const delegated=curP()&&!curM()?.ended_at&&S.shifts.some(isSubSh)
+  ?`<details><summary>شیفت‌هایی که به جایگزین سپرده‌ام</summary><div id="out_shift_rows">${shRows(true)}</div></details>`:'';
+ return (live?addRows():'')+shiftList()+delegated+
+  (S.subShiftHistoryError?'<p class="mu">بارگذاری شیفت‌های جایگزینی انجام نشد.</p>':'');
+}
+function shiftKindGo(kind){
+ S.shiftKind=kind;
+ segSet($('#seg_sh_kind'),shiftPageTabs.findIndex(t=>t[0]===kind));
+ $('#sh_kind_body').innerHTML=pharmacistShiftBody(!!curM()&&!curM().ended_at);
+ if($('#seg_sf'))segPlace($('#seg_sf'));
+}
+function incomingShiftRows(){
+ return (S.subShiftHistory||[]).map(s=>({...s,id:s.shift_id,incoming:true,
+  pharmacy_id:'incoming-substitute',pharmacist_id:S.me.id,pharmacist_name:S.me.full_name,
+  amount:s.amount==null?null:Number(s.amount),paid_amount:s.paid_amount==null?null:Number(s.paid_amount),
+  hours:Number(s.hours),status:'confirmed'}));
+}
+function workedShiftRows(){
+ const rows=(S.hrs||[]).filter(s=>!isSubSh(s)),ids=new Set(rows.map(s=>s.id));
+ return rows.concat(incomingShiftRows().filter(s=>!ids.has(s.id)));
+}
+function shiftWorkCard(s,title,state,extra='',actions=''){
+ return `<div class="sr swr"><div><b>${esc(title)}</b><small>${esc(jd(s.shift_date))} · <bdi dir="ltr">${esc(s.start_time)}–${esc(s.end_time)}</bdi> · ${fh(s.hours)}</small>${extra}</div>
+ <div class="am">${s.amount==null?'':`<b>${fmt(s.amount)}</b><span class="un">${RL()}</span>`}${state?`<span class="st ${state[0]}" style="display:block">${state[1]}</span>`:''}</div>${actions?`<div class="sba">${actions}</div>`:''}</div>`;
+}
+function incomingShiftState(s){
+ if(s.financial_voided)return ['x','بستانکاری ابطال شده'];
+ if(s.amount==null||s.paid_amount==null)return null;
+ if(s.paid_amount>=s.amount)return ['s','تسویه‌شده'];
+ return s.paid_amount>0?['p','بخشی پرداخت شده']:['p','تسویه‌نشده'];
+}
+function incomingShiftCard(s){
+ const remaining=s.amount-s.paid_amount;
+ const extra='<small>جایگزینی</small>'+(s.paid_amount>0&&remaining>0?`<small>مانده: ${fmt(remaining)} ${RL()}</small>`:'');
+ return shiftWorkCard(s,s.pharmacy_name,incomingShiftState(s),extra,`<button onclick="incomingShiftDetail('${s.id}')">جزئیات</button>`);
+}
+function incomingShiftDetail(id){
+ const s=incomingShiftRows().find(row=>row.id===id);
+ if(!s)return;
+ openSheet(esc(s.pharmacy_name),shiftWorkCard(s,s.pharmacy_name,incomingShiftState(s),
+  '<small>جایگزینی</small>'+(s.paid_amount==null?'':`<small>پرداخت تأییدشده: ${fmt(s.paid_amount)} ${RL()}</small>`))+
+  (s.collaboration_ended?'<p class="mu">همکاری پایان یافته است. پرداخت‌های مربوط به این شیفت تا تسویهٔ کامل قابل پیگیری‌اند.</p>':''));
+}
+function substituteShiftHistory(){
+ const groups={};
+ incomingShiftRows().sort((a,b)=>byDate(b,a)).forEach(s=>(groups[s.shift_date.slice(0,7)]||=[]).push(s));
+ S.incomingMonths=S.incomingMonths||{};
+ const error=S.subShiftHistoryError?'<p class="mu">بارگذاری سوابق جایگزینی انجام نشد. دوباره به‌روزرسانی کنید.</p>':'';
+ const list=Object.entries(groups).map(([key,rows],index)=>{
+  const open=S.incomingMonths[key]??(index===0);
+  const total=rows.reduce((sum,s)=>sum+(s.financial_voided?0:s.amount||0),0);
+  const header=monthHeader(key,rows.length,'شیفت',total?`جمع: ${fmt(total)} ${RL()}`:'',open,`incomingMonth(this,'${key}')`);
+  return `<div class="smo ${open?'open':''}">${header}<div class="cw ${open?'open':''}" ${open?'':'inert'}><div class="mb">${rows.map(incomingShiftCard).join('')}</div></div></div>`;
+ }).join('');
+ return error+(list||(!error?'<div class="card mu">هنوز شیفت جایگزینی تأییدشده‌ای ثبت نشده است.</div>':''));
+}
+function incomingMonth(button,key){S.incomingMonths[key]=toggleMonth(button)}
 // ---------- سمت جایگزین: طلب من از داروسازها (تأیید یا رد) ----------
 const crPendN=()=>(S.cr||[]).reduce((a,l)=>a+(l.status=='pending'?1:0)+(l.entries||[]).filter(e=>e.status=='pending').length,0);
 const crBal=l=>(l.entries||[]).filter(e=>e.status=='confirmed').reduce((a,e)=>a+(e.kind=='owed'?e.amount:-e.amount),0);
 function crReq(l){return `<div class="card" style="border:2px solid var(--wa)"><div class="ml">درخواست اتصال</div><p style="margin:6px 0 10px;line-height:1.9"><b>${esc(l.pharmacist_name)}</b>${l.pharmacist_username?` <small class="mu" dir="ltr">@${esc(l.pharmacist_username)}</small>`:''} می‌خواهد شما را با نام «${esc(l.label)}» به حساب شیفت‌هایش وصل کند. اگر بپذیرید، بستانکاری‌ها و پرداخت‌هایی که برایتان ثبت می‌کند به شما می‌رسد تا تأیید یا رد کنید. فقط همین موارد را می‌بینید، نه بقیهٔ حساب او را.</p><div class="fb"><button class="p" onclick="crLinkResp('${l.sub_id}',true)">قبول</button><button class="d" onclick="crLinkResp('${l.sub_id}',false)">رد</button></div></div>`}
-function crCard(l){const E=l.entries||[],pend=E.filter(e=>e.status=='pending'),b=crBal(l);return `<div class="card"><b>${esc(l.pharmacist_name)}</b>${l.pharmacist_username?` <small class="mu" dir="ltr">@${esc(l.pharmacist_username)}</small>`:''}<div class="ml" style="margin-top:10px">${b>0?'او به شما بدهکار است':b<0?'اضافه‌پرداخت به شما':'حساب تسویه است'}</div><p style="font-size:22px;font-weight:800;margin:4px 0 6px">${fmt(Math.abs(b))} ${RL()}</p>${pend.length?`<p style="font-size:13px;margin:0 0 10px;color:var(--wa)">${pn(pend.length)} مورد منتظر تأیید شماست</p>`:''}<div class="fb"><button class="p" onclick="crOpen('${l.sub_id}')">${pend.length?'بررسی و تأیید':'مشاهده حساب'}</button></div></div>`}
+function crCard(l){const E=l.entries||[],pend=E.filter(e=>e.status=='pending'),b=crBal(l);return `<div class="card"><b>${esc(l.pharmacist_name)}</b>${l.status==='ended'?'<div class="mu">همکاری پایان یافته · در حال تسویه</div>':''}${l.pharmacist_username?` <small class="mu" dir="ltr">@${esc(l.pharmacist_username)}</small>`:''}<div class="ml" style="margin-top:10px">${b>0?'او به شما بدهکار است':b<0?'اضافه‌پرداخت به شما':'حساب تسویه است'}</div><p style="font-size:22px;font-weight:800;margin:4px 0 6px">${fmt(Math.abs(b))} ${RL()}</p>${pend.length?`<p style="font-size:13px;margin:0 0 10px;color:var(--wa)">${pn(pend.length)} مورد منتظر تأیید شماست</p>`:''}<div class="fb"><button class="p" onclick="crOpen('${l.sub_id}')">${pend.length?'بررسی و تأیید':'مشاهده حساب'}</button></div></div>`}
 function crView(){const L=S.cr||[];if(!L.length)return '<p class="mu" style="margin:14px 6px">هنوز داروسازی شما را به‌عنوان جایگزین وصل نکرده است.</p>';
  return `<div class="gt">طلب من از داروسازها</div><p class="mu" style="margin:-4px 6px 10px;font-size:13px;line-height:1.9">وقتی داروسازی شما را به‌عنوان جایگزین ثبت کند، بستانکاری و پرداخت‌هایش اینجا برای تأیید یا رد شما می‌آید. مانده فقط از موارد تأییدشده حساب می‌شود.</p>`+L.map(l=>l.status=='pending'?crReq(l):crCard(l)).join('')}
 function crRow(e,sid){const s=e.shift,o=e.kind=='owed';return `<div class="lr"><div class="lt"><b>${o?'شیفتی که رفته‌ام':'پرداخت دریافتی'}</b><span>${fmt(e.amount)} ${RL()}</span></div><small class="mu">${e.date}${s?` · <bdi dir="ltr">${String(s.start).slice(0,5)}–${String(s.end).slice(0,5)}</bdi>${s.hours?' · '+fh(s.hours):''}${s.pharmacy?' · '+esc(s.pharmacy):''}`:''}${e.status&&e.status!='pending'?' · '+ENT_CHIP(e):''}</small>${e.reason?`<div class="mu" style="color:var(--er)">${e.status=='voided'?'دلیل ابطال':'دلیل رد'}: ${esc(e.reason)}</div>`:''}${e.note?`<div class="mu">${esc(e.note)}</div>`:''}${e.status=='pending'?`<div class="fb"><button class="p" onclick="crOk(['${e.id}'],'${sid}')">${o?'تأیید':'دریافت شد'}</button><button class="d" onclick="crNo('${e.id}','${sid}')">${o?'رد':'نرسید'}</button></div>`:''}</div>`}
 function crOpen(sid){const l=(S.cr||[]).find(y=>String(y.sub_id)==String(sid));if(!l)return;const E=l.entries||[],pend=E.filter(e=>e.status=='pending'),rest=E.filter(e=>e.status!='pending'),b=crBal(l),g={};
  rest.forEach(e=>{const m=String(e.date).slice(0,7);(g[m]=g[m]||[]).push(e)});
  const months=Object.keys(g).sort().reverse().map(m=>{const q=m.split('/');return `<div class="mh"><span>${MN[+q[1]-1]} ${pn(q[0])}</span><span>${pn(g[m].length)} مورد</span></div><div class="gc g2" style="padding:0 16px">${g[m].map(e=>crRow(e,sid)).join('')}</div>`}).join('');
- openSheet(esc(l.pharmacist_name),`<div class="card"><div class="ml">${b>0?'او به شما بدهکار است':b<0?'اضافه‌پرداخت به شما':'حساب تسویه است'}</div><p style="font-size:22px;font-weight:800;margin:6px 0 2px">${fmt(Math.abs(b))} ${RL()}</p><p class="mu" style="margin:0;font-size:12px">فقط موارد تأییدشدهٔ شما حساب می‌شود.</p></div>${pend.length?`<div class="gt">منتظر تأیید شما (${pn(pend.length)})</div><div class="gc g2" style="padding:0 16px">${pend.map(e=>crRow(e,sid)).join('')}</div>${pend.length>1?`<button class="p wide" style="margin-top:10px" onclick="crOkAll('${sid}')">تأیید همهٔ ${pn(pend.length)} مورد</button>`:''}`:''}${months}<button class="d wide" style="margin-top:14px" onclick="crUnlinkAsk('${sid}')">قطع اتصال</button>`)}
-async function crOk(ids,sid){const r=await sb.rpc('sub_respond_entries',{p_ids:ids.map(String),p_accept:true,p_reason:null});if(r.error)return fail(r.error);await loadCr();home();crOpen(sid);msg('تأیید شد')}
+ openSheet(esc(l.pharmacist_name),`<div class="card"><div class="ml">${b>0?'او به شما بدهکار است':b<0?'اضافه‌پرداخت به شما':'حساب تسویه است'}</div><p style="font-size:22px;font-weight:800;margin:6px 0 2px">${fmt(Math.abs(b))} ${RL()}</p><p class="mu" style="margin:0;font-size:12px">فقط موارد تأییدشدهٔ شما حساب می‌شود.</p></div>${pend.length?`<div class="gt">منتظر تأیید شما (${pn(pend.length)})</div><div class="gc g2" style="padding:0 16px">${pend.map(e=>crRow(e,sid)).join('')}</div>${pend.length>1?`<button class="p wide" style="margin-top:10px" onclick="crOkAll('${sid}')">تأیید همهٔ ${pn(pend.length)} مورد</button>`:''}`:''}${months}${l.status==='active'?`<button class="d wide" style="margin-top:14px" onclick="crUnlinkAsk('${sid}')">قطع اتصال</button>`:''}`)}
+async function crOk(ids,sid){const r=await sb.rpc('sub_respond_entries',{p_ids:ids.map(String),p_accept:true,p_reason:null});if(r.error)return fail(r.error);await loadCr();if(!S.cr.some(l=>l.sub_id===sid))closeSheet(1);home();crOpen(sid);msg('تأیید شد')}
 function crOkAll(sid){const l=(S.cr||[]).find(y=>String(y.sub_id)==String(sid));if(!l)return;const ids=(l.entries||[]).filter(e=>e.status=='pending').map(e=>String(e.id));if(!ids.length)return;askYes('تأیید همه','همهٔ '+pn(ids.length)+' مورد منتظر تأیید را تأیید می‌کنید؟ اگر موردی درست نیست، اول همان را جدا رد کنید.','تأیید همه',()=>crOk(ids,sid))}
-function crNo(eid,sid){askWhy('رد','رد',async t=>{const r=await sb.rpc('sub_respond_entries',{p_ids:[String(eid)],p_accept:false,p_reason:t});if(r.error)return fail(r.error);await loadCr();home();crOpen(sid);msg('رد شد و داروساز باخبر می‌شود')})}
+function crNo(eid,sid){askWhy('رد','رد',async t=>{const r=await sb.rpc('sub_respond_entries',{p_ids:[String(eid)],p_accept:false,p_reason:t});if(r.error)return fail(r.error);await loadCr();if(!S.cr.some(l=>l.sub_id===sid))closeSheet(1);home();crOpen(sid);msg('رد شد و داروساز باخبر می‌شود')})}
 async function crLinkResp(sid,ok){const r=await sb.rpc('respond_sub_link',{p_sub:String(sid),p_accept:ok});if(r.error)return fail(r.error);await loadCr();home();msg(ok?'اتصال برقرار شد؛ موارد منتظر تأیید را بررسی کنید':'درخواست رد شد')}
-function crUnlinkAsk(sid){askYes('قطع اتصال','اتصال شما به این داروساز قطع شود؟ دیگر حسابش را نمی‌بینید و او باخبر می‌شود.','قطع اتصال',async()=>{const r=await sb.rpc('unlink_sub',{p_sub:String(sid)});if(r.error)return fail(r.error);await loadCr();closeSheet(1);home();msg('اتصال قطع شد')})}
+function crUnlinkAsk(sid){askYes('قطع اتصال','اتصال شما به این داروساز قطع شود؟ شیفت جدیدی برای این اتصال ثبت نمی‌شود. موارد قبلی تا تسویهٔ کامل در «طلب من» قابل پیگیری‌اند.','قطع اتصال',async()=>{const r=await sb.rpc('unlink_sub',{p_sub:String(sid)});if(r.error)return fail(r.error);await loadCr();closeSheet(1);home();msg('اتصال قطع شد')})}
 // لینک دعوت جایگزین: ?sub=کد
 async function subInvCheck(){let c=null;try{c=localStorage.getItem('ps_sub_inv')}catch(e){}if(!c||!S.me||S._inv)return;S._inv=1;
  const drop=()=>{try{localStorage.removeItem('ps_sub_inv')}catch(e){}};
@@ -1604,7 +1672,10 @@ const subKey=n=>String(n||'').replace(/ي/g,'ی').replace(/ك/g,'ک').replace(/[
 const isSubSh=s=>!!String(s.substitute_name||'').trim();
 // درآمد خالص: برای شیفتی که جایگزین رفته، مبلغ منهای بستانکاری جایگزین (اگر ثبت نشده باشد، همان مبلغ شیفت فرض می‌شود)
 const incL=()=>{const ow={};(S.ent||[]).forEach(e=>{if(e.kind=='owed'&&e.shift_id)ow[e.shift_id]=(ow[e.shift_id]||0)+(+e.amount||0)});
- return(S.incS||[]).map(x=>x.sub?{...x,a:Math.max(0,x.a-(ow[x.id]!=null?ow[x.id]:x.t))}:x).filter(x=>x.a>0)};
+ const ordinary=(S.incS||[]).map(x=>x.sub?{...x,a:Math.max(0,x.a-(ow[x.id]!=null?ow[x.id]:x.t))}:x);
+ const incoming=incomingShiftRows().filter(s=>!s.financial_voided).map(s=>({id:s.id,ph:s.pharmacy_id,d:s.shift_date,h:s.hours,t:s.amount,a:s.paid_amount,st:s.start_time,en:s.end_time}));
+ const incomingIds=new Set(incoming.map(x=>x.id));
+ return ordinary.filter(x=>!incomingIds.has(x.id)).concat(incoming).filter(x=>x.a>0)};
 let SUBSYNC=null;
 // نام هر جایگزینی که در شیفت‌ها (قدیمی و جدید) آمده و در لیست خصوصی نیست را اضافه می‌کند
 const gapIgn=()=>{try{return new Set(JSON.parse(localStorage.getItem('ps_gap_ign')||'[]'))}catch(e){return new Set()}};
@@ -1630,7 +1701,7 @@ async function autoOwed(list){if(S.me.role!='pharmacist')return;AEERR=null;
   const[sb1,ex]=await Promise.all([sb.from('substitutes').select('*'),sb.from('substitute_entries').select('shift_id').eq('kind','owed').in('shift_id',L.map(s=>s.id))]);
   if(sb1.error||ex.error){AEERR=(sb1.error||ex.error).message;return}
   const done=new Set(ex.data.map(e=>e.shift_id)),rows=[];
-  L.forEach(s=>{if(done.has(s.id))return;const x=sb1.data.find(y=>subKey(y.name)==subKey(s.substitute_name));if(x)rows.push({pharmacist_id:S.me.id,substitute_id:x.id,shift_id:s.id,kind:'owed',amount:s.amount,entry_date:s.shift_date,note:'ثبت خودکار از شیفت'})});
+  L.forEach(s=>{if(done.has(s.id))return;const x=sb1.data.find(y=>subKey(y.name)==subKey(s.substitute_name));if(x&&!endedSub(x))rows.push({pharmacist_id:S.me.id,substitute_id:x.id,shift_id:s.id,kind:'owed',amount:s.amount,entry_date:s.shift_date,note:'ثبت خودکار از شیفت'})});
   if(rows.length){const r=await sb.from('substitute_entries').insert(rows);if(r.error){AEERR=r.error.message;return}await loadSub();await syncSubNames()}
  }catch(e){AEERR=(e&&e.message)||'خطا'}}
 
@@ -1646,18 +1717,29 @@ let _us=0;const unitSel=()=>`<span class="usw">${segHtml('seg_u'+(++_us),[['r','
 const dsv=(id,v,u)=>{const ys=[];for(let i=1403;i<=1412;i++)ys.push([i,i]);
  return `<div class="dt dw" id="${id}"${u?' onchange="repUpd()"':''}><select>${opt(ys,v[0])}</select><select>${opt(MN.map((n,i)=>[i+1,n]),v[1])}</select><select>${opt([...Array(31)].map((_,i)=>[i+1,i+1]),v[2])}</select><button type="button" class="dbtn" onclick="pickD('${id}')">${dTx(v[0],v[1],v[2])}</button></div>`};
 const byDate=(p,q)=>p.shift_date<q.shift_date?-1:p.shift_date>q.shift_date?1:(p.start_time<q.start_time?-1:1);
-function repRows(){const f=rfi(),a=jk(f.f),b=jk(f.t),own=curP().owner_id==S.me.id;
+const reportTabs=[['pharmacy','گزارش داروخانه'],['work','کارکرد من']];
+const personalReport=()=>S.me.role==='pharmacist'&&(!curP()||S.repKind!=='pharmacy');
+function repPage(){
+ return (curP()?segHtml('seg_rep_kind',reportTabs,S.repKind||'work','repKindGo'):'')+repCard();
+}
+function repKindGo(kind){
+ S.repKind=kind;
+ segSet($('#seg_rep_kind'),reportTabs.findIndex(t=>t[0]===kind));
+ $('#rep').outerHTML=repCard();
+}
+function repRows(){const f=rfi(),a=jk(f.f),b=jk(f.t),own=curP()?.owner_id==S.me.id;
+ if(personalReport())return workedShiftRows().filter(s=>s.status==='confirmed'&&s.shift_date>=a&&s.shift_date<=b).map(s=>({...s,amount:s.financial_voided?0:s.amount||0,pharmacist_id:S.me.id,pharmacist_name:S.me.full_name,substitute_name:s.incoming?'جایگزینی':'عادی',report_pharmacy:s.incoming?s.pharmacy_name:phNm(s.pharmacy_id)})).sort(byDate);
  return S.shifts.filter(s=>s.status=='confirmed'&&s.shift_date>=a&&s.shift_date<=b&&(!f.p||s.pharmacist_id==f.p)&&(own||s.pharmacist_id==S.me.id)).sort(byDate)}
 function repUpd(){const f=rfi();f.f=rd('r_f').j.split('/').map(Number);f.t=rd('r_t').j.split('/').map(Number);const p=$('#r_p');if(p)f.p=p.value;home();const r=$('#rep');if(r)r.scrollIntoView()}
-function repCard(){const f=rfi(),R=repRows(),PO=curP().owner_id,own=PO==S.me.id,
+function repCard(){const f=rfi(),R=repRows(),work=personalReport(),PO=!work&&curP()?.owner_id,own=PO==S.me.id,
  ps=[...new Map(S.shifts.map(s=>[s.pharmacist_id,s.pharmacist_name])).entries()],sm=fn=>R.reduce((a,s)=>a+fn(s),0),
  tot=sm(s=>s.amount),paid=PO?sm(s=>bal(s).paid_confirmed):0,
  kp=(t,v)=>`<div class="kp" style="cursor:default"><span>${t}</span><b>${v}</b></div>`;
- return `<div id="rep"><div class="gt">گزارش‌ها — ${esc(curP().name)}</div>
+ return `<div id="rep"><div class="gt">گزارش‌ها — ${esc(work?'کارکرد من':curP().name)}</div>
  <div class="cols"><div class="c1"><div class="gc np"><div class="srow tap"><span class="k">از تاریخ</span>${dsv('r_f',f.f,1)}</div><div class="srow tap"><span class="k">تا تاریخ</span>${dsv('r_t',f.t,1)}</div>
  ${own?`<div class="srow tap" onclick="pickOpt('r_p','داروساز مسئول')"><span class="k">داروساز مسئول</span><select id="r_p" hidden onchange="repUpd()"><option value="">همهٔ داروسازها (هر نفر جدا)</option>${opt(ps,f.p)}</select><b class="v" id="v_r_p" style="direction:rtl">${esc((f.p&&(ps.find(x=>x[0]==f.p)||[])[1])||'همهٔ داروسازها (هر نفر جدا)')}</b></div>`:''}
  <div class="srow"><span class="k">واحد مبلغ</span>${unitSel()}</div></div></div><div class="c2">
- <div class="kps">${kp('تعداد شیفت',R.length)}${kp('جمع ساعت',fhT(Math.round(sm(s=>s.hours)*100)/100))}${kp('جمع مبلغ ('+RL()+')',ru(tot))}${PO?kp('وضعیت پرداخت ('+RL()+')','<span style="font-size:15px;line-height:1.7">پرداخت‌شده: '+ru(paid)+'<br>مانده بدهکاری: '+ru(tot-paid)+'</span>'):''}</div>
+ <div class="kps">${kp('تعداد شیفت',R.length)}${work?kp('تفکیک کارکرد',`عادی: ${pn(R.filter(s=>!s.incoming).length)} · جایگزینی: ${pn(R.filter(s=>s.incoming).length)}`)+kp('دریافتی تأییدشده از جایگزینی',ru(sm(s=>s.incoming?s.paid_amount||0:0))+' '+RL()):''}${kp('جمع ساعت',fhT(Math.round(sm(s=>s.hours)*100)/100))}${kp('جمع مبلغ ('+RL()+')',ru(tot))}${PO?kp('وضعیت پرداخت ('+RL()+')','<span style="font-size:15px;line-height:1.7">پرداخت‌شده: '+ru(paid)+'<br>مانده بدهکاری: '+ru(tot-paid)+'</span>'):''}</div>
  <p class="mu np" style="margin:0 6px 12px">فقط شیفت‌های تأییدشدهٔ این بازه در گزارش می‌آیند.</p>
  <div class="np rp-b"><button class="p bigp" onclick="repPdf()">پیش‌نمایش و PDF</button><button class="bigp" style="margin-top:8px" onclick="xl()">خروجی Excel</button></div></div></div></div>`}
 // ---------- برگهٔ گزارش (همیشه روشن، مخصوص PDF) ----------
@@ -1667,9 +1749,9 @@ function sheetHTML(o){const days={},cnt={},seen={};let H=0,T=0;
   return `<tr><td>${r.d}${r.est?' <b>*</b>':''}${r.pend?' <b>†</b>':''}</td><td><span dir="ltr" style="unicode-bidi:isolate">${r.t}</span></td>${o.pcol?`<td>${esc(r.p||'—')}</td>`:''}${cv?`<td>${esc(r.c||'—')}</td>`:''}<td>${r.amt&&r.h?ru(r.amt/r.h):'<span style="color:#8aa0a3">بدون اطلاعات</span>'}</td>${f?`<td rowspan="${cnt[r.d]}" class="dy">${days[r.d]?ru(days[r.d]):'<span style="color:#8aa0a3;font-weight:400">بدون اطلاعات</span>'}</td>`:''}</tr>`}).join('')||'<tr><td colspan="5">در این بازه موردی ثبت نشده است.</td></tr>';
  H=Math.round(H*100)/100;
  return `<div class="sheet"><div class="sh-h"><div class="sh-br"><i>${LOGO}</i><div class="sh-k">${esc(o.title)}</div></div><div class="sh-n">${esc(o.pharmacy)}</div><div class="sh-m">${o.meta.map(m=>`<div${m[2]=='w'?' class="w2"':''}><span>${m[0]}</span><b${m[2]?' class="lt"':''}>${m[0]=='شماره کارت'?esc(m[1]).replace(/(\d{4})(?=\d)/g,'$1<i></i>'):esc(m[1])}</b></div>`).join('')}</div></div>
- <div class="sh-b"><table><tr><th>تاریخ</th><th>ساعت شروع تا پایان</th>${o.pcol?'<th>داروخانه</th>':''}${cv?'<th>کاورکننده</th>':''}<th>نرخ ساعتی (${RL()})</th><th>جمع کارکرد روز (${RL()})</th></tr>${body}</table>
+ <div class="sh-b"><table><tr><th>تاریخ</th><th>ساعت شروع تا پایان</th>${o.pcol?'<th>داروخانه</th>':''}${cv?`<th>${o.pcol?'نوع شیفت':'کاورکننده'}</th>`:''}<th>نرخ ساعتی (${RL()})</th><th>جمع کارکرد روز (${RL()})</th></tr>${body}</table>
  <div class="sh-s"><div><span>جمع کل ساعت</span><b>${fh(H)}</b></div>${o.noAmt?'':`<div class="am"><span>جمع کل مبلغ (${RL()})</span><b>${ru(T)}</b></div>`}</div>
- ${o.extra||''}<div class="sh-g"><div>امضای ${o.s1}</div><div>امضای ${o.s2}</div></div></div><div class="sh-f"><i>${LOGO}</i>صادر شده از ${APP}</div></div>`}
+ ${o.extra||''}<div class="sh-g"><div>امضای ${o.s1}</div>${o.s2?`<div>امضای ${o.s2}</div>`:''}</div></div><div class="sh-f"><i>${LOGO}</i>صادر شده از ${APP}</div></div>`}
 function showSheet(h){const p=$('#pa');p.innerHTML=`<div class="pbar np"><button class="p" onclick="sheetPdf()">ذخیره PDF / چاپ</button><button onclick="closePrint()">بستن</button>${isIOS()?'<span id="pdfHint" class="mu" style="font-size:12px;align-self:center;flex:1"></span>':'<span class="mu" style="font-size:12px;align-self:center">شماره کارت و شبا در PDF قابل انتخاب و کپی است</span>'}</div>`+h;window._pdfFile=null;window._pdfSt=null;window._pdfFails=0;p.hidden=false;p.scrollTop=0;document.body.style.overflow='hidden';if(isIOS())pdfPrep()}
 function closePrint(){$('#pa').hidden=true;document.body.style.overflow='';window._pdfFile=null;window._pdfSt=null;window._pdfTok=(window._pdfTok||0)+1}
 function isIOS(){return /iPhone|iPad|iPod/i.test(navigator.userAgent)||(navigator.platform=='MacIntel'&&navigator.maxTouchPoints>1)}
@@ -1729,10 +1811,10 @@ function sheetPdf(){
  if(st=='err'){if(window._pdfFails>=2){window.print();return}pdfPrep()}
 }
 function repPdf(){const f=rfi(),a=jk(f.f),b=jk(f.t);if(a>b)return msg('تاریخ شروع بعد از تاریخ پایان است',1);
- const R=repRows(),g=new Map();R.forEach(s=>{if(!g.has(s.pharmacist_id))g.set(s.pharmacist_id,{n:s.pharmacist_name,r:[]});g.get(s.pharmacist_id).r.push(s)});
+ const R=repRows(),work=personalReport(),g=new Map();R.forEach(s=>{if(!g.has(s.pharmacist_id))g.set(s.pharmacist_id,{n:s.pharmacist_name,r:[]});g.get(s.pharmacist_id).r.push(s)});
  if(!g.size)return msg('در این بازه شیفت تأییدشده‌ای نیست',1);const iss=jk(tj());
- showSheet([...g.entries()].map(([gid,x])=>sheetHTML({title:'گزارش کارکرد داروساز',pharmacy:curP().name,meta:[['داروساز',x.n],['بازهٔ گزارش',`از ${a} تا ${b}`],['تاریخ صدور',iss],...payMeta(gid)],
-  rows:x.r.map(s=>({d:s.shift_date,t:`<bdi dir="ltr">${s.start_time}–${s.end_time}</bdi>`,c:s.substitute_name,h:s.hours,amt:s.amount})),s1:'داروساز',s2:'موسس / کارفرما'})).join(''))}
+ showSheet([...g.entries()].map(([gid,x])=>sheetHTML({title:'گزارش کارکرد داروساز',pharmacy:work?'کارکرد من':curP().name,pcol:work,meta:[['داروساز',x.n],['بازهٔ گزارش',`از ${a} تا ${b}`],['تاریخ صدور',iss],...(work?[]:payMeta(gid))],
+  rows:x.r.map(s=>({d:s.shift_date,t:`<bdi dir="ltr">${s.start_time}–${s.end_time}</bdi>`,c:s.substitute_name,p:s.report_pharmacy,h:s.hours,amt:s.amount})),extra:work?`<p>دریافتی تأییدشدهٔ جایگزینی: ${fmt(x.r.reduce((sum,s)=>sum+(s.incoming?s.paid_amount||0:0),0))} ${RL()}</p>`:'',s1:'داروساز',s2:work?'':'موسس / کارفرما'})).join(''))}
 // گزارش کارکرد جایگزین: مبلغ‌ها از حساب خصوصی داروساز (نه از مبلغ شیفت)
 async function subRep(){const id=$('#sr_s')?$('#sr_s').value:'',x=S.sub.find(y=>y.id==id);if(!x)return msg('جایگزین را انتخاب کنید',1);
  const a=rd('sr_f').j,b=rd('sr_t').j;if(a>b)return msg('تاریخ شروع بعد از تاریخ پایان است',1);
@@ -1754,13 +1836,13 @@ function repGroups(){const g=new Map();repRows().forEach(s=>{if(!g.has(s.pharmac
 function xlName(){const f=rfi();return `shifts-${jk(f.f).replace(/\//g,'-')}_${jk(f.t).replace(/\//g,'-')}.xlsx`}
 const ensXl=async()=>{if(typeof ExcelJS=='undefined'){try{await loadJs('https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js')}catch(e){}}if(typeof XLSX=='undefined'){try{await loadJs('https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js')}catch(e){}}};
 async function xlPlain(){await ensXl();if(typeof XLSX=='undefined')return msg('کتابخانهٔ Excel بارگذاری نشده؛ اینترنت را بررسی کنید',1);
- const R=repRows(),PO=curP().owner_id,
- a=[['تاریخ','شروع','پایان','ساعت','نرخ ساعتی ('+RL()+')','مبلغ ('+RL()+')','داروساز','کاورکننده',...(PO?['پرداخت‌شده ('+RL()+')']:[])],
- ...R.map(s=>[s.shift_date,s.start_time,s.end_time,s.hours,s.hours?ux(s.amount/s.hours):0,ux(s.amount),s.pharmacist_name,s.substitute_name||'—',...(PO?[ux(bal(s).paid_confirmed)]:[])])],
+ const R=repRows(),work=personalReport(),PO=!work&&curP()?.owner_id,
+ a=[['تاریخ','شروع','پایان','ساعت','نرخ ساعتی ('+RL()+')','مبلغ ('+RL()+')','داروساز',work?'نوع شیفت':'کاورکننده',...(work?['داروخانه','دریافتی تأییدشدهٔ جایگزینی ('+RL()+')']:[]),...(PO?['پرداخت‌شده ('+RL()+')']:[])],
+ ...R.map(s=>[s.shift_date,s.start_time,s.end_time,s.hours,s.hours?ux(s.amount/s.hours):0,ux(s.amount),s.pharmacist_name,s.substitute_name||'—',...(work?[s.report_pharmacy,s.incoming?ux(s.paid_amount||0):null]:[]),...(PO?[ux(bal(s).paid_confirmed)]:[])])],
  ws=XLSX.utils.aoa_to_sheet(a),wb=XLSX.utils.book_new();wb.Workbook={Views:[{RTL:true}]};
  XLSX.utils.book_append_sheet(wb,ws,'شیفت‌ها');XLSX.writeFile(wb,xlName())}
 async function xl(){
- await ensXl();if(typeof ExcelJS=='undefined')return xlPlain();
+ await ensXl();if(typeof ExcelJS=='undefined'||personalReport())return xlPlain();
  const f=rfi(),a=jk(f.f),b=jk(f.t),iss=jk(tj());if(a>b)return msg('تاریخ شروع بعد از تاریخ پایان است',1);
  const G=repGroups();if(!G.length)return msg('در این بازه شیفت تأییدشده‌ای نیست',1);
  try{
@@ -2278,14 +2360,26 @@ const _pfGo=pfGo;pfGo=function(k){if(k=='acc'||k=='bank'){const o=S.pfp;S.pfp=k;
 const dTx=(y,m,d)=>`${fdg(d)} ${MN[m-1]} ${fdg(y)}`;
 function pickD(id){const s=document.querySelectorAll('#'+id+' select'),ys=[];for(let i=1403;i<=1412;i++)ys.push([i,fdg(i)]);
  wheel('تاریخ',[{it:ys,v:+s[0].value},{it:MN.map((n,i)=>[i+1,n]),v:+s[1].value},{it:[...Array(31)].map((_,i)=>[i+1,fdg(i+1)]),v:+s[2].value}],v=>{v.forEach((x,i)=>s[i].value=x);const b=document.querySelector('#'+id+' .dbtn');if(b)b.textContent=dTx(v[0],v[1],v[2]);s[0].dispatchEvent(new Event('change',{bubbles:true}))})}
-function entForm(sh){return `<div class="pv"><div class="fm" style="margin-top:8px">
- <label>جایگزین<select id="e_s">${opt(S.sub.map(x=>[x.id,x.name]),S.sub[0].id)}</select></label>
- <label>نوع<select id="e_k">${opt(Object.entries(EK),'owed')}</select></label>
+function entForm(sh,account){
+ const ended=endedSub(account);return `<div class="pv"><div class="fm" style="margin-top:8px">
+ <label>جایگزین<select id="e_s" ${ended?'disabled':''}>${opt((ended?[account]:S.sub.filter(x=>!endedSub(x))).map(x=>[x.id,x.name]),account?.id||'')}</select></label>
+ <label>نوع<select id="e_k" ${ended?'disabled':''}>${opt(ended?[['paid',EK.paid]]:Object.entries(EK),ended?'paid':'owed')}</select></label>
  <label>مبلغ (${RL()})<input id="e_a" inputmode="numeric" oninput="this.value=nm(this.value)"></label>
  <label>تاریخ${dsel('e_d')}</label>
  <label>شیفت مرتبط (اختیاری)<select id="e_f" onchange="pickShift()"><option value="">—</option>${sh.map(s=>`<option value="${s.id}">${s.shift_date} <bdi dir="ltr">${s.start_time}–${s.end_time}</bdi> (${esc(s.substitute_name)})</option>`).join('')}</select></label>
  <label>توضیحات<input id="e_n"></label></div><p><button class="p" onclick="addEnt()">ثبت تراکنش</button></p></div>`}
-function openEnt(id){const sh=S.shifts.filter(s=>s.substitute_name&&s.status!='voided'&&s.status!='rejected'&&s.pharmacist_id==S.me.id);openSheet('ثبت تراکنش',entForm(sh));if(id){try{const b=subBal(id)-subPend(id).p;$('#e_s').value=id;$('#e_k').value='paid';if(b>0)$('#e_a').value=nm(String(Math.round(ux(b))))}catch(e){}}}
+function openEnt(id){
+ const account=S.sub.find(x=>x.id===id),ended=endedSub(account);
+ if(!account&&!S.sub.some(x=>!endedSub(x)))return msg('برای ثبت پرداخت، حساب جایگزین را باز کنید',1);
+ const confirmed=new Set(S.ent.filter(e=>e.substitute_id===id&&e.kind==='owed'&&e.status==='confirmed').map(e=>e.shift_id));
+ const sh=S.shifts.filter(s=>s.substitute_name&&s.status!=='voided'&&s.status!=='rejected'&&s.pharmacist_id===S.me.id&&(!ended||confirmed.has(s.id)));
+ openSheet(ended?'ثبت پرداخت':'ثبت تراکنش',entForm(sh,account));
+ if(account){
+  const balance=subBal(id)-subPend(id).p;
+  $('#e_s').value=id;$('#e_k').value='paid';
+  if(balance>0)$('#e_a').value=nm(String(Math.round(ux(balance))));
+ }
+}
 
 // ---------- round 4: login + pharmacy pages ----------
 function arGo(v){$('#a_r').value=v;segSet($('#seg_ar'),v=='pharmacist'?0:1)}
