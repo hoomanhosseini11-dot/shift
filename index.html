@@ -285,7 +285,7 @@ button:active,.sr:active,.srow.tap:active,.mr:active,.lr.tap:active,.chip:active
 .leaflet-container{font-family:inherit}
 
 .sh-m div.w2{grid-column:1/-1}
-.sh-m b.lt i{display:inline-block;width:.7em}.sh-m b.lt{font-family:ui-monospace,Menlo,Consolas,"Courier New",monospace;direction:ltr;unicode-bidi:isolate;text-align:right;white-space:nowrap;display:block;letter-spacing:.3px}
+.sh-m b.lt{font-family:ui-monospace,Menlo,Consolas,"Courier New",monospace;direction:ltr;unicode-bidi:isolate;text-align:right;white-space:nowrap;display:block;letter-spacing:.3px}
 .hd{grid-template-columns:92px 1fr 92px}.hd .hl{display:flex;gap:8px;justify-self:start}.hd .av{overflow:hidden}.hd .av svg{width:100%;height:100%;display:block}.hd .hr{display:flex;gap:8px;justify-self:end}
 .hd .c{position:relative}.hd .bd{position:absolute;top:-3px;left:-3px;min-width:18px;height:18px;border-radius:9px;background:var(--er);color:#fff;font:700 10px/18px Vazirmatn,Tahoma,sans-serif;font-style:normal;text-align:center;padding:0 4px}
 .nr{display:flex;gap:12px;align-items:center;padding:14px 0;border-bottom:1px solid var(--bd);cursor:pointer}.nr:last-child{border:0}.nr:active{opacity:.6}
@@ -860,7 +860,7 @@ async function chPw(){const c=$('#pf_c').value,v=$('#pf_p').value,w=$('#pf_p2').
  const r=await sb.auth.updateUser({password:v});if(r.error)return fail(r.error);['pf_c','pf_p','pf_p2'].forEach(i=>$('#'+i).value='');msg('رمز عبور تغییر کرد')}
 const EYE='<button type="button" class="eye" onclick="tp(this)" aria-label="نمایش رمز"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></button>';
 const pwRow=(id,k,ac)=>`<div class="srow"><span class="k">${k}</span><input id="${id}" type="password" dir="ltr" autocomplete="${ac}">${EYE}</div>`;
-const PT={acc:'اطلاعات شخصی',bank:'اطلاعات پرداخت',ph:'داروخانه‌های من',hrs:'ساعت کارکرد',sec:'امنیت',co:'همکاری‌ها',dsp:'نمایش',upd:'به‌روزرسانی',nt:'اعلان‌ها',hlp:'راهنمای برنامه',faq:'سؤالات متداول',sup:'پشتیبانی',adm:'پنل ادمین'},APPV='نسخه ۲٫۸٫۰ — ۱۴۰۵/۰۸/۲۳';
+const PT={acc:'اطلاعات شخصی',bank:'اطلاعات پرداخت',ph:'داروخانه‌های من',hrs:'ساعت کارکرد',sec:'امنیت',co:'همکاری‌ها',dsp:'نمایش',upd:'به‌روزرسانی',nt:'اعلان‌ها',hlp:'راهنمای برنامه',faq:'سؤالات متداول',sup:'پشتیبانی',adm:'پنل ادمین'},APPV='نسخه ۲٫۸٫۱ — ۱۴۰۵/۰۸/۲۴';
 const ciOn=()=>{try{return localStorage.getItem('ci_on')=='1'}catch(e){return false}};
 function ciTog(){try{localStorage.setItem('ci_on',ciOn()?'0':'1')}catch(e){}home()}
 function pfHead(){const me=S.me,isPh=me.role=='pharmacist',em=S.email||'',un=S.me.username||(em.endsWith('@'+UDOM)?em.slice(0,-(UDOM.length+1)):em);
@@ -1757,7 +1757,12 @@ function sheetHTML(o){const days={},cnt={},seen={};let H=0,T=0;
  const cv=!o.noCover,body=o.rows.map(r=>{const f=!seen[r.d];seen[r.d]=1;
   return `<tr><td>${r.d}${r.est?' <b>*</b>':''}${r.pend?' <b>†</b>':''}</td><td><span dir="ltr" style="unicode-bidi:isolate">${r.t}</span></td>${o.pcol?`<td>${esc(r.p||'—')}</td>`:''}${cv?`<td>${esc(r.c||'—')}</td>`:''}<td>${r.amt&&r.h?ru(r.amt/r.h):'<span style="color:#8aa0a3">بدون اطلاعات</span>'}</td>${f?`<td rowspan="${cnt[r.d]}" class="dy">${days[r.d]?ru(days[r.d]):'<span style="color:#8aa0a3;font-weight:400">بدون اطلاعات</span>'}</td>`:''}</tr>`}).join('')||'<tr><td colspan="5">در این بازه موردی ثبت نشده است.</td></tr>';
  H=Math.round(H*100)/100;
- return `<div class="sheet"><div class="sh-h"><div class="sh-br"><i>${LOGO}</i><div class="sh-k">${esc(o.title)}</div></div><div class="sh-n">${esc(o.pharmacy)}</div><div class="sh-m">${o.meta.map(m=>`<div${m[2]=='w'?' class="w2"':''}><span>${m[0]}</span><b${m[2]?' class="lt"':''}>${esc(m[0]=='شماره کارت'?String(m[1]).replace(/\s+/g,''):m[1])}</b></div>`).join('')}</div></div>
+ const meta=o.meta.map(([label,value,kind])=>{
+  const digits=label==='شماره کارت'?fa(value).replace(/[\s-]/g,''):'';
+  const card=/^\d{16}$/.test(digits);
+  return `<div${kind==='w'?' class="w2"':''}><span>${label}</span><b${kind?' class="lt"':''}${card?' dir="ltr" data-pdf-card':''}>${esc(card?digits:value)}</b></div>`
+ }).join('');
+ return `<div class="sheet"><div class="sh-h"><div class="sh-br"><i>${LOGO}</i><div class="sh-k">${esc(o.title)}</div></div><div class="sh-n">${esc(o.pharmacy)}</div><div class="sh-m">${meta}</div></div>
  <div class="sh-b"><table><tr><th>تاریخ</th><th>ساعت شروع تا پایان</th>${o.pcol?'<th>داروخانه</th>':''}${cv?`<th>${o.pcol?'نوع شیفت':'کاورکننده'}</th>`:''}<th>نرخ ساعتی (${RL()})</th><th>جمع کارکرد روز (${RL()})</th></tr>${body}</table>
  <div class="sh-s"><div><span>جمع کل ساعت</span><b>${fh(H)}</b></div>${o.noAmt?'':`<div class="am"><span>جمع کل مبلغ (${RL()})</span><b>${ru(T)}</b></div>`}</div>
  ${o.extra||''}<div class="sh-g"><div>امضای ${o.s1}</div>${o.s2?`<div>امضای ${o.s2}</div>`:''}</div></div><div class="sh-f"><i>${LOGO}</i>صادر شده از ${APP}</div></div>`}
@@ -1795,12 +1800,29 @@ async function pdfPrep(){
    if(window._pdfTok!=tok)return;
    host.innerHTML='';const c=el.cloneNode(true);c.style.cssText='width:794px;max-width:none;margin:0;border-radius:0;box-shadow:none';host.appendChild(c);
    c.querySelectorAll('svg').forEach(v=>{const col=getComputedStyle(v).color;v.innerHTML=v.innerHTML.replace(/currentColor/g,col)});
+   const card=c.querySelector('[data-pdf-card]');
+   const cardBox=card?.getBoundingClientRect(),sheetBox=card&&c.getBoundingClientRect();
+   // Keep the card's layout in the capture. Draw its digits once as selectable PDF text.
+   if(card)card.style.visibility='hidden';
    const cv=await window.html2canvas(c,{scale:2,backgroundColor:'#ffffff',useCORS:true,logging:false,windowWidth:794});
    const hh=cv.height*W/cv.width;
    if(!first)doc.addPage();first=0;
+   const firstPage=doc.getNumberOfPages(),pagePixels=Math.floor(H*cv.width/W);
    if(hh<=H){doc.addImage(cv.toDataURL('image/jpeg',.92),'JPEG',M,M,W,hh)}
-   else{const ph=Math.floor(H*cv.width/W);let y=0,k=0;
-    while(y<cv.height){const h=Math.min(ph,cv.height-y),p=document.createElement('canvas');p.width=cv.width;p.height=h;const x=p.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,p.width,h);x.drawImage(cv,0,y,cv.width,h,0,0,cv.width,h);if(k++)doc.addPage();doc.addImage(p.toDataURL('image/jpeg',.92),'JPEG',M,M,W,h*W/cv.width);y+=h}}
+   else{let y=0,k=0;
+    while(y<cv.height){const h=Math.min(pagePixels,cv.height-y),p=document.createElement('canvas');p.width=cv.width;p.height=h;const x=p.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,p.width,h);x.drawImage(cv,0,y,cv.width,h,0,0,cv.width,h);if(k++)doc.addPage();doc.addImage(p.toDataURL('image/jpeg',.92),'JPEG',M,M,W,h*W/cv.width);y+=h}}
+   if(card){
+    const mmPerCssPixel=W/sheetBox.width;
+    const cardMiddle=(cardBox.top+cardBox.height/2-sheetBox.top)*cv.width/sheetBox.width;
+    const pageOffset=hh>H?Math.floor(cardMiddle/pagePixels):0;
+    doc.setPage(firstPage+pageOffset);
+    doc.setFont('courier','bold');
+    doc.setFontSize(parseFloat(getComputedStyle(card).fontSize)*mmPerCssPixel*72/25.4);
+    doc.setTextColor(255);
+    doc.text(card.textContent,M+(cardBox.right-sheetBox.left)*mmPerCssPixel,
+     M+(cardMiddle-pageOffset*pagePixels)*W/cv.width,{align:'right',baseline:'middle'});
+    doc.setPage(doc.getNumberOfPages())
+   }
   }
   if(window._pdfTok!=tok)return;
   window._pdfFile=new File([doc.output('blob')],'PharmaShift-report.pdf',{type:'application/pdf'});
