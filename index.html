@@ -858,21 +858,26 @@ async function loadShifts0(){
  const tk=S._lt=(S._lt||0)+1,pid=S.cur;
  S.upd=new Date();
  if(S.loadedPh!==pid){
-  S.loadedPh=pid;S.shifts=[];S.plan=[];S.ci=[];S.pay=[];S.bal={};
+  S.loadedPh=pid;S.shifts=[];S.plan=[];S.ci=[];S.pay=[];S.bal={};S.voidRequests=null;
  }
  if(!pid){
   await Promise.all([loadNt(),loadInc(),loadCal(null),loadPc(),loadHrs()]);
   if(tk===S._lt)rtStart();
   return;
  }
- const[r,b,p]=await Promise.all([
+ const[r,b,p,requests]=await Promise.all([
   fetchAll(()=>sb.from('shifts').select('*').eq('pharmacy_id',pid).order('shift_gdate',{ascending:false}).order('start_time',{ascending:false}).order('id')),
   fetchAll(()=>sb.from('shift_balances').select('*').eq('pharmacy_id',pid).order('shift_id')),
   fetchAll(()=>sb.from('payments').select('*').eq('pharmacy_id',pid).order('created_at',{ascending:false}).order('id')),
+  fetchAll(()=>sb.from('shift_void_requests').select('id,shift_id,requested_by,reason,status').eq('pharmacy_id',pid).order('created_at',{ascending:false}).order('id')),
   loadMb(),loadInc(),loadHrs(),loadCi(),loadNt(),loadPc(),loadCal(pid)]);
  if(tk!=S._lt)return;
  if(r.error)return fail(r.error);if(b.error)return fail(b.error);if(p.error)return fail(p.error);
  S.shifts=r.data.filter(x=>x.status!='planned');S.plan=r.data.filter(x=>x.status=='planned').sort((a,b)=>a.shift_gdate<b.shift_gdate?-1:1);
+ S.voidRequests=requests.error?null:new Map();
+ for(const request of requests.data||[]){
+  if(!S.voidRequests.has(request.shift_id))S.voidRequests.set(request.shift_id,request);
+ }
  S.bal={};b.data.forEach(x=>S.bal[x.shift_id]=x);S.pay=p.data;rtStart()}
 // شیفت‌های سایر داروخانه‌های من (فقط برای تقویم صفحهٔ خانه)
 async function loadCal(pid){let a=null,bl={};try{const cr=await sb.from('memberships').select('pharmacy_id,color').eq('user_id',S.me.id);if(!cr.error){const o={};cr.data.forEach(r=>{if(PHC.includes(r.color))o[r.pharmacy_id]=r.color});S.pcol=o}}catch(e){}
@@ -998,7 +1003,7 @@ async function chPw(){const c=$('#pf_c').value,v=$('#pf_p').value,w=$('#pf_p2').
  const r=await sb.auth.updateUser({password:v});if(r.error)return fail(r.error);['pf_c','pf_p','pf_p2'].forEach(i=>$('#'+i).value='');msg('رمز عبور تغییر کرد')}
 const EYE='<button type="button" class="eye" onclick="tp(this)" aria-label="نمایش رمز"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></button>';
 const pwRow=(id,k,ac)=>`<div class="srow"><span class="k">${k}</span><input id="${id}" type="password" dir="ltr" autocomplete="${ac}">${EYE}</div>`;
-const PT={acc:'اطلاعات شخصی',bank:'اطلاعات پرداخت',ph:'داروخانه‌های من',hrs:'ساعت کارکرد',sec:'امنیت',co:'همکاری‌ها',dsp:'نمایش',upd:'به‌روزرسانی',nt:'اعلان‌ها',hlp:'راهنمای برنامه',faq:'سؤالات متداول',sup:'پشتیبانی',adm:'پنل ادمین'},APPV='نسخه ۲٫۸٫۶ — ۱۴۰۵/۰۸/۲۵';
+const PT={acc:'اطلاعات شخصی',bank:'اطلاعات پرداخت',ph:'داروخانه‌های من',hrs:'ساعت کارکرد',sec:'امنیت',co:'همکاری‌ها',dsp:'نمایش',upd:'به‌روزرسانی',nt:'اعلان‌ها',hlp:'راهنمای برنامه',faq:'سؤالات متداول',sup:'پشتیبانی',adm:'پنل ادمین'},APPV='نسخه ۲٫۸٫۷ — ۱۴۰۵/۰۸/۲۵';
 const ciOn=()=>{try{return localStorage.getItem('ci_on')=='1'}catch(e){return false}};
 function ciTog(){try{localStorage.setItem('ci_on',ciOn()?'0':'1')}catch(e){}home()}
 function pfHead(){const me=S.me,isPh=me.role=='pharmacist',em=S.email||'',un=S.me.username||(em.endsWith('@'+UDOM)?em.slice(0,-(UDOM.length+1)):em);
@@ -1508,15 +1513,58 @@ function shRows(outgoing=false){const me=S.me.id,PO=curP()?.owner_id,cs=stOpen()
   const total=`جمع${pnm&&!personal?' '+esc(pnm):''}: ${fmt(A.reduce((a,s)=>a+s.amount,0))} ${RL()}`;
   const pending=pend?`<span class="st p mp">${pn(pend)} منتظر تأیید</span>`:'';
   const head=monthHeader(k,g[k].length,'شیفت',total,op,`shMo(this,'${outgoing?'out-':''}${k}')`,pending);
-  const body=g[k].map(s=>{if(s.incoming)return incomingShiftCard(s);const z=stL(s),b=bal(s),bt=s.pharmacy_id!==S.cur?'':`${!curM()?.ended_at&&act(s)&&s.pharmacist_id==me&&!(b.paid_confirmed+b.paid_pending>0)?`<button class="d" onclick="voidS('${s.id}')">ابطال</button>`:''}${cs&&act(s)&&s.status=='confirmed'&&rem(s)>0?`<button class="p" onclick="settleOne('${s.id}')">تسویه شد</button>`:''}${act(s)&&s.pharmacist_id==me?`<button class="shi" aria-label="اشتراک‌گذاری" title="اشتراک‌گذاری" onclick="shareTxt('${s.pharmacy_id}','${s.id}')"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg></button>`:''}`;
+  const body=g[k].map(s=>{if(s.incoming)return incomingShiftCard(s);const z=stL(s),b=bal(s),vr=shiftVoidControls(s,b),bt=s.pharmacy_id!==S.cur?'':`${!curM()?.ended_at&&act(s)&&s.pharmacist_id==me&&!(b.paid_confirmed+b.paid_pending>0)&&!vr.pending?`<button class="d" onclick="voidS('${s.id}')">ابطال</button>`:''}${cs&&act(s)&&s.status=='confirmed'&&rem(s)>0?`<button class="p" onclick="settleOne('${s.id}')">تسویه شد</button>`:''}${act(s)&&s.pharmacist_id==me?`<button class="shi" aria-label="اشتراک‌گذاری" title="اشتراک‌گذاری" onclick="shareTxt('${s.pharmacy_id}','${s.id}')"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg></button>`:''}`;
   return shiftWorkCard(s,s.pharmacist_name,z,`${s.substitute_name?`<small>جایگزین: ${esc(s.substitute_name)}</small>`:''}
-  ${(personal?S.ms.find(m=>m.pharmacy_id===s.pharmacy_id)?.pharmacies.owner_id:PO)&&s.status=='confirmed'?`<small>پرداخت‌شده: ${fmt(b.paid_confirmed)}${b.paid_pending?` (+${fmt(b.paid_pending)} منتظر تأیید)`:''}</small>`:''}${s.reject_reason?`<small>${esc(s.reject_reason)}</small>`:''}${s.void_reason?`<small>${esc(s.void_reason)}</small>`:''}`,bt)}).join('');
+  ${(personal?S.ms.find(m=>m.pharmacy_id===s.pharmacy_id)?.pharmacies.owner_id:PO)&&s.status=='confirmed'?`<small>پرداخت‌شده: ${fmt(b.paid_confirmed)}${b.paid_pending?` (+${fmt(b.paid_pending)} منتظر تأیید)`:''}</small>`:''}${s.reject_reason?`<small>${esc(s.reject_reason)}</small>`:''}${s.void_reason?`<small>${esc(s.void_reason)}</small>`:''}${vr.label}`,bt+vr.action)}).join('');
   return `<div class="smo ${op?'open':''}" data-mk="${k}">${head}<div class="cw ${op?'open':''}" ${op?'':'inert'}><div class="mb">${body}</div></div></div>`}).join('');
  return `${rows||'<div class="card mu">شیفتی برای نمایش نیست.</div>'}`}
 function shMo(button,key){S.shO[key]=toggleMonth(button)}
 async function dropOwed(id){if(S.me.role!='pharmacist')return;try{const d=await sb.from('substitute_entries').delete().eq('shift_id',id).eq('kind','owed');if(d.error){msg('شیفت ابطال شد، ولی بدهی آن حذف نشد: '+d.error.message,1);return}S.ent=(S.ent||[]).filter(e=>!(e.shift_id==id&&e.kind=='owed'))}catch(e){}}
 function voidS(id){askWhy('ابطال شیفت','ابطال',async r=>{
  const x=await sb.rpc('void_shift',{p_id:id,p_reason:r});if(x.error)return fail(x.error);await dropOwed(id);quick('شیفت ابطال شد',()=>setSt(S.shifts,id,'voided','void_reason',r))})}
+
+function shiftVoidControls(shift,balance){
+ const empty={pending:false,label:'',action:''};
+ if(shift.pharmacy_id!==S.cur||shift.status!=='confirmed'||!curM()||curM().ended_at||!S.voidRequests)return empty;
+ const request=S.voidRequests.get(shift.id);
+ const pharmacist=shift.pharmacist_id===S.me.id;
+ const owner=curP()?.owner_id===S.me.id&&!pharmacist;
+ if(request?.status==='pending'){
+  const label='<small>درخواست ابطال در انتظار پاسخ داروساز</small>';
+  const action=pharmacist?`<button type="button" onclick="reviewShiftVoid('${shift.id}')">بررسی درخواست ابطال</button>`:'';
+  return {pending:true,label,action};
+ }
+ if(!owner)return empty;
+ const label=request?.status==='rejected'?'<small>درخواست ابطال رد شد</small>':'';
+ const action=balance.paid_confirmed+balance.paid_pending>0?'':`<button type="button" onclick="requestShiftVoid('${shift.id}')">درخواست ابطال</button>`;
+ return {pending:false,label,action};
+}
+function requestShiftVoid(id){
+ askWhy('درخواست ابطال شیفت','ارسال درخواست',async reason=>{
+  const result=await sb.rpc('request_shift_void',{p_shift:id,p_reason:reason});
+  if(result.error)return fail(result.error);
+  await loadShifts();home();msg('درخواست ابطال برای داروساز ارسال شد');
+ })
+}
+function reviewShiftVoid(id){
+ const shift=S.shifts.find(s=>s.id===id);
+ const request=S.voidRequests?.get(id);
+ if(!shift||shift.status!=='confirmed'||shift.pharmacist_id!==S.me.id||request?.status!=='pending')return;
+ const balance=bal(shift),paid=balance.paid_pending+balance.paid_confirmed>0;
+ openSheet('درخواست ابطال شیفت',`<div class="card"><b>${esc(jd(shift.shift_date))} · <bdi dir="ltr">${esc(shift.start_time)}–${esc(shift.end_time)}</bdi></b>
+ <p style="overflow-wrap:anywhere">${esc(request.reason)}</p>
+ <p class="mu">${paid?'برای این شیفت پرداخت فعال ثبت شده و فعلاً قابل ابطال نیست.':'با تأیید شما، شیفت ابطال و از ماندهٔ قابل پرداخت خارج می‌شود.'}</p></div>
+ ${paid?'':`<button class="p wide" onclick="decideShiftVoid('${id}',true)">تأیید و ابطال شیفت</button>`}
+ <button class="wide" onclick="decideShiftVoid('${id}',false)">رد درخواست</button>`);
+}
+async function decideShiftVoid(id,approve){
+ const request=S.voidRequests?.get(id);
+ if(request?.status!=='pending')return;
+ const result=await sb.rpc('decide_shift_void',{p_request:request.id,p_approve:approve});
+ if(result.error)return fail(result.error);
+ if(approve)await dropOwed(id);
+ closeSheet(1);await loadShifts();home();msg(approve?'شیفت ابطال شد':'درخواست ابطال رد شد');
+}
 
 // ================= بخش ۲ =================
 const bal=s=>(s.pharmacy_id!==S.cur?S.calBal?.[s.id]:S.bal[s.id])||{paid_confirmed:0,paid_pending:0};
@@ -2511,7 +2559,7 @@ function pushCard(){const st=S.pushSt||'off';
 {const _boot=boot;boot=async function(u,setupSignal){await _boot(u,setupSignal);pushSync();pushRefresh();if(window.__OPENNT&&S.me&&S.cur){window.__OPENNT=false;try{history.replaceState(null,'',location.pathname)}catch(e){}openNt()}}}
 pushState().then(s=>{S.pushSt=s});
 
-async function ntGo(k,ph){const own=S.me.role!='pharmacist';
+async function ntGo(k,ph,ref){const own=S.me.role!='pharmacist';
  if(/^cr_/.test(k)){S.pfp=null;await loadCr();return goPg('fin','cr')}
  if(/^sb_/.test(k)){S.pfp=null;await loadSub();return goPg('fin','sub')}
  if(ph&&k==='co_ended')await loadMs(true);
@@ -2520,10 +2568,12 @@ async function ntGo(k,ph){const own=S.me.role!='pharmacist';
   return openPhHistory(ph);
  }
  if(ph&&ph!=S.cur&&S.ms.some(m=>m.pharmacy_id===ph&&!m.ended_at)){S.cur=ph;try{await loadShifts()}catch(e){}}
- S.pfp=null;if(k.startsWith('shift'))goPg(own?'q':'sh');else goPg(own?'pay':'fin','rec')}
-const NK={co_ended:['users','wn'],shift_new:['clock','wn'],shift_ok:['check',''],shift_rej:['bell','x'],shift_void:['bell','x'],pay_new:['wallet','wn'],pay_ok:['check',''],pay_rej:['bell','x'],pay_void:['bell','x'],cr_link:['users','wn'],cr_new:['wallet','wn'],cr_void:['bell','x'],sb_link:['users',''],sb_ok:['check',''],sb_rej:['bell','x']};
+ S.pfp=null;
+ if(k==='shift_void_request'&&!own&&ph===S.cur){S.sf='all';goPg('sh');return reviewShiftVoid(ref)}
+ if(k.startsWith('shift'))goPg(own?'q':'sh');else goPg(own?'pay':'fin','rec')}
+const NK={co_ended:['users','wn'],shift_new:['clock','wn'],shift_ok:['check',''],shift_rej:['bell','x'],shift_void:['bell','x'],shift_void_request:['bell','wn'],shift_void_rejected:['bell','x'],pay_new:['wallet','wn'],pay_ok:['check',''],pay_rej:['bell','x'],pay_void:['bell','x'],cr_link:['users','wn'],cr_new:['wallet','wn'],cr_void:['bell','x'],sb_link:['users',''],sb_ok:['check',''],sb_rej:['bell','x']};
 function ntCard(){const L=S.nt||[],nw=S.ntNew||new Set();
- return L.length?`<div class="gc" style="padding:0 16px">${L.map(n=>{const k=NK[n.kind]||['bell',''];return `<div class="nr" onclick="ntGo('${esc(n.kind)}','${esc(n.pharmacy_id||'')}')"><div class="ic ${k[1]}"><svg viewBox="0 0 24 24">${IC[k[0]]}</svg></div><div class="tx"><b>${esc(n.title)}</b><small>${esc(n.body||'')}${n.amt!=null?` · ${fmt(n.amt)} ${RL()}`:''}</small></div><span class="tm">${nw.has(n.id)?'<span class="dot"></span>':''}${dyT(n.created_at)} ${hmT(n.created_at)}</span></div>`}).join('')}</div>`:'<div class="card mu">اعلانی ندارید. وقتی شیفت یا پرداختی تأیید، رد یا ابطال شود، اینجا می‌آید.</div>'}
+ return L.length?`<div class="gc" style="padding:0 16px">${L.map(n=>{const k=NK[n.kind]||['bell',''];return `<div class="nr" onclick="ntGo('${esc(n.kind)}','${esc(n.pharmacy_id||'')}','${esc(n.ref_id||'')}')"><div class="ic ${k[1]}"><svg viewBox="0 0 24 24">${IC[k[0]]}</svg></div><div class="tx"><b>${esc(n.title)}</b><small>${esc(n.body||'')}${n.amt!=null?` · ${fmt(n.amt)} ${RL()}`:''}</small></div><span class="tm">${nw.has(n.id)?'<span class="dot"></span>':''}${dyT(n.created_at)} ${hmT(n.created_at)}</span></div>`}).join('')}</div>`:'<div class="card mu">اعلانی ندارید. وقتی شیفت یا پرداختی تأیید، رد یا ابطال شود، اینجا می‌آید.</div>'}
 document.addEventListener('click',e=>{const r=e.target.closest&&e.target.closest('.srow');if(!r||e.target.closest('input,textarea,select,button,a,.dbtn'))return;const i=r.querySelector('input:not([type=hidden]):not([type=checkbox]):not([disabled]),textarea');if(i)i.focus()});
 // ---------- شروع ----------
 sb.auth.onAuthStateChange((ev,ses)=>{
