@@ -607,9 +607,9 @@ function authView(){if(S.wel)return welView();const su=S.tab=='signup';
   <div class="srow"><span class="k">ایمیل یا نام کاربری</span><input id="a_u" dir="ltr" autocapitalize="none" autocomplete="username"></div>
   <div class="srow"><span class="k">رمز عبور</span><input id="a_p" type="password" dir="ltr" autocomplete="${su?'new-password':'current-password'}" onkeydown="if(event.key=='Enter')authGo()"><button type="button" class="eye" onclick="tp(this)" aria-label="نمایش رمز"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></button></div></div>
  <div class="cw ${su?'open':''}" id="au_h"><div><p class="mu hint">نام کاربری: حروف کوچک انگلیسی، عدد و _ (حداقل ۳ حرف)<br>رمز عبور: حداقل ۸ کاراکتر<br>اگر ایمیل ندهید، امکان بازیابی حساب وجود ندارد.</p></div></div>
- <button class="p bigp" id="au_b" onclick="authGo()">${su?'ساخت حساب':'ورود'}</button>
+ <button class="p bigp" id="au_b"${su?'':' data-nobusy="1"'} onclick="authGo()">${su?'ساخت حساب':'ورود'}</button>
  <div class="au-or"><span>یا</span></div><button type="button" class="gbtn" onclick="googleGo()"><svg viewBox="0 0 48 48" width="20" height="20" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.5 5.4 2.6 13.2l7.9 6.1C12.4 13.6 17.7 9.5 24 9.5z"/><path fill="#4285F4" d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.7c-.6 3-2.2 5.5-4.7 7.2l7.6 5.9c4.4-4.1 6.9-10.1 6.9-17.6z"/><path fill="#FBBC05" d="M10.5 28.7c-.5-1.4-.8-3-.8-4.7s.3-3.2.8-4.7l-7.9-6.1C.9 16.4 0 20.1 0 24s.9 7.6 2.6 10.8l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.6-5.9c-2.1 1.4-4.9 2.3-8.3 2.3-6.3 0-11.6-4.1-13.5-9.8l-7.9 6.1C6.5 42.6 14.6 48 24 48z"/></svg><span>ادامه با گوگل</span></button>
- <div class="cw ${su?'':'open'}" id="au_f"><div><p style="text-align:center;margin-top:14px"><a href="#" onclick="forgot();return false">رمز را فراموش کرده‌اید؟</a></p></div></div></div>`}
+ <div class="cw ${su?'':'open'}" id="au_f"><div><p style="text-align:center;margin-top:14px"><a href="#" onclick="forgot();return false">رمز را فراموش کرده‌اید؟</a></p></div></div></div>`;syncLoginButton()}
 const authGo=()=>S.tab=='signup'?doSignup():doLogin();
 function authApply(){const su=S.tab=='signup';['au_r','au_n','au_h'].forEach(id=>{const e=$('#'+id);if(e)e.classList.toggle('open',su)});const f=$('#au_f');if(f)f.classList.toggle('open',!su);const b=$('#au_b');if(b)b.textContent=su?'ساخت حساب':'ورود';const p=$('#a_p');if(p)p.autocomplete=su?'new-password':'current-password'}
 const tp=b=>{const i=b.previousElementSibling;i.type=i.type=='password'?'text':'password'};
@@ -625,7 +625,27 @@ function recView(){$('#app').innerHTML=`<div class="ob"><div class="logo">🔑</
 async function setPw(){const v=$('#n_p').value;if(v.length<8)return msg('رمز حداقل ۸ کاراکتر باشد',1);
  const{data,error}=await sb.auth.updateUser({password:v});if(error)return fail(error);
  REC=false;history.replaceState(null,'',location.pathname);msg('رمز عوض شد');boot(data.user)}
-async function doLogin(){const{error}=await sb.auth.signInWithPassword({email:toEmail($('#a_u').value),password:$('#a_p').value});if(error)msg('ایمیل/نام کاربری یا رمز اشتباه است',1)}
+let loginPending=false;
+function syncLoginButton(){
+ const button=$('#au_b');
+ if(!button||S.tab!=='login')return;
+ button.disabled=loginPending;
+ button.textContent=loginPending?'در حال ورود…':'ورود';
+ if(loginPending)button.setAttribute('aria-busy','true');else button.removeAttribute('aria-busy')
+}
+function finishLogin(){loginPending=false;syncLoginButton()}
+async function doLogin(){
+ if(loginPending)return;
+ loginPending=true;syncLoginButton();
+ let signedIn=false;
+ try{
+  const {data,error}=await sb.auth.signInWithPassword({email:toEmail($('#a_u').value),password:$('#a_p').value});
+  if(error){msg('ایمیل/نام کاربری یا رمز اشتباه است',1);return}
+  signedIn=!!data?.session;
+  if(!signedIn)msg('ورود کامل نشد. دوباره تلاش کنید.',1)
+ }catch(_){msg('ارتباط با سرور برقرار نشد. دوباره تلاش کنید.',1)}
+ finally{if(!signedIn)finishLogin()}
+}
 async function doSignup(){const raw=fa($('#a_u').value).trim().toLowerCase(),name=$('#a_n').value.trim(),pw=$('#a_p').value,isE=raw.includes('@');
  if(!name)return msg('نام را وارد کنید',1);if(pw.length<8)return msg('رمز حداقل ۸ کاراکتر باشد',1);
  if(!isE&&!/^[a-z0-9_]{3,30}$/.test(raw))return msg('نام کاربری معتبر نیست',1);
@@ -866,7 +886,7 @@ async function chPw(){const c=$('#pf_c').value,v=$('#pf_p').value,w=$('#pf_p2').
  const r=await sb.auth.updateUser({password:v});if(r.error)return fail(r.error);['pf_c','pf_p','pf_p2'].forEach(i=>$('#'+i).value='');msg('رمز عبور تغییر کرد')}
 const EYE='<button type="button" class="eye" onclick="tp(this)" aria-label="نمایش رمز"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></button>';
 const pwRow=(id,k,ac)=>`<div class="srow"><span class="k">${k}</span><input id="${id}" type="password" dir="ltr" autocomplete="${ac}">${EYE}</div>`;
-const PT={acc:'اطلاعات شخصی',bank:'اطلاعات پرداخت',ph:'داروخانه‌های من',hrs:'ساعت کارکرد',sec:'امنیت',co:'همکاری‌ها',dsp:'نمایش',upd:'به‌روزرسانی',nt:'اعلان‌ها',hlp:'راهنمای برنامه',faq:'سؤالات متداول',sup:'پشتیبانی',adm:'پنل ادمین'},APPV='نسخه ۲٫۸٫۳ — ۱۴۰۵/۰۸/۲۴';
+const PT={acc:'اطلاعات شخصی',bank:'اطلاعات پرداخت',ph:'داروخانه‌های من',hrs:'ساعت کارکرد',sec:'امنیت',co:'همکاری‌ها',dsp:'نمایش',upd:'به‌روزرسانی',nt:'اعلان‌ها',hlp:'راهنمای برنامه',faq:'سؤالات متداول',sup:'پشتیبانی',adm:'پنل ادمین'},APPV='نسخه ۲٫۸٫۴ — ۱۴۰۵/۰۸/۲۵';
 const ciOn=()=>{try{return localStorage.getItem('ci_on')=='1'}catch(e){return false}};
 function ciTog(){try{localStorage.setItem('ci_on',ciOn()?'0':'1')}catch(e){}home()}
 function pfHead(){const me=S.me,isPh=me.role=='pharmacist',em=S.email||'',un=S.me.username||(em.endsWith('@'+UDOM)?em.slice(0,-(UDOM.length+1)):em);
@@ -1768,7 +1788,7 @@ function sheetHTML(o){const days={},cnt={},seen={};let H=0,T=0;
   const bankValue=bankKind?fa(value).replace(/[\s-]/g,'').toUpperCase():'';
   const card=bankKind==='card'&&/^\d{16}$/.test(bankValue);
   const copyable=card||(bankKind==='iban'&&/^IR\d{24}$/.test(bankValue));
-  const display=card?bankValue.match(/\d{4}/g).join(' - '):value;
+  const display=card?bankValue.match(/\d{4}/g).join('-'):value;
   return `<div${kind==='w'?' class="w2"':''}><span>${label}</span><b${kind?' class="lt"':''}${card?' dir="ltr" data-pdf-card':''}${copyable?` data-report-bank="${bankKind}" data-report-value="${bankValue}"`:''}>${esc(display)}</b></div>`
  }).join('');
  const owner=o.meta.find(([label])=>label==='داروساز')?.[1]||'';
@@ -1831,8 +1851,6 @@ async function pdfPrep(){
    c.querySelectorAll('svg').forEach(v=>{const col=getComputedStyle(v).color;v.innerHTML=v.innerHTML.replace(/currentColor/g,col)});
    const card=c.querySelector('[data-pdf-card]');
    const cardBox=card?.getBoundingClientRect(),sheetBox=card&&c.getBoundingClientRect();
-   // Keep the card's layout in the capture. Draw its digits once as selectable PDF text.
-   if(card)card.style.visibility='hidden';
    const cv=await window.html2canvas(c,{scale:2,backgroundColor:'#ffffff',useCORS:true,logging:false,windowWidth:794});
    const hh=cv.height*W/cv.width;
    if(!first)doc.addPage();first=0;
@@ -1847,10 +1865,10 @@ async function pdfPrep(){
     doc.setPage(firstPage+pageOffset);
     doc.setFont('courier','bold');
     doc.setFontSize(parseFloat(getComputedStyle(card).fontSize)*mmPerCssPixel*72/25.4);
-    doc.setTextColor(255);
+    // Use the report image for visual alignment and retain the grouped card as selectable text.
     const cardRight=M+(cardBox.right-sheetBox.left)*mmPerCssPixel;
     doc.text(card.textContent,cardRight,
-     M+(cardMiddle-pageOffset*pagePixels)*W/cv.width,{align:'right',baseline:'middle'});
+     M+(cardMiddle-pageOffset*pagePixels)*W/cv.width,{align:'right',baseline:'middle',renderingMode:'invisible'});
     doc.setPage(doc.getNumberOfPages())
    }
   }
@@ -2399,7 +2417,10 @@ document.addEventListener('click',e=>{const r=e.target.closest&&e.target.closest
 // ---------- شروع ----------
 sb.auth.onAuthStateChange((ev,ses)=>{
  if(ev=='PASSWORD_RECOVERY'||(REC&&ses&&ses.user)){REC=true;setTimeout(recView,0)}
- else if(ses&&ses.user){if(!S.me||S.me.id!==ses.user.id)setTimeout(()=>boot(ses.user),0)}
+ else if(ses&&ses.user){if(!S.me||S.me.id!==ses.user.id)setTimeout(()=>{
+  const pendingBoot=boot(ses.user);
+  if(loginPending)pendingBoot.catch(error=>bootErr(error?.message||'خطا در بارگذاری حساب')).finally(finishLogin)
+ },0)}
  else{S={me:null,ms:[],cur:null,shifts:[],pay:[],bal:{},sub:[],ent:[],tab:'login',wel:1};if(window.__URLERR){bootErr(window.__URLERR);window.__URLERR=null}else authView()}});
 
 // ---------- بازخورد فوری برای همهٔ دکمه‌ها: «صبر کنید…» تا پایان کار ----------
