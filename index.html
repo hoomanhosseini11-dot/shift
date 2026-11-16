@@ -607,9 +607,9 @@ function authView(){if(S.wel)return welView();const su=S.tab=='signup';
   <div class="srow"><span class="k">ایمیل یا نام کاربری</span><input id="a_u" dir="ltr" autocapitalize="none" autocomplete="username"></div>
   <div class="srow"><span class="k">رمز عبور</span><input id="a_p" type="password" dir="ltr" autocomplete="${su?'new-password':'current-password'}" onkeydown="if(event.key=='Enter')authGo()"><button type="button" class="eye" onclick="tp(this)" aria-label="نمایش رمز"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></button></div></div>
  <div class="cw ${su?'open':''}" id="au_h"><div><p class="mu hint">نام کاربری: حروف کوچک انگلیسی، عدد و _ (حداقل ۳ حرف)<br>رمز عبور: حداقل ۸ کاراکتر<br>اگر ایمیل ندهید، امکان بازیابی حساب وجود ندارد.</p></div></div>
- <button class="p bigp" id="au_b"${su?'':' data-nobusy="1"'} onclick="authGo()">${su?'ساخت حساب':'ورود'}</button>
+ <button class="p bigp" id="au_b" onclick="authGo()">${su?'ساخت حساب':'ورود'}</button>
  <div class="au-or"><span>یا</span></div><button type="button" class="gbtn" onclick="googleGo()"><svg viewBox="0 0 48 48" width="20" height="20" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.5 5.4 2.6 13.2l7.9 6.1C12.4 13.6 17.7 9.5 24 9.5z"/><path fill="#4285F4" d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.7c-.6 3-2.2 5.5-4.7 7.2l7.6 5.9c4.4-4.1 6.9-10.1 6.9-17.6z"/><path fill="#FBBC05" d="M10.5 28.7c-.5-1.4-.8-3-.8-4.7s.3-3.2.8-4.7l-7.9-6.1C.9 16.4 0 20.1 0 24s.9 7.6 2.6 10.8l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.6-5.9c-2.1 1.4-4.9 2.3-8.3 2.3-6.3 0-11.6-4.1-13.5-9.8l-7.9 6.1C6.5 42.6 14.6 48 24 48z"/></svg><span>ادامه با گوگل</span></button>
- <div class="cw ${su?'':'open'}" id="au_f"><div><p style="text-align:center;margin-top:14px"><a href="#" onclick="forgot();return false">رمز را فراموش کرده‌اید؟</a></p></div></div></div>`;syncLoginButton()}
+ <div class="cw ${su?'':'open'}" id="au_f"><div><p style="text-align:center;margin-top:14px"><a href="#" onclick="forgot();return false">رمز را فراموش کرده‌اید؟</a></p></div></div></div>`}
 const authGo=()=>S.tab=='signup'?doSignup():doLogin();
 function authApply(){const su=S.tab=='signup';['au_r','au_n','au_h'].forEach(id=>{const e=$('#'+id);if(e)e.classList.toggle('open',su)});const f=$('#au_f');if(f)f.classList.toggle('open',!su);const b=$('#au_b');if(b)b.textContent=su?'ساخت حساب':'ورود';const p=$('#a_p');if(p)p.autocomplete=su?'new-password':'current-password'}
 const tp=b=>{const i=b.previousElementSibling;i.type=i.type=='password'?'text':'password'};
@@ -625,27 +625,7 @@ function recView(){$('#app').innerHTML=`<div class="ob"><div class="logo">🔑</
 async function setPw(){const v=$('#n_p').value;if(v.length<8)return msg('رمز حداقل ۸ کاراکتر باشد',1);
  const{data,error}=await sb.auth.updateUser({password:v});if(error)return fail(error);
  REC=false;history.replaceState(null,'',location.pathname);msg('رمز عوض شد');boot(data.user)}
-let loginPending=false;
-function syncLoginButton(){
- const button=$('#au_b');
- if(!button||S.tab!=='login')return;
- button.disabled=loginPending;
- button.textContent=loginPending?'در حال ورود…':'ورود';
- if(loginPending)button.setAttribute('aria-busy','true');else button.removeAttribute('aria-busy')
-}
-function finishLogin(){loginPending=false;syncLoginButton()}
-async function doLogin(){
- if(loginPending)return;
- loginPending=true;syncLoginButton();
- let signedIn=false;
- try{
-  const {data,error}=await sb.auth.signInWithPassword({email:toEmail($('#a_u').value),password:$('#a_p').value});
-  if(error){msg('ایمیل/نام کاربری یا رمز اشتباه است',1);return}
-  signedIn=!!data?.session;
-  if(!signedIn)msg('ورود کامل نشد. دوباره تلاش کنید.',1)
- }catch(_){msg('ارتباط با سرور برقرار نشد. دوباره تلاش کنید.',1)}
- finally{if(!signedIn)finishLogin()}
-}
+async function doLogin(){const{error}=await sb.auth.signInWithPassword({email:toEmail($('#a_u').value),password:$('#a_p').value});if(error)msg('ایمیل/نام کاربری یا رمز اشتباه است',1)}
 async function doSignup(){const raw=fa($('#a_u').value).trim().toLowerCase(),name=$('#a_n').value.trim(),pw=$('#a_p').value,isE=raw.includes('@');
  if(!name)return msg('نام را وارد کنید',1);if(pw.length<8)return msg('رمز حداقل ۸ کاراکتر باشد',1);
  if(!isE&&!/^[a-z0-9_]{3,30}$/.test(raw))return msg('نام کاربری معتبر نیست',1);
@@ -667,9 +647,7 @@ function suView(){const i=SU.st;let t,s,h;
  else{t='اطلاعات ورود';s='با اینها وارد برنامه می‌شوید.';h=`<div class="gc"><div class="srow"><span class="k">ایمیل یا نام کاربری</span><input id="su_u" dir="ltr" autocapitalize="none" autocomplete="username" value="${esc(SU.u)}"></div><div class="srow"><span class="k">رمز عبور</span><input id="su_p" type="password" dir="ltr" autocomplete="new-password" onkeydown="if(event.key=='Enter')suNext()"></div></div><p class="mu hint">نام کاربری: حروف کوچک انگلیسی، عدد و _ (حداقل ۳ حرف)<br>رمز عبور: حداقل ۸ کاراکتر<br>اگر ایمیل ندهید، امکان بازیابی حساب وجود ندارد.</p>`}
  $('#app').innerHTML=`<div class="ob su"><div class="su-t"><button type="button" class="su-bk" onclick="suBack()" aria-label="برگشت"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button><div class="su-bar"><b style="width:${(i+1)/SUN*100}%"></b></div><span class="su-n">${i+1}/${SUN}</span></div><h1>${t}</h1><p class="mu">${s}</p>${h}<button class="p bigp" style="margin-top:6px" onclick="suNext()">${i==SUN-1?'ساخت حساب':'ادامه'}</button></div>`}
 function suBack(){suSave();if(SU.st==0){S.wel=1;return authView()}SU.st--;suView()}
-const pfa=s=>String(s).replace(/ي/g,'ی').replace(/ك/g,'ک').replace(/\s+/g,' ').trim();
-const persianNamePart=s=>s.split(' ').every(word=>/^[\u0621-\u063A\u0641-\u064A\u067E\u0686\u0698\u06A9\u06AF\u06CC]+(?:\u200c[\u0621-\u063A\u0641-\u064A\u067E\u0686\u0698\u06A9\u06AF\u06CC]+)*$/.test(word));
-const pOk=s=>/^[\u0621-\u063A\u0641-\u064A\u067E\u0686\u0698\u06A9\u06AF\u06CC\u200c]+( [\u0621-\u063A\u0641-\u064A\u067E\u0686\u0698\u06A9\u06AF\u06CC\u200c]+)+$/.test(s),PNM='نام و نام خانوادگی را فارسی و کامل بنویسید';
+const pfa=s=>String(s).replace(/ي/g,'ی').replace(/ك/g,'ک').replace(/\s+/g,' ').trim(),pOk=s=>/^[\u0621-\u063A\u0641-\u064A\u067E\u0686\u0698\u06A9\u06AF\u06CC\u200c]+( [\u0621-\u063A\u0641-\u064A\u067E\u0686\u0698\u06A9\u06AF\u06CC\u200c]+)+$/.test(s),PNM='نام و نام خانوادگی را فارسی و کامل بنویسید';
 async function phoneOk(ph){const r=await sb.rpc('phone_free',{p_phone:ph});if(!r.error&&r.data===false){msg('این شماره قبلاً ثبت شده است',1);return false}return true}
 async function suNext(){suSave();const i=SU.st;
  if(i==1){SU.name=pfa(SU.name);if(!pOk(SU.name))return msg(PNM,1);if(!SU.prov)return msg('استان را انتخاب کنید',1);const ph=nPh(SU.phone);if(!ph)return msg('شماره همراه معتبر نیست (مثل ۰۹۱۲۳۴۵۶۷۸۹)',1);SU.phone=ph;if(!await phoneOk(ph))return}
@@ -680,25 +658,8 @@ async function suNext(){suSave();const i=SU.st;
  if(error){S.newAcc=0;finHide();return msg(/already|registered/i.test(error.message)?'این ایمیل یا نام کاربری قبلاً ثبت شده':error.message,1)}
  if(!data.session){S.newAcc=0;finHide();return msg('لینک تأیید به ایمیل شما فرستاده شد؛ بعد از تأیید وارد شوید')}
  sb.rpc('save_signup_info',{p_phone:SU.phone,p_province:SU.prov}).then(r=>{if(r.error)console.error(r.error)})}
-function finShow(){
- S.finT=Date.now();
- const previous=$('#fin');
- if(previous&&!previous.classList.contains('off'))return;
- previous?.remove();
- const panel=document.createElement('div');
- panel.id='fin';
- panel.setAttribute('role','status');
- panel.innerHTML='<div class="qr"><i></i><i></i></div><div class="bar"><b></b></div><p>در حال ساخت حساب شما…</p>';
- document.body.appendChild(panel);
- setTimeout(()=>{if(panel.isConnected&&!panel.classList.contains('off'))panel.querySelector('p').textContent='در حال آماده‌سازی برنامه…'},1300)
-}
-function finHide(){
- const panel=$('#fin');
- if(!panel||panel.classList.contains('off'))return;
- panel.classList.add('off');
- panel.style.pointerEvents='none';
- setTimeout(()=>panel.remove(),350)
-}
+function finShow(){S.finT=Date.now();if($('#fin'))return;const d=document.createElement('div');d.id='fin';d.innerHTML='<div class="qr"><i></i><i></i></div><div class="bar"><b></b></div><p id="fint">در حال ساخت حساب شما…</p>';document.body.appendChild(d);setTimeout(()=>{const p=$('#fint');if(p)p.textContent='در حال آماده‌سازی برنامه…'},1300)}
+function finHide(){const d=$('#fin');if(d){d.classList.add('off');setTimeout(()=>d.remove(),350)}}
 function confetti(){if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;const c=['var(--pr)','#6bd6c9','#f2c14e','#7aa7f2','#f08a8a'],w=document.createElement('div');w.className='cf';
  for(let i=0;i<26;i++){const s=document.createElement('i');s.style.cssText=`--x:${((Math.random()-.5)*280)|0}px;--y:${-(90+Math.random()*130)|0}px;--r:${(Math.random()*720-360)|0}deg;--d:${(1.1+Math.random()*.7).toFixed(2)}s;background:${c[i%5]};width:${(6+Math.random()*5)|0}px;height:${(9+Math.random()*6)|0}px`;w.appendChild(s)}
  document.body.appendChild(w);setTimeout(()=>w.remove(),2300)}
@@ -708,73 +669,24 @@ function bootErr(m){$('#app').innerHTML=`<div class="ob"><div class="logo">⚠�
 async function googleGo(){const r=await sb.auth.signInWithOAuth({provider:'google',options:{redirectTo:location.origin+location.pathname}});if(r.error)fail(r.error)}
 let SR='pharmacist';
 function srGo(v){SR=v;segSet($('#seg_sr'),v=='pharmacist'?0:1)}
-function setupView(user){S.setupUser=user;SR='pharmacist';SU.prov='';SU.phone='';
+function setupView(user){const um=user.user_metadata||{},nm=um.full_name||um.name||'';SR='pharmacist';SU.prov='';SU.phone='';
  $('#app').innerHTML=`<div class="ob"><div class="logo br">${LOGO}</div><h1>تکمیل حساب</h1><p class="mu">برای شروع، نقش، نام، استان و شماره همراه خود را مشخص کنید.</p>
  <div class="au-r">${segHtml('seg_sr',[['pharmacist','داروساز'],['owner','موسس']],'pharmacist','srGo')}</div>
- <div class="gc"><div class="srow"><label class="k" for="s_first">نام</label><input id="s_first" dir="rtl" autocomplete="given-name"></div><div class="srow"><label class="k" for="s_last">نام خانوادگی</label><input id="s_last" dir="rtl" autocomplete="family-name"></div>${PROVROW()}</div>
+ <div class="gc"><div class="srow"><span class="k">نام و نام خانوادگی</span><input id="s_n" value="${esc(nm)}"></div>${PROVROW()}</div>
  <button class="p bigp" onclick="setupGo()">ادامه</button><p style="text-align:center;margin-top:14px"><a href="#" onclick="logout();return false">خروج</a></p></div>`}
-async function setupGo(){
- suSave();
- const first=pfa($('#s_first').value),last=pfa($('#s_last').value);
- if(!persianNamePart(first))return msg('نام را فارسی وارد کنید',1);
- if(!persianNamePart(last))return msg('نام خانوادگی را فارسی وارد کنید',1);
- const {prov}=SU,phone=nPh(SU.phone),user=S.setupUser,role=SR;
- if(!prov)return msg('استان را انتخاب کنید',1);
- if(!phone)return msg('شماره همراه معتبر نیست (مثل ۰۹۱۲۳۴۵۶۷۸۹)',1);
- const controller=new AbortController(),signal=controller.signal;
- const timer=setTimeout(()=>controller.abort(),15000);
- async function read(request){
-  const {data,error}=await request.abortSignal(signal);
-  if(error)throw error;
-  return data
- }
- finShow();
- try{
-  const available=await read(sb.rpc('phone_free',{p_phone:phone}));
-  if(available===false){
-   const own=await read(sb.from('user_contact').select('user_id').eq('user_id',user.id).eq('phone',phone).maybeSingle());
-   if(!own)return msg('این شماره قبلاً ثبت شده است',1)
-  }
-  await read(sb.rpc('save_signup_info',{p_phone:phone,p_province:prov}));
-  await read(sb.rpc('complete_profile',{p_name:first+' '+last,p_role:role}));
-  if(user.app_metadata?.provider!=='google')S.newAcc=1;
-  await boot(user,signal)
- }catch(error){
-  console.error(error);
-  msg('تکمیل حساب انجام نشد. دوباره تلاش کنید.',1);
- }finally{
-  clearTimeout(timer);
-  finHide()
- }
-}
+async function setupGo(){suSave();const n=pfa($('#s_n').value||'');if(!pOk(n))return msg(PNM,1);if(!SU.prov)return msg('استان را انتخاب کنید',1);const ph=nPh(SU.phone);if(!ph)return msg('شماره همراه معتبر نیست (مثل ۰۹۱۲۳۴۵۶۷۸۹)',1);if(!await phoneOk(ph))return;
+ finShow();const r=await sb.rpc('complete_profile',{p_name:n,p_role:SR});if(r.error){finHide();return fail(r.error)}
+ sb.rpc('save_signup_info',{p_phone:ph,p_province:SU.prov}).then(x=>{if(x.error)console.error(x.error)});S.newAcc=1;const u=(await sb.auth.getUser()).data.user;if(u)boot(u)}
 function welcomeView(){const m=S.me,fn=(m.full_name||'').trim().split(/\s+/)[0]||'';
  const go=()=>{$('#app').innerHTML=`<div class="ob" style="text-align:center"><div class="logo br">${LOGO}</div><h1>خوش اومدی${fn?'، '+esc(fn):''}!</h1><p class="mu">حساب شما به‌عنوان ${m.role=='owner'?'موسس':'داروساز'} ساخته شد.</p><button class="p bigp" onclick="home()">شروع</button></div>`;finHide();confetti()};
  setTimeout(go,S.finT?Math.max(0,2200-(Date.now()-S.finT)):0);S.finT=0}
-function unView(){finHide();const ok=pOk(pfa(S.me.full_name||''));$('#app').innerHTML=`<div class="ob"><div class="logo br">${LOGO}</div><h1>نام کاربری بساز</h1><p class="mu">این نام به‌جای ایمیل شما نمایش داده می‌شود.</p><div class="gc">${ok?'':'<div class="srow"><span class="k">نام و نام خانوادگی (فارسی)</span><input id="un_n" value="'+esc(S.me.full_name||'')+'"></div>'}<div class="srow"><span class="k">نام کاربری</span><input id="un_u" dir="ltr" autocapitalize="none" autocomplete="off"></div></div><p class="mu hint">حروف کوچک انگلیسی، عدد و _ (حداقل ۳ حرف)</p><button class="p bigp" onclick="unGo()">ادامه</button><p style="text-align:center;margin-top:14px"><a href="#" onclick="logout();return false">خروج</a></p></div>`}
+function unView(){const ok=pOk(pfa(S.me.full_name||''));$('#app').innerHTML=`<div class="ob"><div class="logo br">${LOGO}</div><h1>نام کاربری بساز</h1><p class="mu">این نام به‌جای ایمیل شما نمایش داده می‌شود.</p><div class="gc">${ok?'':'<div class="srow"><span class="k">نام و نام خانوادگی (فارسی)</span><input id="un_n" value="'+esc(S.me.full_name||'')+'"></div>'}<div class="srow"><span class="k">نام کاربری</span><input id="un_u" dir="ltr" autocapitalize="none" autocomplete="off"></div></div><p class="mu hint">حروف کوچک انگلیسی، عدد و _ (حداقل ۳ حرف)</p><button class="p bigp" onclick="unGo()">ادامه</button><p style="text-align:center;margin-top:14px"><a href="#" onclick="logout();return false">خروج</a></p></div>`}
 async function unGo(){const u=fa($('#un_u').value).trim().toLowerCase(),e=$('#un_n'),n=e?pfa(e.value):null;if(!/^[a-z0-9_]{3,30}$/.test(u))return msg('نام کاربری معتبر نیست (حروف کوچک انگلیسی، عدد و _، حداقل ۳ حرف)',1);if(e&&!pOk(n))return msg(PNM,1);const f=await sb.rpc('username_free',{p_username:u});if(!f.error&&f.data===false)return msg('این نام کاربری قبلاً گرفته شده',1);const r=await sb.rpc('set_username',{p_username:u,p_name:n});if(r.error)return fail(r.error);const us=(await sb.auth.getUser()).data.user;if(us)boot(us)}
 const logout=async()=>{try{await pushOff()}catch(e){}return sb.auth.signOut()};
 
 // ---------- بارگذاری داده ----------
-async function boot(user,setupSignal){
- const profile=sb.from('profiles').select('*').eq('id',user.id).maybeSingle();
- const p=await (setupSignal?profile.abortSignal(setupSignal):profile);
- if(setupSignal&&(p.error||!p.data?.setup_done))throw p.error||new Error('Profile setup was not saved');
- if(p.error)return bootErr(p.error.message);
- if(!p.data)return setupView(user);
- S.me=p.data;S.email=user.email||'';S.prov=(user.app_metadata||{}).provider||'';
- if(S.me.setup_done===false)return setupView(user);
- if(S.me.username===null){
-  if(!S.email.endsWith('@'+UDOM))return unView();
-  const username=S.email.slice(0,-(UDOM.length+1));
-  const result=await sb.rpc('set_username',{p_username:username});
-  if(!result.error)S.me.username=username;
- }
- if(setupSignal)finHide();
- await Promise.all([loadDet(),loadMs(),loadSub(),loadCr()]);
- await syncSubNames();
- if(S.newAcc){S.newAcc=0;return welcomeView()}
- home()
-}
+async function boot(user){
+ const p=await sb.from('profiles').select('*').eq('id',user.id).maybeSingle();if(p.error)return bootErr(p.error.message);if(!p.data)return setupView(user);S.me=p.data;S.email=user.email||'';S.prov=(user.app_metadata||{}).provider||'';if(S.me.setup_done===false)return setupView(user);if(S.me.username===null){if(S.email.endsWith('@'+UDOM)){const l=S.email.slice(0,-(UDOM.length+1));const q=await sb.rpc('set_username',{p_username:l});if(!q.error)S.me.username=l}else return unView()}await Promise.all([loadDet(),loadMs(),loadSub(),loadCr()]);await syncSubNames();if(S.newAcc){S.newAcc=0;return welcomeView()}home()}
 async function loadMs(changesOnly=false){
  const userId=S.me.id,request=S.msRequest=(S.msRequest||0)+1;
  const mq=x=>fetchAll(()=>sb.from('memberships')
@@ -954,7 +866,7 @@ async function chPw(){const c=$('#pf_c').value,v=$('#pf_p').value,w=$('#pf_p2').
  const r=await sb.auth.updateUser({password:v});if(r.error)return fail(r.error);['pf_c','pf_p','pf_p2'].forEach(i=>$('#'+i).value='');msg('رمز عبور تغییر کرد')}
 const EYE='<button type="button" class="eye" onclick="tp(this)" aria-label="نمایش رمز"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></button>';
 const pwRow=(id,k,ac)=>`<div class="srow"><span class="k">${k}</span><input id="${id}" type="password" dir="ltr" autocomplete="${ac}">${EYE}</div>`;
-const PT={acc:'اطلاعات شخصی',bank:'اطلاعات پرداخت',ph:'داروخانه‌های من',hrs:'ساعت کارکرد',sec:'امنیت',co:'همکاری‌ها',dsp:'نمایش',upd:'به‌روزرسانی',nt:'اعلان‌ها',hlp:'راهنمای برنامه',faq:'سؤالات متداول',sup:'پشتیبانی',adm:'پنل ادمین'},APPV='نسخه ۲٫۸٫۵ — ۱۴۰۵/۰۸/۲۵';
+const PT={acc:'اطلاعات شخصی',bank:'اطلاعات پرداخت',ph:'داروخانه‌های من',hrs:'ساعت کارکرد',sec:'امنیت',co:'همکاری‌ها',dsp:'نمایش',upd:'به‌روزرسانی',nt:'اعلان‌ها',hlp:'راهنمای برنامه',faq:'سؤالات متداول',sup:'پشتیبانی',adm:'پنل ادمین'},APPV='نسخه ۲٫۸٫۳ — ۱۴۰۵/۰۸/۲۴';
 const ciOn=()=>{try{return localStorage.getItem('ci_on')=='1'}catch(e){return false}};
 function ciTog(){try{localStorage.setItem('ci_on',ciOn()?'0':'1')}catch(e){}home()}
 function pfHead(){const me=S.me,isPh=me.role=='pharmacist',em=S.email||'',un=S.me.username||(em.endsWith('@'+UDOM)?em.slice(0,-(UDOM.length+1)):em);
@@ -1140,7 +1052,7 @@ function cpCode(b,c){const t=b.textContent,ok=()=>{msg('کد دعوت کپی ش�
 // ---------- صفحهٔ اصلی + منوی پایین ----------
 const IC={user:'<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/>',home:'<path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>',check:'<circle cx="12" cy="12" r="9"/><path d="M8 12.5l3 3 5-6"/>',wallet:'<rect x="3" y="6" width="18" height="13" rx="3"/><path d="M3 10h18M16 14.5h2"/>',doc:'<path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h6"/>',users:'<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.5 3-6 6.5-6s6.5 2.5 6.5 6"/><path d="M16 5a3.5 3.5 0 0 1 0 6.5M18 14.5c2 .8 3.5 2.7 3.5 5.5"/>',clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/>',swap:'<path d="M7 4L3 8l4 4M3 8h14M17 20l4-4-4-4M21 16H7"/>'};
 Object.assign(IC,{shield:'<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/>',bank:'<path d="M3 10l9-6 9 6M5 10v8M9.5 10v8M14.5 10v8M19 10v8M3 20h18"/>',store:'<path d="M4 9l1.5-5h13L20 9v11H4z"/><path d="M4 9c0 1.7 1.3 3 3 3s3-1.3 3-3c0 1.7 1.3 3 3 3s3-1.3 3-3"/><path d="M10 20v-5h4v5"/>',sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/>',rocket:'<path d="M12 3c4 2 6 6 5 11l-5 5-5-5c-1-5 1-9 5-11z"/><circle cx="12" cy="10" r="1.6"/><path d="M9 19l-2 3M15 19l2 3"/>',logout:'<path d="M10 4H5v16h5M15 8l4 4-4 4M19 12H9"/>',bell:'<path d="M6 16V11a6 6 0 0 1 12 0v5l2 2H4z"/><path d="M10 21h4"/>'});
-function navPages(isPh){return isPh?[['home','خانه','home'],['sh','شیفت‌ها','clock'],['fin','مالی','wallet'],['rep','گزارش‌ها','doc']]
+function navPages(isPh,ph){const pf=['pf','پروفایل','user'];return isPh?[['home','خانه','home'],['sh','شیفت‌ها','clock'],['fin','مالی','wallet'],['rep','گزارش‌ها','doc']]
  :[['home','خانه','home'],['q','تأیید شیفت‌ها','check'],['pay','پرداخت‌ها','wallet'],['rep','گزارش‌ها','doc']]}
 function goPg(p,t){S.pg=p;if(p=='fin'&&!t)t='rec';if(t)S.ft=t;home();window.scrollTo(0,0);const a=$('#app');a.classList.remove('fd');void a.offsetWidth;a.classList.add('fd')}
 const tile=(l,v,sub,go,cls)=>`<div class="kp ${cls||''}" ${go?`onclick="goPg('${go.split(':')[0]}','${go.split(':')[1]||''}')"`:'style="cursor:default"'}><span>${l}</span><b>${v}</b>${sub?`<small>${sub}</small>`:''}</div>`;
@@ -1161,24 +1073,26 @@ function homePh(){const me=S.me,ph=curP(),A=S.shifts.filter(s=>s.pharmacist_id==
   incoming=worked.filter(s=>s.incoming),workedHours=worked.reduce((total,s)=>total+s.hours,0);
  return nextCard(A.concat(S.plan.filter(s=>s.pharmacist_id==S.me.id)))+`<div class="kps">${incTile()}${tile('ساعت کارکرد '+MN[tj()[1]-1],fhT(workedHours),`${pn(worked.length)} شیفت تأییدشده${incoming.length?` · ${pn(incoming.length)} جایگزینی`:''}`,'sh')}${tile('جمع ماه جاری',fmt(mt),`${RL()}${pendS?` — ${pendS} شیفت منتظر تأیید`:''}${subAmt?` — شامل ${fmt(subAmt)} برای جایگزین`:''}`,'sh')}
  ${ph.owner_id?tile('بستانکاری از موسس',fmt(claim),RL()+' — فقط تأییدشده‌ها','fin:rec')+tile('پرداخت منتظر تأیید شما',mine,wait?`${wait} ثبت‌شدهٔ شما منتظر موسس`:'','fin:rec',mine?'warn':''):''}</div><div class="cols"><div class="c1">${calCard(A.concat(S.plan.filter(s=>s.pharmacist_id==S.me.id)),1)}${curM()?.ended_at?'':planCard(true)+(ciOn()?ciCard(true):'')}</div><div class="c2">${incCard()}</div></div>`}
-const firstPharmacyCard=()=>`<section class="card" style="text-align:center">
- <h2>هنوز داروخانه‌ای نداری</h2>
- <p class="mu">اولین داروخانه‌ات رو بساز تا بتونی شیفت‌هات رو ثبت و پیگیری کنی.</p>
- <button type="button" class="p bigp" onclick="openNewPh()">ساخت داروخانه</button>
- <button type="button" class="bigp" onclick="openJoin()">پیوستن با کد دعوت</button>
- </section>`;
+const pharmCard=()=>{const ph=curP();
+ if(!ph)return `<div class="ob"><div class="logo br">${LOGO}</div><h1>خوش آمدید</h1><p class="mu">هنوز داروخانه‌ای ندارید. یکی بسازید یا با کد دعوت وصل شوید.</p>
+ <div class="gt">داروخانهٔ جدید</div><div class="gc"><div class="srow"><span class="k">نام</span><input id="np" placeholder="نام داروخانه"></div>${npx()}</div>
+ <button class="p bigp" onclick="newPh()">ساخت داروخانه</button>
+ <div class="or"><span>یا</span></div>
+ <div class="gt">پیوستن با کد دعوت</div><div class="gc"><div class="srow"><span class="k">کد</span><input id="ic" dir="ltr" placeholder="کد دعوت" autocapitalize="characters"></div></div>
+ <button class="bigp" onclick="joinPh()">پیوستن</button></div>`;
+ const live=curM()&&!curM().ended_at,row=(f,x)=>`<div class="srow tap add" onclick="${f}()"><span class="plus">+</span><b>${x}</b></div>`;
+ return `<div class="gt">داروخانه‌ها و دعوت</div><p class="mu" style="margin:-2px 6px 10px">${ph.owner_id?'این داروخانه موسس دارد؛ شیفت‌ها نیاز به تأیید دارند.':'داروخانهٔ شخصی؛ شیفت‌ها مستقیم تأییدشده ثبت می‌شوند.'}</p>
+ <div class="gc np">${row('openNewPh','ساخت داروخانهٔ جدید')}${row('openJoin','پیوستن با کد دعوت')}${live?row('openInv','ساخت کد دعوت'):''}</div>`};
 function selOpts(){return S.ms.filter(m=>!m.ended_at).map(m=>`<option value="${esc(m.pharmacy_id)}" ${m.pharmacy_id===S.cur?'selected':''}>${esc(m.pharmacies.name)}${m.pharmacies.owner_id?' (با موسس)':' (شخصی)'}</option>`).join('')}
-function home(){$('#app').classList.remove('fd');const me=S.me,m=curM(),ph=curP(),isPh=me.role=='pharmacist',live=m&&!m.ended_at,pgs=!ph&&!isPh&&me.is_admin?[]:navPages(isPh);
+function home(){$('#app').classList.remove('fd');const me=S.me,m=curM(),ph=curP(),isPh=me.role=='pharmacist',live=m&&!m.ended_at,pgs=ph?navPages(isPh,ph):isPh?[['home','خانه','home'],['sh','شیفت‌ها','clock'],['fin','مالی','wallet'],['rep','گزارش‌ها','doc']]:[];
  if(!pgs.some(p=>p[0]==S.pg)&&S.pg!='pf')S.pg='home';const pg=S.pg;let body;const PFM=pg=='pf'&&!S.pfp;
  if(pg=='pf')body=pfCard();
  else if(pg=='sh'&&!ph)body=pharmacistShiftPage(false);
  else if(!ph&&pg=='fin')body=finPage();
- else if(!ph&&pg=='rep')body=isPh?repPage():'<div class="card mu">بعد از ساخت یا پیوستن به داروخانه، گزارش‌ها اینجا در دسترس‌اند.</div>';
- else if(!ph&&pg=='q')body='<div class="card mu">پس از ثبت شیفت در داروخانه، شیفت‌های در انتظار تأیید اینجا نمایش داده می‌شوند.</div>';
- else if(!ph&&pg=='pay')body='<div class="card mu">پرداخت‌های ثبت‌شدهٔ داروخانه اینجا نمایش داده می‌شوند.</div>';
+ else if(!ph&&pg=='rep')body=repPage();
  else if(!ph&&S.ms.length)body=`<div class="card"><button type="button" class="p" onclick="S.pfp='ph';S.pg='pf';setPhTab('arch');home()">مشاهدهٔ سوابق داروخانه‌ها</button></div>`+
   (isPh?calCard([],1)+incCard():'');
- else if(!ph)body=me.is_admin?admDash():firstPharmacyCard();
+ else if(!ph)body=me.is_admin?admDash():pharmCard();
  else if(pg=='home')body=(isPh?homePh():homeOw());
  else if(pg=='q')body=(live?queue():'')+shiftList();
  else if(pg=='sh')body=isPh?pharmacistShiftPage(live):(live?addRows():'')+shiftList();
@@ -1854,7 +1768,7 @@ function sheetHTML(o){const days={},cnt={},seen={};let H=0,T=0;
   const bankValue=bankKind?fa(value).replace(/[\s-]/g,'').toUpperCase():'';
   const card=bankKind==='card'&&/^\d{16}$/.test(bankValue);
   const copyable=card||(bankKind==='iban'&&/^IR\d{24}$/.test(bankValue));
-  const display=card?bankValue.match(/\d{4}/g).join('-'):value;
+  const display=card?bankValue.match(/\d{4}/g).join(' - '):value;
   return `<div${kind==='w'?' class="w2"':''}><span>${label}</span><b${kind?' class="lt"':''}${card?' dir="ltr" data-pdf-card':''}${copyable?` data-report-bank="${bankKind}" data-report-value="${bankValue}"`:''}>${esc(display)}</b></div>`
  }).join('');
  const owner=o.meta.find(([label])=>label==='داروساز')?.[1]||'';
@@ -1917,6 +1831,8 @@ async function pdfPrep(){
    c.querySelectorAll('svg').forEach(v=>{const col=getComputedStyle(v).color;v.innerHTML=v.innerHTML.replace(/currentColor/g,col)});
    const card=c.querySelector('[data-pdf-card]');
    const cardBox=card?.getBoundingClientRect(),sheetBox=card&&c.getBoundingClientRect();
+   // Keep the card's layout in the capture. Draw its digits once as selectable PDF text.
+   if(card)card.style.visibility='hidden';
    const cv=await window.html2canvas(c,{scale:2,backgroundColor:'#ffffff',useCORS:true,logging:false,windowWidth:794});
    const hh=cv.height*W/cv.width;
    if(!first)doc.addPage();first=0;
@@ -1931,10 +1847,10 @@ async function pdfPrep(){
     doc.setPage(firstPage+pageOffset);
     doc.setFont('courier','bold');
     doc.setFontSize(parseFloat(getComputedStyle(card).fontSize)*mmPerCssPixel*72/25.4);
-    // Use the report image for visual alignment and retain the grouped card as selectable text.
+    doc.setTextColor(255);
     const cardRight=M+(cardBox.right-sheetBox.left)*mmPerCssPixel;
     doc.text(card.textContent,cardRight,
-     M+(cardMiddle-pageOffset*pagePixels)*W/cv.width,{align:'right',baseline:'middle',renderingMode:'invisible'});
+     M+(cardMiddle-pageOffset*pagePixels)*W/cv.width,{align:'right',baseline:'middle'});
     doc.setPage(doc.getNumberOfPages())
    }
   }
@@ -2463,7 +2379,7 @@ function pushCard(){const st=S.pushSt||'off';
  return `<div class="mg" style="margin-bottom:14px">${pushRow()}${pushDetailsRow()}</div>${st=='install'?`<p class="mu" style="margin:-4px 6px 14px;font-size:12.5px;line-height:1.9">در Safari دکمهٔ اشتراک‌گذاری (Share) ← «Add to Home Screen» را بزنید، بعد برنامه را از آیکون صفحهٔ اصلی باز کنید و دوباره همین‌جا اعلان را روشن کنید.</p>`:''}`}
 {const _ntCard=ntCard;ntCard=function(){return pushCard()+_ntCard()}}
 {const _openNt=openNt;openNt=function(){pushRefresh();return _openNt()}}
-{const _boot=boot;boot=async function(u,setupSignal){await _boot(u,setupSignal);pushSync();pushRefresh();if(window.__OPENNT&&S.me&&S.cur){window.__OPENNT=false;try{history.replaceState(null,'',location.pathname)}catch(e){}openNt()}}}
+{const _boot=boot;boot=async function(u){await _boot(u);pushSync();pushRefresh();if(window.__OPENNT&&S.me&&S.cur){window.__OPENNT=false;try{history.replaceState(null,'',location.pathname)}catch(e){}openNt()}}}
 pushState().then(s=>{S.pushSt=s});
 
 async function ntGo(k,ph){const own=S.me.role!='pharmacist';
@@ -2483,10 +2399,7 @@ document.addEventListener('click',e=>{const r=e.target.closest&&e.target.closest
 // ---------- شروع ----------
 sb.auth.onAuthStateChange((ev,ses)=>{
  if(ev=='PASSWORD_RECOVERY'||(REC&&ses&&ses.user)){REC=true;setTimeout(recView,0)}
- else if(ses&&ses.user){if(!S.me||S.me.id!==ses.user.id)setTimeout(()=>{
-  const pendingBoot=boot(ses.user);
-  if(loginPending)pendingBoot.catch(error=>bootErr(error?.message||'خطا در بارگذاری حساب')).finally(finishLogin)
- },0)}
+ else if(ses&&ses.user){if(!S.me||S.me.id!==ses.user.id)setTimeout(()=>boot(ses.user),0)}
  else{S={me:null,ms:[],cur:null,shifts:[],pay:[],bal:{},sub:[],ent:[],tab:'login',wel:1};if(window.__URLERR){bootErr(window.__URLERR);window.__URLERR=null}else authView()}});
 
 // ---------- بازخورد فوری برای همهٔ دکمه‌ها: «صبر کنید…» تا پایان کار ----------
