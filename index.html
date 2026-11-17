@@ -927,7 +927,7 @@ async function loadInc(){S.inc=[];S.incS=[];if(S.me.role!='pharmacist')return;
 async function refreshAll(){if(!await loadMs())return;await loadSub();await loadCr();await syncSubNames();home();if(S.me.is_admin)await admLoad();msg('اطلاعات به‌روز شد')}
 function incTile(){const t=tj(),c=mkM(t[0],t[1]),pm=t[1]==1?mkM(t[0]-1,12):mkM(t[0],t[1]-1),I=incL(),
  sum=(k,cap)=>I.filter(x=>String(x.d).startsWith(k+'/')&&(!cap||+String(x.d).split('/')[2]<=cap)).reduce((a,x)=>a+x.a,0),a=sum(c),b=sum(pm,t[2]),d=b?Math.round((a-b)/b*100):null;
- return tile('درآمد خالص این ماه',ru(a),`${RL()} — شیفت‌های خودت، تأییدشده${d==null?'':` — <span dir="ltr" style="unicode-bidi:isolate">${d>=0?'▲':'▼'} ${pn(Math.abs(d))}٪</span> نسبت به ماه قبل تا همین روز`}`)}
+ return tile('درآمد محاسبه‌شدهٔ این ماه',ru(a),`${RL()} — بر اساس ماه شیفت${d==null?'':` — <span dir="ltr" style="unicode-bidi:isolate">${d>=0?'▲':'▼'} ${pn(Math.abs(d))}٪</span> نسبت به ماه قبل تا همین روز`}`)}
 const last6=()=>{const t=tj(),ms=[];for(let i=5;i>=0;i--){let m=t[1]-i,y=t[0];while(m<1){m+=12;y--}ms.push([y,m])}return ms};
 const CHD={};
 const cpS=v=>{const u=ux(v);return u>=1e6?fdg((u/1e6).toFixed(1).replace(/\.0$/,''))+' میلیون':u>=1e3?fdg(Math.round(u/1e3))+' هزار':fdg(u)};
@@ -958,8 +958,8 @@ function icAll(k,pid){const p=k.split('/'),tm=x=>x?String(x).slice(0,5):'',L=inc
 function incCard(){const I=incL(),nm={},by={},ms=last6(),ks=new Set(ms.map(m=>mkM(m[0],m[1])));S.ms.forEach(x=>nm[String(x.pharmacy_id)]=x.pharmacies.name);nm['incoming-substitute']='شیفت‌های جایگزینی';
  I.forEach(x=>{const k=String(x.d).slice(0,7);if(!ks.has(k)||!nm[x.ph]||!(x.a>0))return;const o=by[x.ph]||(by[x.ph]={id:x.ph,n:nm[x.ph],v:{}});o.v[k]=(o.v[k]||0)+x.a});
  const ord=[...S.ms.map(m=>String(m.pharmacy_id)),'incoming-substitute'],ser=Object.values(by).sort((a,b)=>ord.indexOf(a.id)-ord.indexOf(b.id)),per=S.ms.some(m=>!m.pharmacies.owner_id);
- return `<div class="card"><h2>درآمد ماهانه <span class="mu" style="font-weight:400">(بر اساس ماه شیفت)</span></h2><div class="fb"><div class="mu">واحد ${unitSel()}</div></div>
- ${ser.length?incChart(ms,ser)+`<p class="mu" style="margin:8px 0 0;font-size:12px">فقط مبلغ پرداخت‌شده و تأییدشده (${RL()}) برای شیفت‌های هر ماه. روی هر ماه بزنید تا ریزش بیاید.${per?' در داروخانهٔ شخصی، شیفت‌های تأییدشده حساب می‌شوند.':''}</p>`:'<p class="mu">هنوز مبلغ پرداخت‌شدهٔ تأییدشده‌ای ثبت نشده است.</p>'}</div>`}
+ return `<div class="card"><h2>درآمد محاسبه‌شدهٔ ماهانه <span class="mu" style="font-weight:400">(بر اساس ماه شیفت)</span></h2><div class="fb"><div class="mu">واحد ${unitSel()}</div></div>
+ ${ser.length?incChart(ms,ser)+`<p class="mu" style="margin:8px 0 0;font-size:12px">دریافتی‌های تأییدشده برای شیفت‌های هر ماه، پس از کسر سهم جایگزین.${per?' برای داروخانهٔ شخصی، مبلغ کارکرد تأییدشده مبناست.':''} برای دیدن جزئیات، ماه را انتخاب کنید.</p>`:'<p class="mu">هنوز درآمدی برای این دوره نمایش داده نمی‌شود.</p>'}</div>`}
 function subDash(){const by={};S.sub.forEach(x=>by[x.id]={n:x.name,v:{}});let any=false;
  S.ent.filter(e=>e.kind=='owed'&&entOK(e)).forEach(e=>{const o=by[e.substitute_id];if(o){const k=String(e.entry_date).slice(0,7);o.v[k]=(o.v[k]||0)+e.amount;any=true}});
  const ms0=last6(),f0=ms0.findIndex(m=>Object.values(by).some(o=>o.v[mkM(m[0],m[1])])),ms=f0<0?ms0:ms0.slice(f0);
@@ -968,10 +968,10 @@ function subDash(){const by={};S.sub.forEach(x=>by[x.id]={n:x.name,v:{}});let an
 function recCard(){const me=S.me,live=curM()&&!curM().ended_at,conf=S.shifts.filter(s=>s.pharmacist_id==me.id&&s.status=='confirmed'),
  tot=conf.reduce((a,s)=>a+s.amount,0),got=conf.reduce((a,s)=>a+bal(s).paid_confirmed,0),
  mine=S.pay.filter(p=>p.status=='pending'&&p.created_by!=me.id),wait=S.pay.filter(p=>p.status=='pending'&&p.created_by==me.id);
- return `<div class="kps">${tile('مانده بستانکاری',fmt(tot-got),RL()+' — شیفت‌های تأییدشده منهای دریافتی‌ها')}${tile('دریافتی تأییدشده',fmt(got),RL())}${tile('منتظر تأیید شما',mine.length,wait.length?`${wait.length} ثبت‌شدهٔ شما منتظر موسس`:'',null,mine.length?'warn':'')}</div>
+ return `<div class="kps">${tile('مانده بستانکاری',fmt(tot-got),RL()+' — کارکرد تأییدشده منهای دریافتی‌های تأییدشده')}${tile('دریافتی تأییدشده',fmt(got),RL())}${tile('منتظر تأیید شما',mine.length,wait.length?`${wait.length} ثبت‌شدهٔ شما منتظر موسس`:'',null,mine.length?'warn':'')}</div>
  ${live&&mine.length?`<div class="card" style="border:2px solid var(--wa)"><h2>منتظر تأیید شما (${mine.length})</h2>${mine.map(p=>`<div class="pv fb" style="justify-content:space-between"><div><b>${fmt(p.amount)} ${RL()}</b><div class="mu">${p.paid_date} — ثبت‌شده توسط موسس</div></div><div class="fb"><button class="p" onclick="okP('${p.id}')">تأیید دریافت</button><button class="d" onclick="noP('${p.id}')">رد</button></div></div>`).join('')}</div>`:''}
  ${live?`<div class="card"><div class="dsm" role="button" onclick="this.nextElementSibling.classList.toggle('open')">＋ ثبت دریافتیِ جدید</div><div class="cw"><div>${payForm(false)}</div></div></div>`:''}
- <div class="gt">تاریخچهٔ دریافتی‌ها</div><p class="mu" style="margin:-4px 6px 10px;font-size:12px">هر دریافتی بعد از تأیید طرف مقابل از مانده بستانکاری شما کم می‌شود و در «درآمد» حساب می‌شود.</p>${payList()}`}
+ <div class="gt">تاریخچهٔ دریافتی‌ها</div><p class="mu" style="margin:-4px 6px 10px;font-size:12px">دریافتی پس از تأیید طرف مقابل از ماندهٔ طلب شما کم می‌شود.</p>${payList()}`}
 function finTabs(){const hasRec=!!curP()?.owner_id,hasCr=(S.cr||[]).length>0,T=[];
  if(hasRec)T.push(['rec',(hasCr?'از موسس':'دریافتی از موسس')+bdg(pendMe())]);
  T.push(['sub',hasCr?'جایگزین‌های من':'تسویه با جایگزین‌ها']);
@@ -1013,7 +1013,7 @@ async function chPw(){const c=$('#pf_c').value,v=$('#pf_p').value,w=$('#pf_p2').
  const r=await sb.auth.updateUser({password:v});if(r.error)return fail(r.error);['pf_c','pf_p','pf_p2'].forEach(i=>$('#'+i).value='');msg('رمز عبور تغییر کرد')}
 const EYE='<button type="button" class="eye" onclick="tp(this)" aria-label="نمایش رمز"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></button>';
 const pwRow=(id,k,ac)=>`<div class="srow"><span class="k">${k}</span><input id="${id}" type="password" dir="ltr" autocomplete="${ac}">${EYE}</div>`;
-const PT={acc:'اطلاعات شخصی',bank:'اطلاعات پرداخت',ph:'داروخانه‌های من',hrs:'ساعت کارکرد',sec:'امنیت',co:'همکاری‌ها',dsp:'نمایش',upd:'به‌روزرسانی',nt:'اعلان‌ها',hlp:'راهنمای برنامه',faq:'سؤالات متداول',sup:'پشتیبانی',adm:'پنل ادمین'},APPV='نسخه ۲٫۸٫۸ — ۱۴۰۵/۰۸/۲۵';
+const PT={acc:'اطلاعات شخصی',bank:'اطلاعات پرداخت',ph:'داروخانه‌های من',hrs:'ساعت کارکرد',sec:'امنیت',co:'همکاری‌ها',dsp:'نمایش',upd:'به‌روزرسانی',nt:'اعلان‌ها',hlp:'راهنمای برنامه',faq:'سؤالات متداول',sup:'پشتیبانی',adm:'پنل ادمین'},APPV='نسخه ۲٫۸٫۹ — ۱۴۰۵/۰۸/۲۶';
 const ciOn=()=>{try{return localStorage.getItem('ci_on')=='1'}catch(e){return false}};
 function ciTog(){try{localStorage.setItem('ci_on',ciOn()?'0':'1')}catch(e){}home()}
 function pfHead(){const me=S.me,isPh=me.role=='pharmacist',em=S.email||'',un=S.me.username||(em.endsWith('@'+UDOM)?em.slice(0,-(UDOM.length+1)):em);
@@ -1174,7 +1174,7 @@ function setPhHistoryTab(tab){
    const paid=h.balances.get(s.id)||0;
    const settled=s.status==='confirmed'&&paid>=s.amount;
    const state=settled?'s':s.status==='confirmed'?'c':s.status==='pending'?'p':'x';
-   return `<div class="sr swr"><div><b>${jd(s.shift_date)}</b><small><bdi dir="ltr">${esc(s.start_time)}–${esc(s.end_time)}</bdi> · ${fh(s.hours)}</small>${s.substitute_name?`<small>جایگزین: ${esc(s.substitute_name)}</small>`:''}${h.pharmacy.owner_id&&s.status==='confirmed'?`<small>پرداخت‌شده: ${fmt(paid)}</small>`:''}${[s.note,s.reject_reason,s.void_reason].filter(Boolean).map(n=>`<small>${esc(n)}</small>`).join('')}</div><div class="am"><b>${fmt(s.amount)}</b><span class="un">${RL()}</span><span class="st ${state}" style="display:block">${settled?'تسویه‌شده':ST[s.status]||'—'}</span></div></div>`;
+   return `<div class="sr swr"><div><b>${jd(s.shift_date)}</b><small><bdi dir="ltr">${esc(s.start_time)}–${esc(s.end_time)}</bdi> · ${fh(s.hours)}</small>${s.substitute_name?`<small>جایگزین: ${esc(s.substitute_name)}</small>`:''}${h.pharmacy.owner_id&&s.status==='confirmed'?`<small>پرداخت تأییدشده: <bdi>${fmt(paid)} ${RL()}</bdi></small>`:''}${[s.note,s.reject_reason,s.void_reason].filter(Boolean).map(n=>`<small>${esc(n)}</small>`).join('')}</div><div class="am"><b>${fmt(s.amount)}</b><span class="un">${RL()}</span><span class="st ${state}" style="display:block">${settled?'تسویه‌شده':ST[s.status]||'—'}</span></div></div>`;
   },'شیفتی برای نمایش نیست.','شیفت',s=>s.status!=='rejected'&&s.status!=='voided');
  }else{
   const label=h.pharmacy.owner_id===S.me.id?'پرداخت':'دریافتی';
@@ -1525,7 +1525,7 @@ function shRows(outgoing=false){const me=S.me.id,PO=curP()?.owner_id,cs=stOpen()
   const head=monthHeader(k,g[k].length,'شیفت',total,op,`shMo(this,'${outgoing?'out-':''}${k}')`,pending);
   const body=g[k].map(s=>{if(s.incoming)return incomingShiftCard(s);const z=stL(s),b=bal(s),vr=shiftVoidControls(s,b),bt=s.pharmacy_id!==S.cur?'':`${!curM()?.ended_at&&act(s)&&s.pharmacist_id==me&&!(b.paid_confirmed+b.paid_pending>0)&&!vr.pending?`<button class="d" onclick="voidS('${s.id}')">ابطال</button>`:''}${cs&&act(s)&&s.status=='confirmed'&&rem(s)>0?`<button class="p" onclick="settleOne('${s.id}')">تسویه شد</button>`:''}${act(s)&&s.pharmacist_id==me?`<button class="shi" aria-label="اشتراک‌گذاری" title="اشتراک‌گذاری" onclick="shareTxt('${s.pharmacy_id}','${s.id}')"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg></button>`:''}`;
   return shiftWorkCard(s,s.pharmacist_name,z,`${s.substitute_name?`<small>جایگزین: ${esc(s.substitute_name)}</small>`:''}
-  ${(personal?S.ms.find(m=>m.pharmacy_id===s.pharmacy_id)?.pharmacies.owner_id:PO)&&s.status=='confirmed'?`<small>پرداخت‌شده: ${fmt(b.paid_confirmed)}${b.paid_pending?` (+${fmt(b.paid_pending)} منتظر تأیید)`:''}</small>`:''}${s.reject_reason?`<small>${esc(s.reject_reason)}</small>`:''}${s.void_reason?`<small>${esc(s.void_reason)}</small>`:''}${vr.label}`,bt+vr.action)}).join('');
+  ${(personal?S.ms.find(m=>m.pharmacy_id===s.pharmacy_id)?.pharmacies.owner_id:PO)&&s.status=='confirmed'?`<small>پرداخت تأییدشده: <bdi>${fmt(b.paid_confirmed)} ${RL()}</bdi></small>${b.paid_pending?`<small>پرداخت در انتظار تأیید: <bdi>${fmt(b.paid_pending)} ${RL()}</bdi></small>`:''}`:''}${s.reject_reason?`<small>${esc(s.reject_reason)}</small>`:''}${s.void_reason?`<small>${esc(s.void_reason)}</small>`:''}${vr.label}`,bt+vr.action)}).join('');
   return `<div class="smo ${op?'open':''}" data-mk="${k}">${head}<div class="cw ${op?'open':''}" ${op?'':'inert'}><div class="mb">${body}</div></div></div>`}).join('');
  return `${rows||'<div class="card mu">شیفتی برای نمایش نیست.</div>'}`}
 function shMo(button,key){S.shO[key]=toggleMonth(button)}
@@ -1564,6 +1564,9 @@ function reviewShiftVoid(id){
  const amount=`<bdi>${fmt(shift.amount)} ${RL()}</bdi>`;
  const owner=MB.find(m=>m.user_id===request.requested_by)?.name;
  const payment=[balance.paid_confirmed>0?'پرداخت تأییدشده':'',balance.paid_pending>0?'پرداخت در انتظار تأیید':''].filter(Boolean).join(' و ');
+ const effect=balance.paid_confirmed>0?'برای این شیفت پرداخت تأییدشده ثبت شده است و امکان ابطال شیفت وجود ندارد.':
+  balance.paid_pending>0?'برای این شیفت پرداختی در انتظار تأیید است و فعلاً امکان ابطال شیفت وجود ندارد. وضعیت پرداخت را در بخش مالی بررسی کنید.':
+  `با تأیید شما، شیفت ابطال می‌شود و ${amount} از ماندهٔ قابل پرداخت کم می‌شود.`;
  const field=(label,value)=>`<div><dt>${label}</dt><dd>${value}</dd></div>`;
  const note=(label,value)=>`<div class="void-review-text"><span class="void-review-label">${label}</span><p>${esc(value)}</p></div>`;
  openSheet('درخواست ابطال شیفت',`<div class="card">
@@ -1579,7 +1582,7 @@ function reviewShiftVoid(id){
  </dl>
  ${note('دلیل درخواست ابطال',request.reason)}
  ${shift.note?.trim()?note('توضیحات شیفت',shift.note):''}
- <p class="mu void-review-effect">${paid?'تا وقتی پرداخت فعال است، شیفت قابل ابطال نیست.':`با تأیید شما، شیفت ابطال می‌شود و ${amount} از ماندهٔ قابل پرداخت کم می‌شود.`}</p></div>
+ <p class="mu void-review-effect">${effect}</p></div>
  <div class="void-review-actions">
  ${paid?'':`<button class="p wide" onclick="decideShiftVoid('${id}',true)">تأیید و ابطال شیفت</button>`}
  <button class="wide" onclick="decideShiftVoid('${id}',false)">رد درخواست</button></div>`);
@@ -1617,7 +1620,7 @@ function noS(id){askWhy('رد شیفت','رد',async t=>{
 // ---------- پرداخت‌ها ----------
 function payCard(){const me=S.me,own=curP().owner_id==me.id,live=curM()&&!curM().ended_at;
  return `<div class="cols eq"><div class="c1"><div class="card"><h2>پرداخت‌ها</h2>
- <p class="mu" style="margin-top:-4px">${own?'پرداخت را شما ثبت می‌کنید و داروساز باید تأیید کند.':'پرداخت دریافتی را می‌توانید ثبت کنید؛ موسس باید تأیید کند.'} فقط پس از تأیید طرف مقابل در حساب شیفت‌ها حساب می‌شود.</p>
+ <p class="mu" style="margin-top:-4px">${own?'پس از واریز، پرداخت را ثبت کنید تا داروساز دریافت آن را تأیید کند.':'دریافتی را ثبت کنید تا مؤسس پرداخت را تأیید کند.'} مبلغ پس از تأیید طرف مقابل از مانده کم می‌شود.</p>
 </div></div><div class="c2">${live?`<div class="gc np"><div class="srow tap add" onclick="openPay()"><span class="plus">+</span><b>${own?'ثبت پرداخت جدید':'ثبت دریافتی'}</b></div></div>`:''}</div></div>
  ${own?debtCard():''}${payList()}`}
 const pendMe=()=>S.pay.filter(p=>p.status=='pending'&&p.created_by!=S.me.id).length,bdg=n=>n?`<span class="bdg">${pn(n)}</span>`:'';
@@ -1642,31 +1645,36 @@ function payForm(own){
  <label>تاریخ پرداخت${dsel('p_d')}</label>
  <label>مبلغ کل (${RL()})<input id="p_t" inputmode="numeric" oninput="this.value=nm(this.value);split()"></label>
  <label>توضیحات<input id="p_n"></label></div>
- <p class="mu" style="margin:8px 0 4px">مبلغ به‌صورت خودکار از قدیمی‌ترین شیفت تأییدشده تقسیم می‌شود؛ می‌توانید هر ردیف را تغییر دهید.</p>
+ <p class="mu" style="margin:8px 0 4px">مبلغ از قدیمی‌ترین شیفت تأییدشده تقسیم می‌شود. می‌توانید مبلغ هر شیفت را تغییر دهید. پرداخت‌های تأییدشده و در انتظار تأیید از مبلغ قابل ثبت هر شیفت کم شده‌اند.</p>
  <div class="tw" id="p_rows"></div><div id="p_s" style="margin:8px 0"></div>
- <button class="p" onclick="savePay()">${own?'ثبت پرداخت و ارسال برای تأیید داروساز':'ثبت دریافتی و ارسال برای تأیید موسس'}</button></div>`}
+ <button class="p" onclick="savePay()">${own?'ثبت پرداخت و ارسال برای تأیید داروساز':'ثبت دریافتی و ارسال برای تأیید مؤسس'}</button></div>`}
 function cand(){const el=$('#p_p'),pid=el?el.value:S.me.id;
  return S.shifts.filter(s=>s.status=='confirmed'&&s.pharmacist_id==pid&&rem(s)>0)
  .sort((a,b)=>a.shift_gdate<b.shift_gdate?-1:a.shift_gdate>b.shift_gdate?1:(a.start_time<b.start_time?-1:1))}
 function split(){if(!$('#p_rows'))return;let left=num($('#p_t').value);const c=cand();
  $('#p_rows').innerHTML=c.length?`${c.map(s=>{const a=Math.min(left,dvr(rem(s)));left-=a;
- return `<div class="sr pr" style="align-items:center"><div class="pm"><b>${s.shift_date}</b><small><bdi dir="ltr">${s.start_time}–${s.end_time}</bdi> · مانده: ${fmt(rem(s))}</small></div><input class="am" style="width:120px;text-align:center" data-id="${s.id}" data-max="${rem(s)}" inputmode="numeric" value="${a?fmtN(a):''}" oninput="this.value=nm(this.value);sumP(1)"></div>`}).join('')}`
- :'<p class="mu">شیفت تأییدشدهٔ تسویه‌نشده‌ای برای این داروساز نیست.</p>';
+ return `<div class="sr pr" style="align-items:center"><div class="pm"><b>${s.shift_date}</b><small><bdi dir="ltr">${s.start_time}–${s.end_time}</bdi> · قابل ثبت: <bdi>${fmt(rem(s))} ${RL()}</bdi></small></div><input class="am" style="width:120px;text-align:center" data-id="${s.id}" data-max="${rem(s)}" inputmode="numeric" value="${a?fmtN(a):''}" oninput="this.value=nm(this.value);sumP(1)"></div>`}).join('')}`
+ :'<p class="mu">در حال حاضر هیچ شیفت تأییدشده‌ای با مبلغ قابل ثبت وجود ندارد.</p>';
  sumP()}
-function sumP(sy){const s=[...document.querySelectorAll('#p_rows .am')].reduce((a,i)=>a+num(i.value),0),t=num($('#p_t').value);
- if(sy&&$('#p_t'))$('#p_t').value=s?fmtN(s):'';
- const t2=num($('#p_t').value);
- $('#p_s').innerHTML=`جمع تخصیص‌یافته به شیفت‌ها: <b>${fmtN(s)} ${RL()}</b>${t2&&t2!=s?` — <span style="color:var(--wa)">${fmtN(t2-s)} ${RL()} از مبلغ کل به شیفتی تخصیص نیافته (بیشتر از مانده‌ها)</span>`:''}`}
+function sumP(syncTotal){
+ const assigned=[...document.querySelectorAll('#p_rows .am')].reduce((sum,input)=>sum+num(input.value),0);
+ const totalInput=$('#p_t');
+ if(syncTotal)totalInput.value=assigned?fmtN(assigned):'';
+ const unassigned=num(totalInput.value)-assigned;
+ $('#p_s').innerHTML=`جمع مبلغ برای شیفت‌ها: <bdi><b>${fmtN(assigned)} ${RL()}</b></bdi>${unassigned>0?`<div style="color:var(--wa)"><bdi>${fmtN(unassigned)} ${RL()}</bdi> به هیچ شیفتی اختصاص نیافته و ثبت نمی‌شود.</div>`:''}`;
+}
 async function savePay(){const own=curP().owner_id==S.me.id,pid=own?($('#p_p')||{}).value:S.me.id,inp=[...document.querySelectorAll('#p_rows .am')];
- if(!pid)return msg('داروساز انتخاب نشده',1);
+ if(!pid)return msg('داروساز را انتخاب کنید.',1);
+ const t=nI($('#p_t').value);
+ if(!t)return msg('مبلغ کل را وارد کنید.',1);
  const amt=i=>{const a=nI(i.value),m=+i.dataset.max;return a>m&&a-m<K()?m:a},items=inp.map(i=>({shift_id:i.dataset.id,amount:amt(i)})).filter(x=>x.amount>0);
- if(!items.length)return msg('مبلغی به شیفتی تخصیص داده نشده است',1);
- if(inp.some(i=>amt(i)>+i.dataset.max))return msg('تخصیص یک شیفت از مانده‌اش بیشتر است',1);
- const t=nI($('#p_t').value),s=items.reduce((a,x)=>a+x.amount,0);
- if(Math.abs(t-s)>=K()&&!confirm(`فقط ${fmt(s)} ${RL()} به شیفت‌ها تخصیص یافته (مبلغ کل: ${fmt(t)}). با همین مقدار ثبت شود؟`))return;
+ if(!items.length)return msg('برای ثبت، مبلغی را به دست‌کم یک شیفت اختصاص دهید.',1);
+ if(inp.some(i=>amt(i)>+i.dataset.max))return msg('مبلغ واردشده برای یکی از شیفت‌ها بیشتر از مبلغ قابل ثبت آن است. مبلغ همان ردیف را اصلاح کنید.',1);
+ const s=items.reduce((a,x)=>a+x.amount,0);
+ if(Math.abs(t-s)>=K()&&!confirm(`مبلغ واردشده ${fmt(t)} ${RL()} است. مبلغی که برای شیفت‌ها ثبت می‌شود ${fmt(s)} ${RL()} است. ثبت شود؟`))return;
  const d=rd('p_d');
  const r=await sb.rpc('create_payment',{p_pharmacy:S.cur,p_pharmacist:pid,p_date:d.j,p_gdate:d.g,p_items:items,p_note:$('#p_n').value});
- if(r.error)return fail(r.error);await loadShifts();home();msg('پرداخت ثبت شد و منتظر تأیید طرف مقابل است')}
+ if(r.error)return fail(r.error);await loadShifts();home();msg(own?'پرداخت ثبت شد و در انتظار تأیید داروساز است.':'دریافتی ثبت شد و در انتظار تأیید مؤسس است.')}
 async function okP(id){const r=await sb.rpc('confirm_payment',{p_id:id});if(r.error)return fail(r.error);quick('پرداخت تأیید شد',()=>setSt(S.pay,id,'confirmed'))}
 function noP(id){askWhy('رد پرداخت','رد',async t=>{
  const r=await sb.rpc('reject_payment',{p_id:id,p_reason:t});if(r.error)return fail(r.error);quick('پرداخت رد شد',()=>setSt(S.pay,id,'rejected','reject_reason',t))})}
@@ -1866,14 +1874,14 @@ function incomingMonth(button,key){S.incomingMonths[key]=toggleMonth(button)}
 const crPendN=()=>(S.cr||[]).reduce((a,l)=>a+(l.status=='pending'?1:0)+(l.entries||[]).filter(e=>e.status=='pending').length,0);
 const crBal=l=>(l.entries||[]).filter(e=>e.status=='confirmed').reduce((a,e)=>a+(e.kind=='owed'?e.amount:-e.amount),0);
 function crReq(l){return `<div class="card" style="border:2px solid var(--wa)"><div class="ml">درخواست اتصال</div><p style="margin:6px 0 10px;line-height:1.9"><b>${esc(l.pharmacist_name)}</b>${l.pharmacist_username?` <small class="mu" dir="ltr">@${esc(l.pharmacist_username)}</small>`:''} می‌خواهد شما را با نام «${esc(l.label)}» به حساب شیفت‌هایش وصل کند. اگر بپذیرید، بستانکاری‌ها و پرداخت‌هایی که برایتان ثبت می‌کند به شما می‌رسد تا تأیید یا رد کنید. فقط همین موارد را می‌بینید، نه بقیهٔ حساب او را.</p><div class="fb"><button class="p" onclick="crLinkResp('${l.sub_id}',true)">قبول</button><button class="d" onclick="crLinkResp('${l.sub_id}',false)">رد</button></div></div>`}
-function crCard(l){const E=l.entries||[],pend=E.filter(e=>e.status=='pending'),b=crBal(l);return `<div class="card"><b>${esc(l.pharmacist_name)}</b>${l.status==='ended'?'<div class="mu">همکاری پایان یافته · در حال تسویه</div>':''}${l.pharmacist_username?` <small class="mu" dir="ltr">@${esc(l.pharmacist_username)}</small>`:''}<div class="ml" style="margin-top:10px">${b>0?'او به شما بدهکار است':b<0?'اضافه‌پرداخت به شما':'حساب تسویه است'}</div><p style="font-size:22px;font-weight:800;margin:4px 0 6px">${fmt(Math.abs(b))} ${RL()}</p>${pend.length?`<p style="font-size:13px;margin:0 0 10px;color:var(--wa)">${pn(pend.length)} مورد منتظر تأیید شماست</p>`:''}<div class="fb"><button class="p" onclick="crOpen('${l.sub_id}')">${pend.length?'بررسی و تأیید':'مشاهده حساب'}</button></div></div>`}
+function crCard(l){const E=l.entries||[],pend=E.filter(e=>e.status=='pending'),b=crBal(l);return `<div class="card"><b>${esc(l.pharmacist_name)}</b>${l.status==='ended'?'<div class="mu">همکاری پایان یافته · در حال تسویه</div>':''}${l.pharmacist_username?` <small class="mu" dir="ltr">@${esc(l.pharmacist_username)}</small>`:''}<div class="ml" style="margin-top:10px">${b>0?'ماندهٔ طلب شما':b<0?'اضافه‌پرداخت به شما':'حساب تسویه است'}</div><p style="font-size:22px;font-weight:800;margin:4px 0 6px">${fmt(Math.abs(b))} ${RL()}</p>${pend.length?`<p style="font-size:13px;margin:0 0 10px;color:var(--wa)">${pn(pend.length)} مورد منتظر تأیید شماست</p>`:''}<div class="fb"><button class="p" onclick="crOpen('${l.sub_id}')">${pend.length?'بررسی و تأیید':'مشاهده حساب'}</button></div></div>`}
 function crView(){const L=S.cr||[];if(!L.length)return '<p class="mu" style="margin:14px 6px">هنوز داروسازی شما را به‌عنوان جایگزین وصل نکرده است.</p>';
  return `<div class="gt">طلب من از داروسازها</div><p class="mu" style="margin:-4px 6px 10px;font-size:13px;line-height:1.9">وقتی داروسازی شما را به‌عنوان جایگزین ثبت کند، بستانکاری و پرداخت‌هایش اینجا برای تأیید یا رد شما می‌آید. مانده فقط از موارد تأییدشده حساب می‌شود.</p>`+L.map(l=>l.status=='pending'?crReq(l):crCard(l)).join('')}
-function crRow(e,sid){const s=e.shift,o=e.kind=='owed';return `<div class="lr"><div class="lt"><b>${o?'شیفتی که رفته‌ام':'پرداخت دریافتی'}</b><span>${fmt(e.amount)} ${RL()}</span></div><small class="mu">${e.date}${s?` · <bdi dir="ltr">${String(s.start).slice(0,5)}–${String(s.end).slice(0,5)}</bdi>${s.hours?' · '+fh(s.hours):''}${s.pharmacy?' · '+esc(s.pharmacy):''}`:''}${e.status&&e.status!='pending'?' · '+ENT_CHIP(e):''}</small>${e.reason?`<div class="mu" style="color:var(--er)">${e.status=='voided'?'دلیل ابطال':'دلیل رد'}: ${esc(e.reason)}</div>`:''}${e.note?`<div class="mu">${esc(e.note)}</div>`:''}${e.status=='pending'?`<div class="fb"><button class="p" onclick="crOk(['${e.id}'],'${sid}')">${o?'تأیید':'دریافت شد'}</button><button class="d" onclick="crNo('${e.id}','${sid}')">${o?'رد':'نرسید'}</button></div>`:''}</div>`}
+function crRow(e,sid){const s=e.shift,o=e.kind=='owed';return `<div class="lr"><div class="lt"><b>${o?'کارکرد شیفت جایگزینی':'پرداخت دریافتی'}</b><span>${fmt(e.amount)} ${RL()}</span></div><small class="mu">${e.date}${s?` · <bdi dir="ltr">${String(s.start).slice(0,5)}–${String(s.end).slice(0,5)}</bdi>${s.hours?' · '+fh(s.hours):''}${s.pharmacy?' · '+esc(s.pharmacy):''}`:''}${e.status&&e.status!='pending'?' · '+ENT_CHIP(e):''}</small>${e.reason?`<div class="mu" style="color:var(--er)">${e.status=='voided'?'دلیل ابطال':'دلیل رد'}: ${esc(e.reason)}</div>`:''}${e.note?`<div class="mu">${esc(e.note)}</div>`:''}${e.status=='pending'?`<div class="fb"><button class="p" onclick="crOk(['${e.id}'],'${sid}')">${o?'تأیید':'دریافت شد'}</button><button class="d" onclick="crNo('${e.id}','${sid}')">${o?'رد':'نرسید'}</button></div>`:''}</div>`}
 function crOpen(sid){const l=(S.cr||[]).find(y=>String(y.sub_id)==String(sid));if(!l)return;const E=l.entries||[],pend=E.filter(e=>e.status=='pending'),rest=E.filter(e=>e.status!='pending'),b=crBal(l),g={};
  rest.forEach(e=>{const m=String(e.date).slice(0,7);(g[m]=g[m]||[]).push(e)});
  const months=Object.keys(g).sort().reverse().map(m=>{const q=m.split('/');return `<div class="mh"><span>${MN[+q[1]-1]} ${pn(q[0])}</span><span>${pn(g[m].length)} مورد</span></div><div class="gc g2" style="padding:0 16px">${g[m].map(e=>crRow(e,sid)).join('')}</div>`}).join('');
- openSheet(esc(l.pharmacist_name),`<div class="card"><div class="ml">${b>0?'او به شما بدهکار است':b<0?'اضافه‌پرداخت به شما':'حساب تسویه است'}</div><p style="font-size:22px;font-weight:800;margin:6px 0 2px">${fmt(Math.abs(b))} ${RL()}</p><p class="mu" style="margin:0;font-size:12px">فقط موارد تأییدشدهٔ شما حساب می‌شود.</p></div>${pend.length?`<div class="gt">منتظر تأیید شما (${pn(pend.length)})</div><div class="gc g2" style="padding:0 16px">${pend.map(e=>crRow(e,sid)).join('')}</div>${pend.length>1?`<button class="p wide" style="margin-top:10px" onclick="crOkAll('${sid}')">تأیید همهٔ ${pn(pend.length)} مورد</button>`:''}`:''}${months}${l.status==='active'?`<button class="d wide" style="margin-top:14px" onclick="crUnlinkAsk('${sid}')">قطع اتصال</button>`:''}`)}
+ openSheet(esc(l.pharmacist_name),`<div class="card"><div class="ml">${b>0?'ماندهٔ طلب شما':b<0?'اضافه‌پرداخت به شما':'حساب تسویه است'}</div><p style="font-size:22px;font-weight:800;margin:6px 0 2px">${fmt(Math.abs(b))} ${RL()}</p><p class="mu" style="margin:0;font-size:12px">فقط موارد تأییدشدهٔ شما حساب می‌شود.</p></div>${pend.length?`<div class="gt">منتظر تأیید شما (${pn(pend.length)})</div><div class="gc g2" style="padding:0 16px">${pend.map(e=>crRow(e,sid)).join('')}</div>${pend.length>1?`<button class="p wide" style="margin-top:10px" onclick="crOkAll('${sid}')">تأیید همهٔ ${pn(pend.length)} مورد</button>`:''}`:''}${months}${l.status==='active'?`<button class="d wide" style="margin-top:14px" onclick="crUnlinkAsk('${sid}')">قطع اتصال</button>`:''}`)}
 async function crOk(ids,sid){const r=await sb.rpc('sub_respond_entries',{p_ids:ids.map(String),p_accept:true,p_reason:null});if(r.error)return fail(r.error);await loadCr();if(!S.cr.some(l=>l.sub_id===sid))closeSheet(1);home();crOpen(sid);msg('تأیید شد')}
 function crOkAll(sid){const l=(S.cr||[]).find(y=>String(y.sub_id)==String(sid));if(!l)return;const ids=(l.entries||[]).filter(e=>e.status=='pending').map(e=>String(e.id));if(!ids.length)return;askYes('تأیید همه','همهٔ '+pn(ids.length)+' مورد منتظر تأیید را تأیید می‌کنید؟ اگر موردی درست نیست، اول همان را جدا رد کنید.','تأیید همه',()=>crOk(ids,sid))}
 function crNo(eid,sid){askWhy('رد','رد',async t=>{const r=await sb.rpc('sub_respond_entries',{p_ids:[String(eid)],p_accept:false,p_reason:t});if(r.error)return fail(r.error);await loadCr();if(!S.cr.some(l=>l.sub_id===sid))closeSheet(1);home();crOpen(sid);msg('رد شد و داروساز باخبر می‌شود')})}
@@ -2478,11 +2486,11 @@ async function swReady(){
 async function pushSave(sub){const j=sub.toJSON(),r=await withTO(sb.rpc('save_push_sub',{p_endpoint:j.endpoint,p_p256dh:j.keys.p256dh,p_auth:j.keys.auth,p_ua:navigator.userAgent.slice(0,200)}),10000,'ذخیره در سرور');if(r.error)throw new Error('ذخیره در سرور: '+(r.error.message||r.error))}
 const pushSteps={
  permission:'درخواست مجوز اعلان خطا داد',
- denied:'مجوز اعلان در این وب‌اپ رد شده است',
+ denied:'برای فعال‌کردن اعلان، مجوز را در تنظیمات گوشی یا مرورگر تغییر دهید.',
  default:'درخواست مجوز بدون تأیید پایان یافت',
- worker:'سرویس‌ورکر اعلان آماده نشد',
- subscription:'ساخت اشتراک اعلان انجام نشد',
- server:'ثبت اشتراک روی سرور انجام نشد',
+ worker:'اعلان روی این دستگاه آماده نشد. برنامه را دوباره باز کنید.',
+ subscription:'اعلان روی این دستگاه فعال نشد. دوباره تلاش کنید.',
+ server:'فعال‌سازی اعلان کامل نشد. اینترنت را بررسی کنید و دوباره تلاش کنید.',
  enabled:'اشتراک اعلان روی سرور ثبت شد'
 };
 async function pushSubscribe(onStage){
@@ -2539,11 +2547,11 @@ async function pushTog(){
 async function pushSync(){
  try{if(!S.me||!pushOk()||(isIos&&!isStandalone())||Notification.permission!='granted'||!pushFlag())return;
   await pushSave(await pushSubscribe())}catch(e){}}
-const PUSHT={on:'فعال است؛ حتی وقتی برنامه بسته است اعلان می‌رسد',off:'برای دریافت اعلان وقتی برنامه بسته است روشن کنید',denied:'مجوز اعلان در این وب‌اپ رد شده است',install:'ابتدا برنامه را به صفحهٔ اصلی گوشی اضافه کنید',unsupported:'این مرورگر از اعلان پشتیبانی نمی‌کند'};
+const PUSHT={on:'فعال است؛ حتی وقتی برنامه بسته است اعلان می‌رسد',off:'برای دریافت اعلان وقتی برنامه بسته است روشن کنید',denied:'برای فعال‌کردن اعلان، مجوز را در تنظیمات گوشی یا مرورگر تغییر دهید.',install:'ابتدا برنامه را به صفحهٔ اصلی گوشی اضافه کنید',unsupported:'این مرورگر از اعلان پشتیبانی نمی‌کند'};
 function pushRow(){const st=S.pushSt||'off';
  return `<div class="mr" onclick="pushTog()"><div class="ic"><svg viewBox="0 0 24 24">${IC.bell}</svg></div><div class="tx"><b>اعلان روی گوشی</b><small>${PUSHT[st]}</small></div><span class="tg ${st=='on'?'on':''}"><i></i></span></div>`}
 function pushDetailsRow(){
- return mrow('bell','جزئیات اعلان','مجوز، سرویس‌ورکر و اشتراک',"openPushDetails()");
+ return mrow('bell','جزئیات اعلان','بررسی مجوز و وضعیت دریافت اعلان',"openPushDetails()");
 }
 async function readPushDetails(){
  const permission=window.Notification?.permission;
@@ -2600,7 +2608,7 @@ async function ntGo(k,ph,ref){const own=S.me.role!='pharmacist';
  if(k.startsWith('shift'))goPg(own?'q':'sh');else goPg(own?'pay':'fin','rec')}
 const NK={co_ended:['users','wn'],shift_new:['clock','wn'],shift_ok:['check',''],shift_rej:['bell','x'],shift_void:['bell','x'],shift_void_request:['bell','wn'],shift_void_rejected:['bell','x'],pay_new:['wallet','wn'],pay_ok:['check',''],pay_rej:['bell','x'],pay_void:['bell','x'],cr_link:['users','wn'],cr_new:['wallet','wn'],cr_void:['bell','x'],sb_link:['users',''],sb_ok:['check',''],sb_rej:['bell','x']};
 function ntCard(){const L=S.nt||[],nw=S.ntNew||new Set();
- return L.length?`<div class="gc" style="padding:0 16px">${L.map(n=>{const k=NK[n.kind]||['bell',''];return `<div class="nr" onclick="ntGo('${esc(n.kind)}','${esc(n.pharmacy_id||'')}','${esc(n.ref_id||'')}')"><div class="ic ${k[1]}"><svg viewBox="0 0 24 24">${IC[k[0]]}</svg></div><div class="tx"><b>${esc(n.title)}</b><small>${esc(n.body||'')}${n.amt!=null?` · ${fmt(n.amt)} ${RL()}`:''}</small></div><span class="tm">${nw.has(n.id)?'<span class="dot"></span>':''}${dyT(n.created_at)} ${hmT(n.created_at)}</span></div>`}).join('')}</div>`:'<div class="card mu">اعلانی ندارید. وقتی شیفت یا پرداختی تأیید، رد یا ابطال شود، اینجا می‌آید.</div>'}
+ return L.length?`<div class="gc" style="padding:0 16px">${L.map(n=>{const k=NK[n.kind]||['bell',''];return `<div class="nr" onclick="ntGo('${esc(n.kind)}','${esc(n.pharmacy_id||'')}','${esc(n.ref_id||'')}')"><div class="ic ${k[1]}"><svg viewBox="0 0 24 24">${IC[k[0]]}</svg></div><div class="tx"><b>${esc(n.title)}</b><small>${esc(n.body||'')}${n.amt!=null?` · ${fmt(n.amt)} ${RL()}`:''}</small></div><span class="tm">${nw.has(n.id)?'<span class="dot"></span>':''}${dyT(n.created_at)} ${hmT(n.created_at)}</span></div>`}).join('')}</div>`:'<div class="card mu">هنوز اعلانی ندارید. درخواست‌ها و نتیجهٔ بررسی شیفت‌ها و پرداخت‌ها اینجا نمایش داده می‌شوند.</div>'}
 document.addEventListener('click',e=>{const r=e.target.closest&&e.target.closest('.srow');if(!r||e.target.closest('input,textarea,select,button,a,.dbtn'))return;const i=r.querySelector('input:not([type=hidden]):not([type=checkbox]):not([disabled]),textarea');if(i)i.focus()});
 // ---------- شروع ----------
 sb.auth.onAuthStateChange((ev,ses)=>{
@@ -2915,10 +2923,10 @@ async function stRun(items,d,note){
  if(p&&p.status=='pending'){
   const c=await sb.rpc('confirm_payment',{p_id:p.id});
   if(c.error){await sb.rpc('void_payment',{p_id:p.id,p_reason:'تأیید خودکار انجام نشد'});await loadShifts();home();
-   msg('تسویه انجام نشد: سرور اجازهٔ تأیید پرداخت در داروخانهٔ شخصی را نمی‌دهد (تابع confirm_payment در Supabase باید اصلاح شود).',1);return false}}
+   msg('تأیید خودکار پرداخت انجام نشد. وضعیت پرداخت را در برنامه بررسی کنید. اگر مشکل ادامه داشت با پشتیبانی تماس بگیرید.',1);return false}}
  await loadShifts();
  const bad=items.filter(x=>{const s=S.shifts.find(y=>y.id==x.shift_id);return !s||bal(s).paid_confirmed<s.amount});
- if(bad.length){home();msg('پرداخت ثبت شد ولی تسویهٔ کامل نشد؛ دوباره صفحه را تازه کن و وضعیت شیفت‌ها را ببین.',1);return false}
+ if(bad.length){home();msg('پرداخت ثبت شد، اما همهٔ شیفت‌ها تسویه نشدند. صفحه را به‌روز کنید و وضعیت شیفت‌ها را بررسی کنید.',1);return false}
  return true}
 function settleOne(id){const s=S.shifts.find(x=>x.id==id);if(!s)return;
  askYes('تسویهٔ شیفت',`شیفت ${jd(s.shift_date)} به مبلغ <b>${fmt(rem(s))} ${RL()}</b> با تاریخ واریز امروز تسویه شود؟`,'تسویه شد',async()=>{
