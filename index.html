@@ -826,6 +826,7 @@ async function boot(user,setupSignal){
  if(setupSignal)finHide();
  await Promise.all([loadDet(),loadMs(),loadSub(),loadCr()]);
  await syncSubNames();
+ S.notificationReady=user.id;
  if(S.newAcc){S.newAcc=0;return welcomeView()}
  home()
 }
@@ -1013,7 +1014,7 @@ async function chPw(){const c=$('#pf_c').value,v=$('#pf_p').value,w=$('#pf_p2').
  const r=await sb.auth.updateUser({password:v});if(r.error)return fail(r.error);['pf_c','pf_p','pf_p2'].forEach(i=>$('#'+i).value='');msg('رمز عبور تغییر کرد')}
 const EYE='<button type="button" class="eye" onclick="tp(this)" aria-label="نمایش رمز"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></button>';
 const pwRow=(id,k,ac)=>`<div class="srow"><span class="k">${k}</span><input id="${id}" type="password" dir="ltr" autocomplete="${ac}">${EYE}</div>`;
-const PT={acc:'اطلاعات شخصی',bank:'اطلاعات پرداخت',ph:'داروخانه‌های من',hrs:'ساعت کارکرد',sec:'امنیت',co:'همکاری‌ها',dsp:'نمایش',upd:'به‌روزرسانی',nt:'اعلان‌ها',hlp:'راهنمای برنامه',faq:'سؤالات متداول',sup:'پشتیبانی',adm:'پنل ادمین'},APPV='نسخه ۲٫۸٫۹ — ۱۴۰۵/۰۸/۲۶';
+const PT={acc:'اطلاعات شخصی',bank:'اطلاعات پرداخت',ph:'داروخانه‌های من',hrs:'ساعت کارکرد',sec:'امنیت',co:'همکاری‌ها',dsp:'نمایش',upd:'به‌روزرسانی',nt:'اعلان‌ها',hlp:'راهنمای برنامه',faq:'سؤالات متداول',sup:'پشتیبانی',adm:'پنل ادمین'},APPV='نسخه ۲٫۸٫۱۰ — ۱۴۰۵/۰۸/۲۶';
 const ciOn=()=>{try{return localStorage.getItem('ci_on')=='1'}catch(e){return false}};
 function ciTog(){try{localStorage.setItem('ci_on',ciOn()?'0':'1')}catch(e){}home()}
 function pfHead(){const me=S.me,isPh=me.role=='pharmacist',em=S.email||'',un=S.me.username||(em.endsWith('@'+UDOM)?em.slice(0,-(UDOM.length+1)):em);
@@ -1609,7 +1610,7 @@ const nm=v=>v?fmtN(num(v)):'';
 // ---------- صف تأیید شیفت (موسس) ----------
 function queue(){const q=S.shifts.filter(s=>s.status=='pending');
  return `<div class="gt">صف تأیید شیفت‌ها <span class="mu" style="font-weight:400">(${q.length} مورد)</span></div>
- ${q.length?`<div class="gc g2" style="padding:0 16px">${q.map(s=>`<div class="lr"><div class="lt"><b>${esc(s.pharmacist_name)}</b><span>${fmt(s.amount)} ${RL()}</span></div>
+ ${q.length?`<div class="gc g2" style="padding:0 16px">${q.map(s=>`<div class="lr" data-notification-shift="${esc(s.id)}" tabindex="-1"><div class="lt"><b>${esc(s.pharmacist_name)}</b><span>${fmt(s.amount)} ${RL()}</span></div>
  <small class="mu">${s.shift_date} · <bdi dir="ltr">${s.start_time}–${s.end_time}</bdi> · ${fh(s.hours)}${s.substitute_name?' · جایگزین: '+esc(s.substitute_name):''}</small>${s.note?`<div class="mu">${esc(s.note)}</div>`:''}
  <div class="fb"><button class="p" onclick="okS('${s.id}')">تأیید</button><button class="d" onclick="noS('${s.id}')">رد</button></div></div>`).join('')}</div>`
  :'<div class="gc"><p class="mu" style="padding:14px 0;margin:0">شیفتی منتظر تأیید نیست.</p></div>'}`}
@@ -1832,7 +1833,7 @@ function workedShiftRows(){
  return rows.concat(incomingShiftRows().filter(s=>!ids.has(s.id)));
 }
 function shiftWorkCard(s,title,state,extra='',actions=''){
- return `<div class="sr swr shift-work"><div><b>${esc(title)}</b><small>${esc(jd(s.shift_date))} · <bdi dir="ltr">${esc(s.start_time)}–${esc(s.end_time)}</bdi> · ${fh(s.hours)}</small>${extra}</div>
+ return `<div class="sr swr shift-work" data-notification-shift="${esc(s.id)}" tabindex="-1"><div><b>${esc(title)}</b><small>${esc(jd(s.shift_date))} · <bdi dir="ltr">${esc(s.start_time)}–${esc(s.end_time)}</bdi> · ${fh(s.hours)}</small>${extra}</div>
  <div class="am">${s.amount==null?'':`<b>${fmt(s.amount)}</b><span class="un">${RL()}</span>`}${state?`<span class="st ${state[0]}" style="display:block">${state[1]}</span>`:''}</div>${actions?`<div class="sba">${actions}</div>`:''}</div>`;
 }
 function incomingShiftState(s){
@@ -2465,10 +2466,14 @@ const pushOk=()=>('serviceWorker' in navigator)&&('PushManager' in window)&&('No
 const pushFlag=()=>{try{return localStorage.getItem('push_on')=='1'}catch(e){return false}};
 const pushSet=v=>{try{localStorage.setItem('push_on',v?'1':'0')}catch(e){}};
 const u8=b=>{const s=(b+'='.repeat((4-b.length%4)%4)).replace(/-/g,'+').replace(/_/g,'/'),r=atob(s);return Uint8Array.from(r,c=>c.charCodeAt(0))};
-window.__OPENNT=/[?&]nt=1/.test(location.search);
+let pendingNotification=new URLSearchParams(location.search).get('nt');
 if('serviceWorker' in navigator){
  window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(e=>console.warn('sw',e)));
- navigator.serviceWorker.addEventListener('message',e=>{if(e.data&&e.data.type=='nt'&&S.me)openNt()});
+ navigator.serviceWorker.addEventListener('message',e=>{
+  if(e.data?.type!=='nt')return;
+  pendingNotification=e.data.id||'1';
+  void openPendingNotification();
+ });
 }
 async function pushState(){
  if(isIos&&!isStandalone())return 'install';
@@ -2591,7 +2596,27 @@ function pushCard(){const st=S.pushSt||'off';
  return `<div class="mg" style="margin-bottom:14px">${pushRow()}${pushDetailsRow()}</div>${st=='install'?`<p class="mu" style="margin:-4px 6px 14px;font-size:12.5px;line-height:1.9">در Safari دکمهٔ اشتراک‌گذاری (Share) ← «Add to Home Screen» را بزنید، بعد برنامه را از آیکون صفحهٔ اصلی باز کنید و دوباره همین‌جا اعلان را روشن کنید.</p>`:''}`}
 {const _ntCard=ntCard;ntCard=function(){return pushCard()+_ntCard()}}
 {const _openNt=openNt;openNt=function(){pushRefresh();return _openNt()}}
-{const _boot=boot;boot=async function(u,setupSignal){await _boot(u,setupSignal);pushSync();pushRefresh();if(window.__OPENNT&&S.me&&S.cur){window.__OPENNT=false;try{history.replaceState(null,'',location.pathname)}catch(e){}openNt()}}}
+{const _boot=boot;boot=async function(u,setupSignal){await _boot(u,setupSignal);pushSync();pushRefresh();await openPendingNotification()}}
+async function openPendingNotification(){
+ if(!S.me||!pendingNotification||S.notificationReady!==S.me.id)return;
+ const id=pendingNotification,userId=S.me.id;
+ pendingNotification=null;
+ const url=new URL(location.href);
+ if(url.searchParams.has('nt')){
+  url.searchParams.delete('nt');
+  history.replaceState(history.state,'',url.href);
+ }
+ if(!/^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i.test(id))return openNt();
+ const {data:n,error}=await sb.from('notifications').select('id,kind,pharmacy_id,ref_id')
+  .eq('user_id',userId).eq('id',id).maybeSingle();
+ if(S.me?.id!==userId)return;
+ if(error||!n)return openNt();
+ const cached=(S.nt||[]).find(item=>item.id===id);
+ const readAt=new Date().toISOString();
+ if(cached&&!cached.read_at)cached.read_at=readAt;
+ await sb.from('notifications').update({read_at:readAt}).eq('user_id',userId).eq('id',id).is('read_at',null);
+ if(S.me?.id===userId)await ntGo(n.kind,n.pharmacy_id,n.ref_id);
+}
 pushState().then(s=>{S.pushSt=s});
 
 async function ntGo(k,ph,ref){const own=S.me.role!='pharmacist';
@@ -2602,10 +2627,28 @@ async function ntGo(k,ph,ref){const own=S.me.role!='pharmacist';
   S.pg='pf';S.pfp='ph';setPhTab('arch');home();
   return openPhHistory(ph);
  }
- if(ph&&ph!=S.cur&&S.ms.some(m=>m.pharmacy_id===ph&&!m.ended_at)){S.cur=ph;try{await loadShifts()}catch(e){}}
+ const isShift=k.startsWith('shift');
+ if(ph&&S.ms.some(m=>m.pharmacy_id===ph&&!m.ended_at)&&(ph!==S.cur||(isShift&&ref))){
+  S.cur=ph;
+  if(isShift)await loadShifts0();else await loadShifts();
+ }
  S.pfp=null;
- if(k==='shift_void_request'&&!own&&ph===S.cur){S.sf='all';goPg('sh');return reviewShiftVoid(ref)}
- if(k.startsWith('shift'))goPg(own?'q':'sh');else goPg(own?'pay':'fin','rec')}
+ if(isShift){
+  const shift=ph===S.cur&&ref?S.shifts.find(s=>s.id===ref):null;
+  S.sf='all';
+  if(shift)(S.shO||={})[(isSubSh(shift)&&!own?'out-':'')+shift.shift_date.slice(0,7)]=true;
+  goPg(own?'q':'sh');
+  if(shift&&k==='shift_void_request'&&!own&&S.voidRequests?.get(ref)?.status==='pending')return reviewShiftVoid(ref);
+  if(!shift)return;
+  const card=document.querySelector(`[data-notification-shift="${CSS.escape(ref)}"]`);
+  if(card){
+   card.focus({preventScroll:true});
+   card.scrollIntoView({block:'center'});
+  }else{
+   const notes=[shift.note,shift.reject_reason,shift.void_reason].filter(Boolean).map(note=>`<small>${esc(note)}</small>`).join('');
+   openSheet('جزئیات شیفت',shiftWorkCard(shift,shift.pharmacist_name,stL(shift),notes));
+  }
+ }else goPg(own?'pay':'fin','rec')}
 const NK={co_ended:['users','wn'],shift_new:['clock','wn'],shift_ok:['check',''],shift_rej:['bell','x'],shift_void:['bell','x'],shift_void_request:['bell','wn'],shift_void_rejected:['bell','x'],pay_new:['wallet','wn'],pay_ok:['check',''],pay_rej:['bell','x'],pay_void:['bell','x'],cr_link:['users','wn'],cr_new:['wallet','wn'],cr_void:['bell','x'],sb_link:['users',''],sb_ok:['check',''],sb_rej:['bell','x']};
 function ntCard(){const L=S.nt||[],nw=S.ntNew||new Set();
  return L.length?`<div class="gc" style="padding:0 16px">${L.map(n=>{const k=NK[n.kind]||['bell',''];return `<div class="nr" onclick="ntGo('${esc(n.kind)}','${esc(n.pharmacy_id||'')}','${esc(n.ref_id||'')}')"><div class="ic ${k[1]}"><svg viewBox="0 0 24 24">${IC[k[0]]}</svg></div><div class="tx"><b>${esc(n.title)}</b><small>${esc(n.body||'')}${n.amt!=null?` · ${fmt(n.amt)} ${RL()}`:''}</small></div><span class="tm">${nw.has(n.id)?'<span class="dot"></span>':''}${dyT(n.created_at)} ${hmT(n.created_at)}</span></div>`}).join('')}</div>`:'<div class="card mu">هنوز اعلانی ندارید. درخواست‌ها و نتیجهٔ بررسی شیفت‌ها و پرداخت‌ها اینجا نمایش داده می‌شوند.</div>'}
