@@ -1014,7 +1014,7 @@ async function chPw(){const c=$('#pf_c').value,v=$('#pf_p').value,w=$('#pf_p2').
  const r=await sb.auth.updateUser({password:v});if(r.error)return fail(r.error);['pf_c','pf_p','pf_p2'].forEach(i=>$('#'+i).value='');msg('رمز عبور تغییر کرد')}
 const EYE='<button type="button" class="eye" onclick="tp(this)" aria-label="نمایش رمز"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></button>';
 const pwRow=(id,k,ac)=>`<div class="srow"><span class="k">${k}</span><input id="${id}" type="password" dir="ltr" autocomplete="${ac}">${EYE}</div>`;
-const PT={acc:'اطلاعات شخصی',bank:'اطلاعات پرداخت',ph:'داروخانه‌های من',hrs:'ساعت کارکرد',sec:'امنیت',co:'همکاری‌ها',dsp:'نمایش',upd:'به‌روزرسانی',nt:'اعلان‌ها',hlp:'راهنمای برنامه',faq:'سؤالات متداول',sup:'پشتیبانی',adm:'پنل ادمین'},APPV='نسخه ۲٫۸٫۱۰ — ۱۴۰۵/۰۸/۲۷';
+const PT={acc:'اطلاعات شخصی',bank:'اطلاعات پرداخت',ph:'داروخانه‌های من',hrs:'ساعت کارکرد',sec:'امنیت',co:'همکاری‌ها',dsp:'نمایش',upd:'به‌روزرسانی',nt:'اعلان‌ها',hlp:'راهنمای برنامه',faq:'سؤالات متداول',sup:'پشتیبانی',adm:'پنل ادمین'},APPV='نسخه ۲٫۸٫۱۱ — ۱۴۰۵/۰۸/۲۷';
 const ciOn=()=>{try{return localStorage.getItem('ci_on')=='1'}catch(e){return false}};
 function ciTog(){try{localStorage.setItem('ci_on',ciOn()?'0':'1')}catch(e){}home()}
 function pfHead(){const me=S.me,isPh=me.role=='pharmacist',em=S.email||'',un=S.me.username||(em.endsWith('@'+UDOM)?em.slice(0,-(UDOM.length+1)):em);
@@ -2482,12 +2482,37 @@ async function pushState(){
  if(Notification.permission!='granted'||!pushFlag())return 'off';
  try{const r=await navigator.serviceWorker.getRegistration();const s=r&&await r.pushManager.getSubscription();return s?'on':'off'}catch(e){return 'off'}}
 async function pushRefresh(){const o=S.pushSt;S.pushSt=await pushState();if(o!==S.pushSt&&S.me&&!uiBusy()&&((S.pg=='pf'&&(!S.pfp||S.pfp=='nt'))))home()}
-const withTO=(p,ms,tag)=>Promise.race([p,new Promise((_,rj)=>setTimeout(()=>rj(new Error('زمان‌بر شد ('+tag+')')),ms))]);
-async function swReady(){
- let reg=await navigator.serviceWorker.getRegistration();
- if(!reg)reg=await withTO(navigator.serviceWorker.register('sw.js'),8000,'ثبت سرویس‌ورکر');
- if(!reg.active)reg=await withTO(navigator.serviceWorker.ready,10000,'آماده‌شدن سرویس‌ورکر');
- return reg}
+// Diagnostics stay in this signed-in session; never include subscription keys or endpoints.
+const pushStageNames={permission:'مجوز اعلان',worker:'آماده‌سازی سرویس‌ورکر',registration:'خواندن ثبت سرویس‌ورکر',register:'ثبت سرویس‌ورکر',ready:'انتظار فعال‌شدن سرویس‌ورکر',subscription:'اشتراک اعلان',lookup:'خواندن اشتراک موجود',subscribe:'ساخت اشتراک جدید',server:'ذخیره اشتراک در سرور',denied:'مجوز رد شد',default:'مجوز تأیید نشد',enabled:'فعال‌سازی کامل شد'};
+const pushSafeText=value=>String(value||'').replace(/https?:\/\/[^\s<>"']+/gi,'[نشانی حذف شد]').replace(/(bearer\s+)[^\s]+/gi,'$1[حذف شد]').replace(/((?:endpoint|p256dh|auth|token|applicationServerKey)\s*[=:]\s*)[^\s,;]+/gi,'$1[حذف شد]').slice(0,500);
+const withTO=(p,ms,tag)=>new Promise((resolve,reject)=>{
+ const timer=setTimeout(()=>{const error=new Error('زمان‌بر شد ('+tag+')');error.name='TimeoutError';reject(error)},ms);
+ Promise.resolve(p).then(value=>{clearTimeout(timer);resolve(value)},error=>{clearTimeout(timer);reject(error)});
+});
+function newPushAttempt(){
+ const os=navigator.userAgent.match(/(?:CPU(?: iPhone)? OS|iPhone OS) ([\d_]+)/i);
+ return {stage:'permission',at:new Date().toISOString(),version:APPV,os:isIos?'iOS '+(os?os[1].replace(/_/g,'.'):'نامشخص'):'غیر iOS',online:navigator.onLine,started:performance.now(),steps:[]};
+}
+function pushStage(attempt,stage){
+ const now=performance.now(),previous=attempt.steps[attempt.steps.length-1];
+ if(previous)previous.ms=Math.round(now-previous.started);
+ attempt.stage=stage;attempt.steps.push({stage,started:now});
+}
+function finishPushAttempt(attempt,error){
+ const now=performance.now(),last=attempt.steps[attempt.steps.length-1];
+ if(last)last.ms=Math.round(now-last.started);
+ attempt.ms=Math.round(now-attempt.started);
+ if(error){attempt.name=pushSafeText(error.name||'Error');attempt.message=pushSafeText(error.message||error)}
+ delete attempt.started;attempt.steps.forEach(step=>delete step.started);
+ S.pushAttempt=attempt;S.pushAttempts=[attempt,...(S.pushAttempts||[])].slice(0,3);
+}
+async function swReady(onStage){
+ onStage?.('registration');
+ let reg=await withTO(navigator.serviceWorker.getRegistration(),8000,'خواندن ثبت سرویس‌ورکر');
+ if(!reg){onStage?.('register');reg=await withTO(navigator.serviceWorker.register('sw.js'),8000,'ثبت سرویس‌ورکر')}
+ if(!reg.active){onStage?.('ready');reg=await withTO(navigator.serviceWorker.ready,10000,'آماده‌شدن سرویس‌ورکر')}
+ return reg;
+}
 async function pushSave(sub){const j=sub.toJSON(),r=await withTO(sb.rpc('save_push_sub',{p_endpoint:j.endpoint,p_p256dh:j.keys.p256dh,p_auth:j.keys.auth,p_ua:navigator.userAgent.slice(0,200)}),10000,'ذخیره در سرور');if(r.error)throw new Error('ذخیره در سرور: '+(r.error.message||r.error))}
 const pushSteps={
  permission:'درخواست مجوز اعلان خطا داد',
@@ -2498,37 +2523,32 @@ const pushSteps={
  server:'فعال‌سازی اعلان کامل نشد. اینترنت را بررسی کنید و دوباره تلاش کنید.',
  enabled:'اشتراک اعلان روی سرور ثبت شد'
 };
+const pushStepMessage=stage=>pushSteps[stage]||(['registration','register','ready'].includes(stage)?pushSteps.worker:pushSteps.subscription);
 async function pushSubscribe(onStage){
- const reg=await swReady();
- onStage?.('subscription');
+ const reg=await swReady(onStage);
+ onStage?.('lookup');
  let sub=await withTO(reg.pushManager.getSubscription(),8000,'خواندن اشتراک');
- if(!sub)sub=await withTO(reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:u8(VAPID_PUB)}),15000,'اشتراک اعلان');
+ if(!sub){onStage?.('subscribe');sub=await withTO(reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:u8(VAPID_PUB)}),15000,'اشتراک اعلان')}
  return sub;
 }
 async function pushOn(){
- let stage='permission';
- S.pushAttempt=null;
+ const attempt=newPushAttempt();
+ S.pushAttempt=attempt;pushStage(attempt,'permission');
  try{
   // On iOS the permission request must start from the user's tap.
   const perm=Notification.permission==='granted'?'granted':await Notification.requestPermission();
   if(perm!=='granted'){
-   stage=perm==='denied'?'denied':'default';
-   S.pushAttempt={stage};
-   msg(pushSteps[stage]+'؛ جزئیات اعلان را ببینید',1);
-   return;
+   pushStage(attempt,perm==='denied'?'denied':'default');finishPushAttempt(attempt);
+   msg(pushStepMessage(attempt.stage)+'؛ جزئیات اعلان را ببینید',1);return;
   }
-  stage='worker';
   msg('در حال فعال‌سازی…');
-  const sub=await pushSubscribe(step=>{stage=step});
-  stage='server';
-  await pushSave(sub);
-  pushSet(1);
-  S.pushAttempt={stage:'enabled'};
+  const sub=await pushSubscribe(step=>pushStage(attempt,step));
+  pushStage(attempt,'server');await pushSave(sub);
+  pushSet(1);pushStage(attempt,'enabled');finishPushAttempt(attempt);
   msg('اعلان روی گوشی فعال شد ✓');
  }catch(e){
-  const name=typeof e?.name==='string'&&/^[A-Za-z]{1,40}$/.test(e.name)?e.name:'';
-  S.pushAttempt={stage,name};
-  msg(pushSteps[stage]+'؛ جزئیات اعلان را ببینید',1);
+  finishPushAttempt(attempt,e);
+  msg(pushStepMessage(attempt.stage)+'؛ جزئیات اعلان را ببینید',1);
  }
 }
 async function pushOff(){
@@ -2580,17 +2600,26 @@ async function readPushDetails(){
  }catch(e){details.subscription='وضعیت خوانده نشد'}
  return details;
 }
+function pushAttemptReport(attempt){
+ return [attempt.version,'زمان: '+attempt.at,'دستگاه: '+attempt.os,'اتصال هنگام شروع: '+(attempt.online?'آنلاین':'آفلاین'),'مرحله: '+(pushStageNames[attempt.stage]||attempt.stage),'مدت کل: '+attempt.ms+' ms',attempt.name?'خطا: '+attempt.name+' — '+attempt.message:'',...attempt.steps.map(step=>(pushStageNames[step.stage]||step.stage)+': '+step.ms+' ms')].filter(Boolean).join('\n');
+}
+function copyPushDiagnostics(){cpv(null,(S.pushAttempts||[]).map(pushAttemptReport).join('\n\n-----\n\n'))}
 async function openPushDetails(){
  const sheet=openSheet('جزئیات اعلان','<div class="card mu" role="status">در حال بررسی وضعیت اعلان…</div>');
  const details=await readPushDetails();
  if(!sheet.isConnected||sheet!==$('#sh1'))return;
- const row=(label,value)=>`<div class="srow"><span class="k">${label}</span><b class="v">${esc(value)}</b></div>`;
+ const row=(label,value)=>`<div class="srow"><span class="k">${label}</span><b class="v" style="overflow-wrap:anywhere">${esc(value)}</b></div>`;
  const attempt=S.pushAttempt;
+ const report=attempt&&attempt.ms!=null?row('مرحلهٔ آخر',pushStageNames[attempt.stage]||attempt.stage)+
+  row('زمان تلاش',new Date(attempt.at).toLocaleString('fa-IR'))+row('نسخهٔ برنامه',attempt.version)+row('سیستم‌عامل',attempt.os)+
+  row('اتصال هنگام شروع',attempt.online?'آنلاین؛ نوع شبکه مشخص نیست':'آفلاین')+row('مدت کل',attempt.ms+' ms')+
+  (attempt.name?row('نام خطا',attempt.name)+row('متن خطا',attempt.message):'')+
+  attempt.steps.map(step=>row(pushStageNames[step.stage]||step.stage,step.ms+' ms')).join(''):'';
  sheet.querySelector('.shc').innerHTML='<div class="gc">'+
   row('حالت اجرا',details.mode)+row('مجوز اعلان',details.permission)+
   row('سرویس‌ورکر',details.worker)+row('اشتراک روی دستگاه',details.subscription)+
-  row('آخرین تلاش',attempt?pushSteps[attempt.stage]+(attempt.name?' ('+attempt.name+')':''):'در این نشست انجام نشده')+
-  '</div>';
+  row('آخرین تلاش',attempt?pushStepMessage(attempt.stage)+(attempt.ms==null?' — در حال اجرا':''):'در این نشست انجام نشده')+report+'</div>'+
+  ((S.pushAttempts||[]).length?'<p class="mu">گزارش حداکثر سه تلاش اخیر در همین نشست نگه داشته می‌شود. هنگام ارسال بگویید تست با وای‌فای بوده یا اینترنت سیم‌کارت.</p><button class="p" onclick="copyPushDiagnostics()">کپی گزارش اعلان</button>':'');
 }
 function pushCard(){const st=S.pushSt||'off';
  return `<div class="mg" style="margin-bottom:14px">${pushRow()}${pushDetailsRow()}</div>${st=='install'?`<p class="mu" style="margin:-4px 6px 14px;font-size:12.5px;line-height:1.9">در Safari دکمهٔ اشتراک‌گذاری (Share) ← «Add to Home Screen» را بزنید، بعد برنامه را از آیکون صفحهٔ اصلی باز کنید و دوباره همین‌جا اعلان را روشن کنید.</p>`:''}`}
